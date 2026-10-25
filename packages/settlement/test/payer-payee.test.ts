@@ -226,6 +226,12 @@ describe('failure propagation and unknown outcomes', () => {
     expect((await h.payer.authorize(input(ev1, h.channelId))).kind).toBe('AUTHORIZED');
   });
 
+  it('a credential whose native bytes cannot be captured is refused with SDK_CAPTURE_UNAVAILABLE and never sent', async () => {
+    const h = setup({ payer: { encoding: () => { throw new Error('commitment encoding unavailable'); } } });
+    expect(await h.payer.authorize(input(ev1, h.channelId))).toMatchObject({ kind: 'REJECTED', reasonCode: 'SDK_CAPTURE_UNAVAILABLE' });
+    expect(h.events.some((e) => e.event === 'payer.native.signed' || e.event === 'payer.accepted')).toBe(false);
+  });
+
   it('a lost answer after the credential was sent is PENDING until reconciled from the payee receipt', async () => {
     let dropNext = true;
     const h = setup({

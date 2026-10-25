@@ -4,6 +4,7 @@ import {
   bytesToBase64,
   computeCommitmentDigest,
   computeE0Digest,
+  computeEvidenceDigest,
   sha256Hex,
   utf8Bytes,
   type AuthorizedIncrement,
@@ -101,7 +102,9 @@ describe('F3-C: replay, order and continuity', () => {
     const e0 = build();
     const report = await verifyOffline(e0, e1For(golden.e0));
     expect(report.checks.V01_SCHEMA).toMatchObject({ status: 'FAIL', reasonCode: 'INVALID_SCHEMA' });
-    for (const id of CHECK_IDS.filter((c) => c !== 'V01_SCHEMA')) expect(report.checks[id].status, id).toBe('NOT_AVAILABLE');
+    for (const id of CHECK_IDS.filter((c) => c !== 'V01_SCHEMA')) {
+      expect(report.checks[id], id).toMatchObject({ status: 'NOT_AVAILABLE', reasonCode: 'PRECONDITION_FAILED' });
+    }
     expect(report.overall.status).toBe('FAIL');
   });
 
@@ -192,6 +195,17 @@ describe('F4-C: evidence mutated after payer signing', () => {
   it('a recomputed readingDigest mismatch fails V04', async () => {
     const e0 = mutateIncrement(0, (inc) => ({ ...inc, charge: { ...inc.charge, readingDigest: otherDigest } }));
     expect((await verifyOffline(e0)).checks.V04_EVIDENCE).toMatchObject({ status: 'FAIL', reasonCode: 'EVIDENCE_DIGEST_MISMATCH' });
+  });
+
+  it('an approved cumulative that does not exceed the previous one fails V04 with NON_MONOTONIC_CUMULATIVE', async () => {
+    // r-002 restates r-001's cumulative 1000000 with a consistently recomputed evidence digest.
+    const e0 = mutateIncrement(1, (inc) => {
+      const { schema: _schema, evidenceDigest: _digest, ...preimage } = { ...inc.charge, cumulativeChargeBaseUnits: '1000000', deltaChargeBaseUnits: '0' };
+      return { ...inc, charge: { ...inc.charge, ...preimage, evidenceDigest: computeEvidenceDigest(preimage) } };
+    });
+    const report = await verifyOffline(e0);
+    expect(report.checks.V04_EVIDENCE).toMatchObject({ status: 'FAIL', reasonCode: 'NON_MONOTONIC_CUMULATIVE' });
+    expect(report.overall.status).toBe('FAIL');
   });
 
   it('an unpinned channel fails V05, V06 and V07 even with every signature valid', async () => {
