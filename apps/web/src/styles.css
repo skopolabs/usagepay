@@ -2088,6 +2088,12 @@ tr.selected {
   margin-bottom: 6px;
 }
 
+.footer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
 .footer-actions {
   display: flex;
   flex-wrap: wrap;

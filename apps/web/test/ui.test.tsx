@@ -322,6 +322,22 @@ describe('UI-AC07: the demo scope is stated in the footer of every view', () => 
   });
 });
 
+describe('Footer (SPEC 05 §10.2): the source, pitch deck and demo video open in a new tab', () => {
+  it.each([['live', live], ['missing', missing]] as const)('%s bundle', (_name, bundle) => {
+    show(bundle);
+    const footer = within(document.querySelector('footer') as HTMLElement);
+    for (const [name, host] of [
+      [/Source on GitHub/, 'https://github.com/skopolabs'],
+      [/Pitch Deck/, 'https://docs.google.com/presentation/d/'],
+      [/Demo Video/, 'https://www.youtube.com/channel/'],
+    ] as const) {
+      const link = footer.getByRole('link', { name });
+      expect(link.getAttribute('href')?.startsWith(host)).toBe(true);
+      expect(link.getAttribute('target')).toBe('_blank');
+    }
+  });
+});
+
 describe('UI-AC08: presenter mode reaches every section by keyboard alone', () => {
   it('→ walks every section in order, ← goes back, T, S and Space work', async () => {
     const user = userEvent.setup();
@@ -381,8 +397,10 @@ describe('UI-AC09: no network request other than links the user opens', () => {
     for (const a of document.querySelectorAll('a')) {
       const href = a.getAttribute('href') ?? '';
       if (href.startsWith('#')) continue;
-      // Explorer pages for on-chain facts, and the project's GitHub home in the footer.
-      expect(href).toMatch(/^https:\/\/(stellar\.expert\/explorer\/testnet\/|github\.com\/skopolabs$)/);
+      // Explorer pages for on-chain facts; in the footer, the project's GitHub home, pitch deck and video channel.
+      expect(href).toMatch(
+        /^https:\/\/(stellar\.expert\/explorer\/testnet\/|github\.com\/skopolabs$|docs\.google\.com\/presentation\/d\/157kTzIG6SZ9LdqSRKgJaeVdF4ENpdYWz\/|www\.youtube\.com\/channel\/UCVkziV3cu8SnGI5tDzu37oQ$)/,
+      );
       expect((a).getAttribute('target')).toBe('_blank');
       expect((a).getAttribute('rel')).toBe('noopener noreferrer');
     }

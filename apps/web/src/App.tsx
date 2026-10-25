@@ -46,8 +46,10 @@ const SHOW: readonly (readonly [Show, string])[] = [
   ['ON_CHAIN', 'On-chain'],
 ];
 
-/** The project's public GitHub home, the only link in the footer besides the in-page ones. */
+/** The project's public GitHub home, pitch deck and video channel: the only links in the footer besides the in-page ones. */
 const GITHUB = 'https://github.com/skopolabs';
+const PITCH_DECK = 'https://docs.google.com/presentation/d/157kTzIG6SZ9LdqSRKgJaeVdF4ENpdYWz/edit?slide=id.p1#slide=id.p1';
+const DEMO_VIDEO = 'https://www.youtube.com/channel/UCVkziV3cu8SnGI5tDzu37oQ';
 
 const clock = (seconds: number) => `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
 
@@ -210,14 +212,24 @@ function DemoPage({ bundle }: { bundle: DemoBundle }) {
               </p>
               <p className="muted">Every payment in this demo carries evidence that anyone can re-check, with no keys.</p>
             </div>
-            <p className="footer-actions">
-              <a className="button button-primary" href={run === undefined ? '#scenarios' : '#verify'}>
-                {run === undefined ? 'See the scenarios' : 'See the auditor'} <span aria-hidden="true">→</span>
-              </a>
-              <a className="footer-link" href={GITHUB} target="_blank" rel="noopener noreferrer">
-                Source on GitHub <span aria-hidden="true">↗</span>
-              </a>
-            </p>
+            <div className="footer-nav">
+              <p className="footer-actions">
+                <a className="button button-primary" href={run === undefined ? '#scenarios' : '#verify'}>
+                  {run === undefined ? 'See the scenarios' : 'See the auditor'} <span aria-hidden="true">→</span>
+                </a>
+                <a className="footer-link" href={GITHUB} target="_blank" rel="noopener noreferrer">
+                  Source on GitHub <span aria-hidden="true">↗</span>
+                </a>
+              </p>
+              <p className="footer-actions">
+                <a className="footer-link" href={PITCH_DECK} target="_blank" rel="noopener noreferrer">
+                  Pitch Deck <span aria-hidden="true">↗</span>
+                </a>
+                <a className="footer-link" href={DEMO_VIDEO} target="_blank" rel="noopener noreferrer">
+                  Demo Video <span aria-hidden="true">↗</span>
+                </a>
+              </p>
+            </div>
           </div>
           <div className="footer-base">
             <p className="footer-brand">
