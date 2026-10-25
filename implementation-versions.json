@@ -1,0 +1,100 @@
+{
+  "schema": "usagepay.implementation-versions.v1",
+  "resolvedAt": "2026-10-24",
+  "gate": "G0",
+  "network": {
+    "id": "stellar:testnet",
+    "networkPassphrase": "Test SDF Network ; September 2015",
+    "assetSac": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
+    "assetSacSource": "USDC_SAC_TESTNET exported by the installed @stellar/mpp 0.7.1 (dist/constants.js)",
+    "assetDecimals": 7,
+    "assetDecimalsStatus": "SDK DEFAULT_DECIMALS only; NOT yet verified on-chain (G1 must confirm SAC decimals before any payment)"
+  },
+  "toolchain": {
+    "node": {
+      "required": ">=22.12.0",
+      "localObserved": "22.22.0"
+    },
+    "pnpm": {
+      "pinned": "10.33.0",
+      "source": "packageManager field; equals @stellar/mpp 0.7.1 packageManager",
+      "invokedVia": "corepack 0.34.0"
+    },
+    "typescript": "6.0.3",
+    "vitest": "4.1.12",
+    "@types/node": "22.20.5",
+    "stellarCli": {
+      "requiredMinimum": "28.1.0",
+      "localObserved": "28.1.0 (c0f4d0da)",
+      "stellarXdr": "28.0.0"
+    },
+    "claudeCode": {
+      "localObserved": "2.1.310"
+    }
+  },
+  "dependencies": {
+    "@stellar/mpp": "0.7.1",
+    "mppx": "0.6.31",
+    "@stellar/stellar-sdk": "15.1.0",
+    "@stellar/stellar-base": "15.0.0",
+    "viem": "2.57.10",
+    "zod": "4.6.7",
+    "@noble/curves": "2.4.0",
+    "@noble/hashes": "2.4.0",
+    "canonicalize": "2.1.0"
+  },
+  "dependencyNotes": {
+    "@stellar/mpp": "peerDependencies require @stellar/stellar-sdk ^15.1.0 and mppx ^0.6.29; newer stellar-sdk 17.x / mppx 0.15.x are intentionally NOT used",
+    "viem": "required (non-optional) peer of mppx 0.6.31",
+    "@stellar/stellar-base": "npm marks 15.0.0 deprecated (rolled into stellar-sdk), but it is the exact single instance stellar-sdk 15.1.0 depends on; contracts use only StrKey",
+    "canonicalize": "dev-only RFC 8785 reference implementation used for differential tests"
+  },
+  "upstreamSources": {
+    "stellar-mpp-sdk": {
+      "repository": "https://github.com/stellar/stellar-mpp-sdk",
+      "tag": "v0.7.1",
+      "commit": "9f2f8254421e09906dfb7e983e2491a273120adf",
+      "verifiedBy": "npm gitHead of @stellar/mpp@0.7.1 equals git ls-remote refs/tags/v0.7.1"
+    },
+    "one-way-channel": {
+      "repository": "https://github.com/stellar-experimental/one-way-channel",
+      "ref": "main",
+      "commit": "25dea1b303495a7a4184af7605bbb7671ff08da6",
+      "note": "no release tags; pinned to main HEAD observed 2026-10-23. Experimental, unaudited, Testnet only"
+    },
+    "stellar-dev-skill": {
+      "repository": "https://github.com/stellar/stellar-dev-skill",
+      "plugin": "stellar-dev@stellar-dev 1.2.0",
+      "commit": "e20f3529421830ee57fdbf9974e334816b05fe84",
+      "localStatus": "installed at project scope 2026-10-23"
+    }
+  },
+  "installedSdkSurfaceObserved": {
+    "@stellar/mpp": [
+      "STELLAR_TESTNET",
+      "USDC_SAC_TESTNET",
+      "DEFAULT_DECIMALS",
+      "NETWORK_PASSPHRASE",
+      "ChannelMethods",
+      "toBaseUnits",
+      "fromBaseUnits"
+    ],
+    "@stellar/mpp/channel/client": [
+      "Mppx",
+      "channel",
+      "stellar"
+    ],
+    "@stellar/mpp/channel/server": [
+      "Mppx",
+      "Store",
+      "channel",
+      "close",
+      "getChannelState",
+      "watchChannel",
+      "Expires",
+      "resolveKeypair",
+      "stellar"
+    ],
+    "commitmentEncoding": "dist/channel/commitment.js: signed bytes are the XDR ScVal::Map returned by contract prepare_commitment with fields {amount, channel, domain:'chancmmt', network:SHA-256(passphrase)}. Behaviour to be demonstrated with real credentials in G1, not assumed"
+  }
+}
