@@ -16,8 +16,9 @@ export function renderWalkthrough(bundle: DemoBundle, options: { color?: boolean
   const mark = (status: string) =>
     status === 'PASS' || status === 'OK' ? c.green('✔') : status === 'NOT_AVAILABLE' || status === 'PENDING' ? c.yellow('…') : c.red('✘');
 
-  line(c.bold('UsagePay · pay-per-kWh EV charging, settled on Stellar'));
-  line('An EV charges; a meter signs every reading; the fleet wallet pays the station step by step through a');
+  line(c.dim('Infrastructure for the machine economy.'));
+  line(c.bold('UsagePay enables verifiable machine-to-machine payments for metered services on Stellar.'));
+  line('Demo use case: EV charging. A meter signs every reading; the payer pays the provider step by step through a');
   line('Stellar payment channel; one transaction settles; an independent auditor re-checks everything.');
 
   const run = bundle.realRun;
