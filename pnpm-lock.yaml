@@ -17,6 +17,9 @@ importers:
       '@usagepay/contracts':
         specifier: workspace:*
         version: link:packages/contracts
+      '@usagepay/demo':
+        specifier: workspace:*
+        version: link:apps/demo
       '@usagepay/fixtures':
         specifier: workspace:*
         version: link:fixtures

@@ -22,12 +22,14 @@
     "typecheck:testnet": "tsc -b && tsc -p scripts/testnet/tsconfig.json",
     "g2:settlement": "tsc -b && node scripts/testnet/g2/run.ts",
     "verify": "tsc -b && node packages/verification/dist/bin.js",
-    "g3:verify": "tsc -b && node scripts/testnet/g3/run.ts"
+    "g3:verify": "tsc -b && node scripts/testnet/g3/run.ts",
+    "test:e2e:testnet": "tsc -b && node scripts/testnet/e2e/run.ts"
   },
   "dependencies": {
     "@stellar/mpp": "0.7.1",
     "@stellar/stellar-sdk": "15.1.0",
     "@usagepay/contracts": "workspace:*",
+    "@usagepay/demo": "workspace:*",
     "@usagepay/fixtures": "workspace:*",
     "@usagepay/metering": "workspace:*",
     "@usagepay/settlement": "workspace:*",

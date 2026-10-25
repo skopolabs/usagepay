@@ -30,7 +30,8 @@ import { IDENTITIES, channelAddress, identityAddress, identitySecret } from '../
 import { Trace } from '../g1/trace.ts';
 
 const ROOT = new URL('../../../', import.meta.url).pathname;
-const CHANNEL_ALIAS = 'upay-g2-channel';
+/** Channel deployed by deploy-channel.sh; the Testnet E2E passes a fresh `upay-e2e-*` alias. */
+const CHANNEL_ALIAS = process.env['UPAY_CHANNEL_ALIAS'] ?? 'upay-g2-channel';
 const DEPOSIT = 10_000_000n;
 const BUDGET_CAP = '5000000';
 
