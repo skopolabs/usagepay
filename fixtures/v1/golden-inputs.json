@@ -1,0 +1,70 @@
+{
+  "schema": "usagepay.fixture-inputs.v1",
+  "evidenceClass": "OFFLINE_FIXTURE",
+  "notice": "Deterministic simulated test inputs. Not real-world energy readings, not certified metrology and not proof of any payment.",
+  "session": {
+    "fixtureId": "S1-ev-session-001",
+    "sessionId": "ev-session-001",
+    "machineId": "sim-charger-01",
+    "domain": "ev.ocpp2x",
+    "startedAt": "2026-10-25T09:00:00.000Z",
+    "meterStartWh": "10000"
+  },
+  "meter": {
+    "signerKeyId": "test-meter-01"
+  },
+  "tariff": {
+    "schema": "usagepay.tariff.v1",
+    "tariffId": "demo-tariff-usdc-0.40-kwh-v1",
+    "assetSac": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
+    "assetDecimals": 7,
+    "currencyCode": "USDC",
+    "unit": "kWh",
+    "pricePerKwhBaseUnits": "4000000",
+    "rounding": "floor_cumulative",
+    "validFrom": "2026-10-25T00:00:00.000Z",
+    "validUntil": "2026-10-27T00:00:00.000Z"
+  },
+  "tariffNotes": "Hypothetical 0.40 USDC/kWh. assetSac is USDC_SAC_TESTNET exported by the pinned @stellar/mpp 0.7.1; assetDecimals 7 is the SDK DEFAULT_DECIMALS and must be confirmed on-chain in G1 before any real payment.",
+  "intervals": [
+    {
+      "readingId": "r-001",
+      "observedAt": "2026-10-25T09:01:00.000Z",
+      "intervalStart": "2026-10-25T09:00:00.000Z",
+      "intervalEnd": "2026-10-25T09:01:00.000Z",
+      "meterStartWh": "10000",
+      "meterEndWh": "10250",
+      "coverage": "intermediate_signed",
+      "expected": { "deltaWh": "250", "cumulativeWh": "250", "cumulativeChargeBaseUnits": "1000000", "deltaChargeBaseUnits": "1000000" }
+    },
+    {
+      "readingId": "r-002",
+      "observedAt": "2026-10-25T09:02:00.000Z",
+      "intervalStart": "2026-10-25T09:01:00.000Z",
+      "intervalEnd": "2026-10-25T09:02:00.000Z",
+      "meterStartWh": "10250",
+      "meterEndWh": "10500",
+      "coverage": "intermediate_signed",
+      "expected": { "deltaWh": "250", "cumulativeWh": "500", "cumulativeChargeBaseUnits": "2000000", "deltaChargeBaseUnits": "1000000" }
+    },
+    {
+      "readingId": "r-003",
+      "observedAt": "2026-10-25T09:03:00.000Z",
+      "intervalStart": "2026-10-25T09:02:00.000Z",
+      "intervalEnd": "2026-10-25T09:03:00.000Z",
+      "meterStartWh": "10500",
+      "meterEndWh": "10750",
+      "coverage": "terminal_signed",
+      "expected": { "deltaWh": "250", "cumulativeWh": "750", "cumulativeChargeBaseUnits": "3000000", "deltaChargeBaseUnits": "1000000" }
+    }
+  ],
+  "e0FinalizedAt": "2026-10-25T09:04:00.000Z",
+  "budgetCase": {
+    "fixtureId": "F2-budget-cap-2500000",
+    "capBaseUnits": "2500000",
+    "approvedReadingIds": ["r-001", "r-002"],
+    "rejectedReadingId": "r-003",
+    "expectedReasonCode": "BUDGET_EXCEEDED",
+    "expectedHighestApprovedBaseUnits": "2000000"
+  }
+}
