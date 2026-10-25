@@ -14,9 +14,10 @@ It adds no schema and duplicates no module logic. It holds no key material beyon
 |---|---|
 | `runScenarios()` | Runs S1 and F1–F7 in order. Each result has the scenario ID, session, expected and actual outcome, reason code, evidence class, checkpoints and a plain-language story |
 | `installOfflineChain(channel)` | OFFLINE stand-in for one one-way-channel contract behind Soroban RPC (see below) |
-| `explainEvent`, `explainTrace`, `CHECK_EXPLANATIONS`, `explainReason` | The plain-language layer. Each event gets an actor (meter, fleet, station, Stellar, auditor), an `ON_CHAIN`/`OFF_CHAIN` layer, a status, a title and one sentence |
+| `explainEvent`, `explainTrace`, `CHECK_EXPLANATIONS`, `EVIDENCE_CLASSES`, `explainReason` | The plain-language layer. Each event gets an actor (meter, fleet, station, Stellar, auditor), an `ON_CHAIN`/`OFF_CHAIN` layer, a status, a title and one sentence. Each evidence class gets a label and one sentence |
 | `loadRealRun`, `findLatestRun`, `observeLedger`, `cliEquivalents` | Load a captured `g2-*` Testnet run and its `trust.json`. Read the ledger now, read-only. Show the `stellar` CLI command that reproduces each on-chain fact |
-| `buildBundle` → `DemoBundle` (`upay.demo-bundle.v1`) | The single data source of the walkthrough and the UI. Public values only |
+| `buildBundle` → `DemoBundle` (`upay.demo-bundle.v1`) | The single data source of the walkthrough and the UI (`apps/web`, SPEC 05). Public values only |
+| `@usagepay/demo/format` | Pure integer display helpers (`formatAmount`, `formatEnergy`, `short`), the only runtime code the browser UI imports |
 | `runDemo` / `dist/bin.js` | `pnpm demo [--run <g2-run>] [--trust <file>] [--offline] [--json] [--out <file>] [--rpc <url>] [--timeout <ms>]` |
 | `testnetGuard` | Opt-in and Testnet-only refusal rules of `pnpm test:e2e:testnet` |
 

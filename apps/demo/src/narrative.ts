@@ -10,10 +10,10 @@ import { explorerLinks, formatAmount, short } from './format.js';
 export type Actor = 'meter' | 'fleet' | 'station' | 'stellar' | 'auditor';
 
 export const ACTORS: Record<Actor, { readonly name: string; readonly role: string }> = {
-  meter: { name: 'Charger meter', role: 'Measures the energy delivered and signs every reading. Simulated device with a test key, not a certified meter.' },
-  fleet: { name: 'Fleet wallet (payer)', role: 'Checks each reading against the tariff and its budget, then signs a payment voucher plus a receipt tying it to that reading.' },
-  station: { name: 'Charging station (payee)', role: 'Accepts a voucher only if the fleet receipt matches the exact reading, then closes the channel to get paid.' },
-  stellar: { name: 'Stellar Testnet', role: 'Public ledger. Holds the fleet deposit in a payment channel and pays the station when the channel closes.' },
+  meter: { name: 'Meter · EV charger', role: 'Measures the service delivered (here, energy) and signs every reading. Simulated device with a test key, not a certified meter.' },
+  fleet: { name: 'Payer · EV fleet wallet', role: 'Checks each reading against the tariff and its budget, then signs a payment voucher plus a receipt tying it to that reading. Its keys never leave it.' },
+  station: { name: 'Provider · charging station', role: 'The payee. Accepts a voucher only if the payer receipt matches the exact reading, then closes the channel to get paid.' },
+  stellar: { name: 'Stellar Testnet', role: 'Public ledger. Holds the payer deposit in a payment channel and pays the provider when the channel closes.' },
   auditor: { name: 'Independent auditor (verifier)', role: 'Re-checks everything from the published evidence and the public ledger. Holds no keys and trusts no stored "verified" flag.' },
 };
 
@@ -48,6 +48,13 @@ export const CHECK_EXPLANATIONS: Record<CheckId, CheckExplanation> = {
   V06_PAYER_ACK: { title: 'Fleet receipts', question: 'Did the fleet sign a receipt binding each voucher to its exact reading?', layer: 'OFF_CHAIN' },
   V07_E0_E1_LINK: { title: 'Package link', question: 'Does the settlement record point to this exact, unmodified evidence package?', layer: 'OFF_CHAIN' },
   V08_CHAIN: { title: 'On-chain payment', question: 'Does the public Stellar ledger show the channel closed with the right amount paid to the right station?', layer: 'ON_CHAIN' },
+};
+
+/** What each scenario evidence class (SPEC 04 §2) proves, in plain words. */
+export const EVIDENCE_CLASSES: Record<'OFFLINE_FIXTURE' | 'SDK_INTEGRATION' | 'REAL_TESTNET', { readonly label: string; readonly plain: string }> = {
+  OFFLINE_FIXTURE: { label: 'Offline fixture', plain: 'Deterministic test data with test-only keys; proves the formats and the arithmetic, not a payment.' },
+  SDK_INTEGRATION: { label: 'Real code, simulated ledger', plain: 'Real meter, fleet and station code and real Stellar MPP SDK signatures; only the ledger is simulated offline.' },
+  REAL_TESTNET: { label: 'Real Stellar Testnet', plain: 'Signed and settled on the public Stellar Testnet with test USDC; anyone can look it up.' },
 };
 
 /** Stable reason codes from all modules, in plain words. Unknown codes fall back to the code itself. */

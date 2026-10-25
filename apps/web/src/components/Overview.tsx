@@ -1,0 +1,240 @@
+import { formatAmount, formatEnergy } from '@usagepay/demo/format';
+import { progressOf, utc, type DemoBundle } from '../bundle.ts';
+import { ActorIcon, LayerBadge, SectionHeader, StatusBadge } from './ui.tsx';
+
+/** The kicker above the first sentence (01.2 §0.1). */
+export const KICKER = 'Infrastructure for the machine economy.';
+
+/** The first sentence of the demo (01.2 §0.1): the category first, the EV use case second. */
+export const POSITIONING = 'UsagePay enables verifiable machine-to-machine payments for metered services on Stellar.';
+
+/** Illustrative categories, not built adapters (01.2 §0.1); the demo runs the energy adapter only. */
+const SERVICES = ['Energy', 'Compute time', 'Connectivity', 'Equipment hours', 'Water'] as const;
+
+/** Section 0: value proposition, the honest replay banner and the headline figures, all read from the bundle. */
+export function Overview({ bundle }: { bundle: DemoBundle }) {
+  const run = bundle.realRun;
+  return (
+    <section id="overview" className="section hero" aria-labelledby="overview-title">
+      <p className="kicker">{KICKER}</p>
+      <h1 id="overview-title" tabIndex={-1}>
+        {POSITIONING}
+      </h1>
+      <p className="hero-lead">
+        Every payment carries its proof: the signed measurement, the price applied, the payer&apos;s approval and the Stellar settlement,
+        checkable by anyone.
+      </p>
+      <aside className="use-case" aria-label="Demo use case">
+        <p className="use-case-tag">Demo use case · EV charging</p>
+        <p>
+          We show it with an electric vehicle charging, because everyone understands a charger and a kilowatt-hour: the charger signs every reading,
+          the fleet pays the station step by step with off-chain Stellar vouchers, and one Stellar transaction settles the total. The same flow fits
+          any service a machine can measure.
+        </p>
+        <ul className="use-case-list" aria-label="Metered services the same flow fits">
+          {SERVICES.map((service) => (
+            <li key={service} className={service === 'Energy' ? 'use-case-shown' : undefined}>
+              {service}
+              {service === 'Energy' ? <span className="muted"> · shown here</span> : null}
+            </li>
+          ))}
+        </ul>
+      </aside>
+
+      {run.status === 'MISSING' ? (
+        <div className="banner banner-bad" role="status">
+          <StatusBadge status="NOT_AVAILABLE" label="No real Testnet run" />
+          <p>
+            This bundle holds no captured Stellar Testnet run ({run.reason}). The scenarios below still run real code against a simulated ledger; no
+            Testnet payment is shown.
+          </p>
+        </div>
+      ) : (
+        <div className="banner banner-replay" role="status">
+          <p className="banner-title">
+            <strong>REPLAY</strong> of a real Stellar Testnet run · <code>{run.runId}</code> · recorded {utc(run.recordedAt)}
+          </p>
+          <p>Nothing is paid again now. The page shows what happened, step by step, and how an independent auditor checked it.</p>
+          <p className="banner-verdict">
+            <StatusBadge status={run.verification.overall.status} />
+            <span>
+              Auditor verdict captured {utc(run.verification.at)}, {run.verification.mode === 'LIVE' ? 'reading Stellar Testnet live' : 'offline'}. {run.verification.overall.plain}
+            </span>
+          </p>
+        </div>
+      )}
+
+      {run.status === 'MISSING' ? null : <Figures bundle={bundle} />}
+
+      <p className="demo-result">
+        <span>Demo self-check</span>
+        <StatusBadge status={bundle.result.status} />
+        <span className="muted">{bundle.result.detail}</span>
+      </p>
+    </section>
+  );
+}
+
+function Figures({ bundle }: { bundle: DemoBundle }) {
+  const run = bundle.realRun;
+  if (run.status === 'MISSING') return null;
+  const last = run.meter.at(-1);
+  const progress = progressOf(run.story);
+  const passed = run.verification.checks.filter((c) => c.status === 'PASS').length;
+  return (
+    <dl className="figures">
+      <div>
+        <dt>Energy delivered</dt>
+        <dd>{last === undefined ? '—' : formatEnergy(last.cumulativeWh)}</dd>
+        <span className="figure-note">{run.meter.length} signed readings</span>
+      </div>
+      <div>
+        <dt>Paid to the station</dt>
+        <dd>{formatAmount(run.settlement.settled)}</dd>
+        <span className="figure-note">at {run.tariff.pricePerKwh} per kWh</span>
+      </div>
+      <div className="figure-flow">
+        <dt>Payments</dt>
+        <dd>
+          {progress.vouchers} vouchers → {progress.transactions} transaction
+        </dd>
+        <span className="figure-note">
+          <LayerBadge layer="OFF_CHAIN" /> → <LayerBadge layer="ON_CHAIN" />
+        </span>
+      </div>
+      <div>
+        <dt>Auditor checks</dt>
+        <dd>
+          {passed} / {run.verification.checks.length} PASS
+        </dd>
+        <span className="figure-note">recomputed, no keys held</span>
+      </div>
+    </dl>
+  );
+}
+
+/** Section 1: the problem in three boxes and why Stellar MPP alone does not close it (01.2 §0.1). Static copy within the SPEC 04 limits. */
+export function Gap() {
+  return (
+    <section id="gap" className="section" aria-labelledby="gap-title">
+      <SectionHeader id="gap" eyebrow="1 · The gap" title="A valid payment does not say what it paid for">
+        Today the meter, the payer and the ledger each keep their own record. Nobody can prove which payment matched which measurement.
+      </SectionHeader>
+      <div className="gap">
+        <div className="gap-box">
+          <ActorIcon actor="meter" />
+          <h3>The meter</h3>
+          <p>Knows how much was used.</p>
+        </div>
+        <span className="gap-link" aria-hidden="true">?</span>
+        <div className="gap-box">
+          <ActorIcon actor="fleet" />
+          <h3>The payer</h3>
+          <p>Knows what it agreed to pay.</p>
+        </div>
+        <span className="gap-link" aria-hidden="true">?</span>
+        <div className="gap-box">
+          <ActorIcon actor="stellar" />
+          <h3>The ledger</h3>
+          <p>Knows that money moved.</p>
+        </div>
+      </div>
+
+      <div className="mpp-gap" aria-labelledby="mpp-gap-title">
+        <h3 id="mpp-gap-title">Why Stellar MPP alone is not enough</h3>
+        <div className="mpp-columns">
+          <div className="mpp-col mpp-proves">
+            <p className="mpp-col-title">MPP proves</p>
+            <ul>
+              <li>How much the payer authorized: it signs a running total for one channel.</li>
+              <li>That the money settled: the channel closes on Stellar.</li>
+            </ul>
+          </div>
+          <div className="mpp-col mpp-cannot">
+            <p className="mpp-col-title">MPP cannot prove: for what?</p>
+            <ul>
+              <li>A voucher carries no reading, no unit and no price.</li>
+              <li>The channel contract pays any amount the payer signed. It never sees the meter.</li>
+              <li>So any usage log can sit next to a valid payment, and nobody can prove they belong together.</li>
+            </ul>
+          </div>
+        </div>
+        <div className="mpp-adds-box">
+          <p className="mpp-adds-title">
+            <strong>UsagePay adds the missing link</strong>, on top of MPP and without a new contract:
+          </p>
+          <ol className="mpp-adds">
+            <li>Signed readings are checked before anyone pays.</li>
+            <li>Pricing can be replayed by anyone, to the exact base unit.</li>
+            <li>A payer-signed receipt binds each voucher to its exact evidence, channel and network.</li>
+            <li>Evidence is sealed before settlement and linked to the transaction after it.</li>
+            <li>An independent auditor re-checks everything and holds no keys.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div className="fits" aria-labelledby="fits-title">
+        <h3 id="fits-title">Fits what is already deployed</h3>
+        <ul className="fits-list">
+          <li>
+            <strong>No new hardware.</strong> Built to read the meter data that existing standards already carry; in EV charging, OCPP with OCMF
+            signed readings. No new device, no firmware change.
+          </li>
+          <li>
+            <strong>No new payment protocol.</strong> Payments use Stellar MPP and its existing one-way channel contract, unchanged. No new
+            contract, no fork.
+          </li>
+          <li>
+            <strong>Beside existing systems.</strong> Charger management, billing and roaming keep their role. UsagePay adds the evidence that links
+            their records to the payment.
+          </li>
+        </ul>
+        <p className="muted small">
+          In this demo the meter is simulated: OCPP-shaped readings signed with a test key, not certified and not OCPP or OCMF conformant. Meters
+          that sign only the start and end of a session need provisional amounts reconciled at the end; that is on the roadmap.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+const SIDE: Record<string, { readonly layer: 'OFF_CHAIN' | 'ON_CHAIN' | 'BOTH'; readonly note: string }> = {
+  meter: { layer: 'OFF_CHAIN', note: 'Signs readings' },
+  fleet: { layer: 'OFF_CHAIN', note: 'Signs vouchers and receipts' },
+  station: { layer: 'BOTH', note: 'Checks off-chain, closes on-chain' },
+  stellar: { layer: 'ON_CHAIN', note: 'Public ledger' },
+  auditor: { layer: 'BOTH', note: 'Reads both, holds no keys' },
+};
+
+/** Section 2: the five actors, from `bundle.actors`. */
+export function Actors({ bundle }: { bundle: DemoBundle }) {
+  return (
+    <section id="actors" className="section" aria-labelledby="actors-title">
+      <SectionHeader id="actors" eyebrow="2 · Who is involved" title="Five parties, each with one job" />
+      <ul className="actors">
+        {Object.entries(bundle.actors).map(([id, actor]) => {
+          const side = SIDE[id];
+          return (
+            <li key={id} className={`actor-card actor-card-${id}`}>
+              <ActorIcon actor={id} />
+              <h3>{actor.name}</h3>
+              <p>{actor.role}</p>
+              {side === undefined ? null : (
+                <p className="actor-side">
+                  {side.layer === 'BOTH' ? (
+                    <>
+                      <LayerBadge layer="OFF_CHAIN" compact /> <LayerBadge layer="ON_CHAIN" compact />
+                    </>
+                  ) : (
+                    <LayerBadge layer={side.layer} compact />
+                  )}
+                  <span className="muted">{side.note}</span>
+                </p>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  );
+}

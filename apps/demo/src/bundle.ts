@@ -1,6 +1,6 @@
 import { CHECK_IDS, createVerifier, type ChainReader, type CheckId, type VerificationReport } from '@usagepay/verification';
 import { explorerLinks, formatAmount } from './format.js';
-import { ACTORS, CHECK_EXPLANATIONS, explainReason, explainTrace, type CheckExplanation, type StoryEvent } from './narrative.js';
+import { ACTORS, CHECK_EXPLANATIONS, EVIDENCE_CLASSES, explainReason, explainTrace, type CheckExplanation, type StoryEvent } from './narrative.js';
 import { cliEquivalents, meterRows, observeLedger, type CliEquivalent, type LedgerObservation, type MeterRow, type RealRun, type RunSummary } from './real-run.js';
 import { runScenarios, type ScenarioResult } from './scenarios.js';
 
@@ -14,6 +14,7 @@ export interface DemoBundle {
   readonly result: DemoVerdict;
   readonly actors: typeof ACTORS;
   readonly checks: Readonly<Record<CheckId, CheckExplanation>>;
+  readonly evidenceClasses: typeof EVIDENCE_CLASSES;
   readonly realRun: RealRunView | { readonly status: 'MISSING'; readonly reason: string };
   readonly scenarios: readonly ScenarioResult[];
   readonly limits: readonly string[];
@@ -63,9 +64,10 @@ export interface RealRunView {
 }
 
 export const LIMITS: readonly string[] = [
+  'One adapter today: energy in Wh, shown as EV charging. UsagePay is built for any metered service, but this code accepts energy readings only; a second adapter is on the roadmap.',
   'Meter data is simulated: a software charger signs readings with a disposable test key. Not a certified meter, not OCPP or OCMF conformant.',
   'Stellar Testnet only: test USDC with no real value; Testnet software is not audited for production.',
-  'The Stellar channel contract enforces the payment, not the metering. The fleet receipt links each payment to its reading, and the auditor re-checks that link.',
+  'The Stellar channel contract enforces the payment, not the metering. The payer receipt links each payment to its reading, and the auditor re-checks that link.',
   'Channel deposits, payouts and parties are public on the ledger; ordinary USDC channels are not confidential.',
   'Demo storage lives in one process: no production durability, recovery or reconciliation.',
 ];
@@ -92,6 +94,7 @@ export async function buildBundle(options: BundleOptions): Promise<DemoBundle> {
     result: demoVerdict(realRun, scenarios),
     actors: ACTORS,
     checks: CHECK_EXPLANATIONS,
+    evidenceClasses: EVIDENCE_CLASSES,
     realRun,
     scenarios,
     limits: LIMITS,

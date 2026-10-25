@@ -2,8 +2,7 @@ import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { accountIdToPublicKey, bytesToHex } from '@usagepay/contracts';
-import type { ChainReader, ObservedChannel } from '@usagepay/verification';
+import type { ChainReader } from '@usagepay/verification';
 import {
   explainEvent,
   explainTrace,
@@ -16,30 +15,12 @@ import {
   type DemoBundle,
   type RealRun,
 } from '../src/index.js';
+import { honestLedger } from './ledger-double.js';
 
 const ROOT = new URL('../../../', import.meta.url).pathname;
 const RUNS = join(ROOT, 'scripts/testnet/runs');
 const latest = findLatestRun(RUNS)!;
 const run = loadRealRun(latest);
-
-/** Read-only ledger double answering what Testnet reports for an honest close of `run` (the real values are in G3). */
-function honestLedger(r: RealRun, patch: Partial<ObservedChannel> = {}): ChainReader {
-  const highest = r.e0.increments.at(-1)!.commitment;
-  const amount = BigInt(highest.cumulativeAmountBaseUnits);
-  return {
-    getTransaction: async () => ({ status: 'SUCCESS', ledger: 4242, invocation: { contractId: r.trust.channelId, functionName: 'close', amount, signatureB64: highest.signatureB64 } }),
-    getTransactionEvents: async () => [{ name: 'withdraw', to: r.trust.recipient, amount }, { name: 'close' }, { name: 'refund', from: r.trust.funder, amount: 10_000_000n - amount }],
-    readChannel: async () => ({
-      commitmentKeyHex: bytesToHex(accountIdToPublicKey(r.trust.commitmentKey)),
-      from: r.trust.funder,
-      to: r.trust.recipient,
-      token: r.trust.assetSac,
-      balance: 0n,
-      withdrawn: amount,
-      ...patch,
-    }),
-  };
-}
 
 function demo(argv: string[], chain: ChainReader = honestLedger(run)) {
   const out = mkdtempSync(join(tmpdir(), 'upay-demo-'));
@@ -120,6 +101,7 @@ describe('pnpm demo (walkthrough + bundle)', () => {
     expect(stdout).toContain('AUDITOR VERDICT: PASS');
     expect(stdout).toContain('DEMO PASS');
     expect(bundle?.schema).toBe('upay.demo-bundle.v1');
+    expect(Object.keys(bundle?.evidenceClasses ?? {})).toEqual(['OFFLINE_FIXTURE', 'SDK_INTEGRATION', 'REAL_TESTNET']);
     expect(bundle?.realRun).toMatchObject({ status: 'REPLAY', evidenceClass: 'REAL_TESTNET', runId: run.runId, verification: { mode: 'LIVE', overall: { status: 'PASS' } } });
     expect(bundle?.scenarios.map((s) => `${s.id}:${s.result}`)).toEqual(['S1:PASS', 'F1:PASS', 'F2:PASS', 'F3:PASS', 'F4:PASS', 'F5:PASS', 'F6:PASS', 'F7:PASS']);
   });
