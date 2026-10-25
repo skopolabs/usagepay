@@ -11,6 +11,8 @@ export default defineConfig({
       { resolve: { alias }, test: { name: 'verification', root: './packages/verification', include: ['test/**/*.test.ts'] } },
       // SPEC 04 cross-package scenarios S1/F1-F7 (offline, SDK_INTEGRATION) and the demo narrative.
       { resolve: { alias }, test: { name: 'integration', root: './apps/demo', include: ['test/**/*.test.ts'], testTimeout: 60_000 } },
+      // SPEC 05 judge-facing UI (jsdom), configured next to the app.
+      './apps/web/vite.config.ts',
     ],
   },
 });
