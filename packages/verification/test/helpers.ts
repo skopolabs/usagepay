@@ -1,3 +1,4 @@
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import {
   NETWORK,
   accountIdToPublicKey,
@@ -22,6 +23,7 @@ import {
   signPayerAck,
 } from '@usagepay/fixtures';
 import {
+  trustFromFile,
   type ChainReader,
   type CommitmentEncoding,
   type ObservedChannel,
@@ -118,4 +120,22 @@ export function fakeChain(e0: EvidenceE0, trust: VerifierTrust, patch: Partial<F
     readChannel: (channelId) => (calls.push(`readChannel(${channelId})`), answer(state.channel)),
   };
   return { reader, calls, state };
+}
+
+const RUNS = new URL('../../../scripts/testnet/runs/', import.meta.url);
+
+/**
+ * Genuine SPEC 02 Testnet artifacts (real SDK-signed commitments) of the newest committed `g2-*` run, plus the trust
+ * file the runner pinned before its first increment.
+ */
+export function g2Artifacts(): { e0: EvidenceE0; e1: EvidenceE1; trust: VerifierTrust; trustFile: unknown } {
+  const latest = readdirSync(RUNS)
+    .filter((name) => name.startsWith('g2-') && existsSync(new URL(`${name}/trust.json`, RUNS)))
+    .sort()
+    .at(-1);
+  if (latest === undefined) throw new Error('no committed g2-* Testnet run with trust.json');
+  const run = new URL(`${latest}/`, RUNS);
+  const read = (name: string) => JSON.parse(readFileSync(new URL(name, run), 'utf8')) as unknown;
+  const trustFile = read('trust.json');
+  return { e0: read('e0.json') as EvidenceE0, e1: read('e1.json') as EvidenceE1, trust: trustFromFile(trustFile), trustFile };
 }
