@@ -1,10 +1,10 @@
 {
   "schema": "usagepay.e1.v1",
-  "e0Digest": "206f386806bf6dc2f6390dc77a564cf1a0187e99f2b88efe2b5d7e1a9a723259",
+  "e0Digest": "5d5186a4a6438e1b69038e13a4e80eda05c02cc962517ad8ded1bece286faf4d",
   "network": "stellar:testnet",
-  "channelId": "CAKIMXHFHQ727ISN4DROHH4EOMQI2IVISCHNMAMO3ZB5WBXHXNL4YIMJ",
+  "channelId": "CBFRK646MGAOQK5M7ZALES7ATVNNTTF4ULBJ3WQ6Z5FEH4IDBGW7XHKM",
   "assetSac": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
-  "closeTxHash": "8599d0906fc6eb182c3b61f602e77343ef347f01b7d822a4113db6feca6856cc",
+  "closeTxHash": "0626430c4b707bf3273ee9b454a73e014de5a3df0d5f24449ece9abb075ca1da",
   "txStatus": "SUCCESS",
   "settledCumulativeBaseUnits": "3000000",
   "verifierVersion": "usagepay-verifier.v1"
