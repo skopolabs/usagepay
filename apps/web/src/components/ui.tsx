@@ -103,7 +103,7 @@ export function SectionHeader({ id, eyebrow, title, layer, children }: { id: Sec
         {layer === undefined ? null : layer === 'BOTH' ? (
           <>
             {' '}
-            <LayerBadge layer="OFF_CHAIN" /> <LayerBadge layer="ON_CHAIN" />
+            <LayerBadge layer="OFF_CHAIN" compact /> <LayerBadge layer="ON_CHAIN" compact />
           </>
         ) : (
           <>

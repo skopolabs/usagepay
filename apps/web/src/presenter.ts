@@ -2,7 +2,7 @@
  * Page sections in product-flow order (SPEC 05 §3) and the presenter sequence (§5). The pitch keeps evolving, so the
  * order, labels and optional time targets live here only: change this list, not the components.
  */
-export type SectionId = 'overview' | 'gap' | 'actors' | 'session' | 'flow' | 'payment' | 'cli' | 'verify' | 'scenarios' | 'limits';
+export type SectionId = 'overview' | 'gap' | 'actors' | 'session' | 'flow' | 'payment' | 'verify' | 'scenarios' | 'cli';
 
 export interface Section {
   readonly id: SectionId;
@@ -17,10 +17,9 @@ export const SECTIONS: readonly Section[] = [
   { id: 'session', label: 'Usage' },
   { id: 'flow', label: 'Vouchers' },
   { id: 'payment', label: 'Payment' },
-  { id: 'cli', label: 'CLI' },
   { id: 'verify', label: 'Auditor' },
   { id: 'scenarios', label: 'What if' },
-  { id: 'limits', label: 'Limits' },
+  { id: 'cli', label: 'CLI' },
 ];
 
 export interface PresenterStep {
@@ -31,5 +30,5 @@ export interface PresenterStep {
 
 export const PRESENTER_STEPS: readonly PresenterStep[] = SECTIONS.map((section) => ({ section: section.id }));
 
-/** Pace of the swimlane replay: one recorded event per tick. */
-export const PLAYBACK_INTERVAL_MS = 900;
+/** Pace of the swimlane replay: one step per tick, where a repeated round is a single step (`replaySteps`). */
+export const PLAYBACK_INTERVAL_MS = 1800;

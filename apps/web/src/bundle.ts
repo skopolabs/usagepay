@@ -45,6 +45,73 @@ export function progressOf(events: readonly StoryEvent[]): Progress {
   };
 }
 
+/** A run of recorded events that repeats the same steps back to back, such as one voucher round per reading. */
+export interface Round {
+  /** Index of the round's first event in the story. */
+  readonly start: number;
+  /** Events in one round. */
+  readonly length: number;
+  /** Round numbers shown by this step: 1 for the first occurrence, which is replayed event by event. */
+  readonly first: number;
+  readonly last: number;
+  /** How many rounds repeat back to back. */
+  readonly of: number;
+}
+
+/** One replay tick: the events `[start, end)` appear together. `round.start` is the first event of the step's rounds. */
+export interface ReplayStep {
+  readonly start: number;
+  readonly end: number;
+  readonly round?: Round;
+}
+
+/** Only completed steps repeat; a refusal or an unknown outcome is always its own step. */
+const signature = (e: StoryEvent): string | undefined =>
+  e.technical['event'] === undefined || (e.status !== 'OK' && e.status !== 'INFO') ? undefined : [e.actor, e.layer, e.status, e.technical['event'], e.technical['id'] ?? ''].join('|');
+
+/**
+ * Replay steps over the recorded events, in their recorded order. Back-to-back rounds with the same actors, event kinds
+ * and statuses are found by shape only: the first round plays one event per step, every repeat plays as a single step,
+ * and repeats of a single event play together.
+ * No event is dropped, merged or reordered.
+ */
+export function replaySteps(events: readonly StoryEvent[]): readonly ReplayStep[] {
+  const sigs = events.map(signature);
+  const same = (a: number, b: number, length: number) => {
+    for (let k = 0; k < length; k++) if (sigs[a + k] === undefined || sigs[a + k] !== sigs[b + k]) return false;
+    return true;
+  };
+  const steps: ReplayStep[] = [];
+  let i = 0;
+  while (i < events.length) {
+    let length = 0;
+    for (let l = 1; i + 2 * l <= events.length; l++) {
+      if (same(i, i + l, l)) {
+        length = l;
+        break;
+      }
+    }
+    if (length === 0) {
+      steps.push({ start: i, end: i + 1 });
+      i += 1;
+      continue;
+    }
+    let of = 2;
+    while (i + (of + 1) * length <= events.length && same(i, i + of * length, length)) of += 1;
+    const first: Round = { start: i, length, first: 1, last: 1, of };
+    for (let k = 0; k < length; k++) steps.push({ start: i + k, end: i + k + 1, round: first });
+    if (length === 1) steps.push({ start: i + 1, end: i + of, round: { start: i + 1, length, first: 2, last: of, of } });
+    else {
+      for (let n = 2; n <= of; n++) {
+        const start = i + (n - 1) * length;
+        steps.push({ start, end: start + length, round: { start, length, first: n, last: n, of } });
+      }
+    }
+    i += of * length;
+  }
+  return steps;
+}
+
 /** The channel deposit as read from the ledger before charging (`read.channel-state`), if recorded. */
 export function depositOf(run: RealRunView): string | undefined {
   return run.story.find((e) => e.technical['event'] === 'read.channel-state')?.technical['balance'];
@@ -53,12 +120,6 @@ export function depositOf(run: RealRunView): string | undefined {
 /** `2026-10-25T16:52:25.654Z` -> `2026-10-25 16:52 UTC`. */
 export function utc(iso: string, withSeconds = false): string {
   return `${iso.slice(0, 10)} ${iso.slice(11, withSeconds ? 19 : 16)} UTC`;
-}
-
-/** `18.4000000` -> `18.40`: trims a recorded decimal for display, keeping two places. */
-export function trimDecimal(value: string): string {
-  const [whole, fraction = ''] = value.split('.');
-  return `${whole}.${fraction.replace(/0+$/, '').padEnd(2, '0')}`;
 }
 
 export type { DemoBundle, RealRunView, StoryEvent };
