@@ -55,6 +55,93 @@ The hackathon result is one reproducible flow: **three approved consumption incr
 | Separate payer-signed evidence acknowledgement | Prove the payer approved a particular evidence/amount association | The channel contract **does not** validate meter data on-chain |
 | Off-chain E0/E1 and simple local execution | Keep the prototype small and independently replayable | No privacy guarantee, production-grade persistence, or 24/7 operations |
 
+## Run it
+
+Requirements: Node.js 22.12+ and pnpm 10.33.0 through Corepack (`corepack enable`). Every command below runs from the repository root.
+
+```bash
+corepack pnpm install --frozen-lockfile
+corepack pnpm typecheck          # all packages and tests
+corepack pnpm test               # every offline test (unit + module + integration)
+corepack pnpm test:contracts     # SPEC 00 contracts, fixtures and the SPEC 04 cross-package scenarios S1/F1-F7
+corepack pnpm build              # all packages and the demo entry point
+corepack pnpm demo               # judge walkthrough: replay of the latest real Testnet run + live read-only verification
+corepack pnpm test:e2e:testnet   # EXPLICIT OPT-IN, live Testnet: needs UPAY_TESTNET_E2E=1 and funded disposable identities
+```
+
+`pnpm demo` prints five labelled steps:
+1. The simulated meter signs its readings.
+2. The fleet approves each step and signs a voucher plus a receipt.
+3. One real Testnet close settles the session.
+4. An independent verifier checks V01–V08 live and read-only.
+5. Offline scenarios show a tampered reading, the budget cap, replay, evidence detachment, false settlement, edited records and a lost connection.
+
+It replays a captured run and labels it `REPLAY`; it never presents that run as a new payment. It also writes `apps/demo/out/demo-bundle.json`, which the demo UI renders. Its exit codes:
+
+| Code | Meaning |
+|---|---|
+| `0` | PASS |
+| `1` | FAIL |
+| `2` | NOT_AVAILABLE (offline, or the ledger cannot be reached) |
+| `3` | Usage error |
+
+`pnpm test:e2e:testnet` refuses to run without the opt-in or with any non-Testnet configuration. It then runs the whole real flow with fresh evidence:
+1. It deploys a fresh `upay-e2e-*` channel with a 1 USDC Testnet deposit.
+2. It authorizes three real SDK-signed cumulative commitments, freezes E0, closes the channel once and writes E1 (G2).
+3. It verifies the result independently (G3).
+
+Identity and funding setup is described in [scripts/testnet/README.md](scripts/testnet/README.md).
+
+### Verify without keys (reviewers)
+
+Reviewers need no keys and no Testnet funds. Each committed `scripts/testnet/runs/g2-*` directory holds a real captured public bundle:
+
+| File | Contents |
+|---|---|
+| `e0.json` | Sealed evidence, written before the close |
+| `e1.json` | Observed settlement |
+| `trust.json` | Public trust inputs, pinned before the first increment |
+| `trace.jsonl` | Event trace of the run |
+
+```bash
+RUN=scripts/testnet/runs/<g2-run>
+corepack pnpm verify $RUN/e0.json $RUN/e1.json --trust $RUN/trust.json            # live, read-only RPC
+corepack pnpm verify $RUN/e0.json $RUN/e1.json --trust $RUN/trust.json --offline  # V08 becomes NOT_AVAILABLE, never PASS
+```
+
+### What is real and what is simulated
+
+| Component | Status |
+|---|---|
+| Stellar MPP channel commitments | **Real.** Signed by the pinned `@stellar/mpp` SDK at runtime |
+| Payer evidence receipts | **Real.** Runtime Ed25519 signatures |
+| Channel deploy, deposit and close | **Real** Stellar Testnet transactions |
+| Independent verification | **Real.** Read-only Stellar RPC: transaction, contract events, instance storage and getters |
+| Meter | **Simulated.** A software charger signs OCPP-shaped readings with a disposable key. Not certified and not OCPP/OCMF conformant |
+| Asset | Testnet USDC only. It has no real value |
+| Offline scenarios S1/F1–F7 (`SDK_INTEGRATION`) | Run the real modules and SDK signatures against a **simulated** ledger. They prove refusal logic, not settlement |
+
+### Testnet evidence (demo day)
+
+The official Testnet evidence for HackMeridian was generated on **2026-10-25** with `UPAY_TESTNET_E2E=1 corepack pnpm test:e2e:testnet` (run [`e2e-2026-10-25T11-50-09-395Z`](scripts/testnet/runs/e2e-2026-10-25T11-50-09-395Z/summary.json)):
+- channel `upay-e2e-20261025t1150`: [`CAKIMXHFHQ727ISN4DROHH4EOMQI2IVISCHNMAMO3ZB5WBXHXNL4YIMJ`](https://stellar.expert/explorer/testnet/contract/CAKIMXHFHQ727ISN4DROHH4EOMQI2IVISCHNMAMO3ZB5WBXHXNL4YIMJ);
+- close transaction, ledger 5381090: [`8599d0906fc6eb182c3b61f602e77343ef347f01b7d822a4113db6feca6856cc`](https://stellar.expert/explorer/testnet/tx/8599d0906fc6eb182c3b61f602e77343ef347f01b7d822a4113db6feca6856cc);
+- settlement run (E0, E1, `trust.json`): [`g2-2026-10-25T11-50-24-635Z`](scripts/testnet/runs/g2-2026-10-25T11-50-24-635Z/);
+- independent verification, V01–V08 PASS: [`g3-2026-10-25T11-50-38-887Z/s1-report.txt`](scripts/testnet/runs/g3-2026-10-25T11-50-38-887Z/s1-report.txt).
+
+The G1 channel feasibility run of the same day is reported in [docs/g1-testnet-feasibility.md](docs/g1-testnet-feasibility.md). Soroban RPC keeps transactions and events for about 7 days; after that, V08 reports `NOT_AVAILABLE` until a fresh run exists. The full procedure is in SPEC 04 §9.
+
+### Provenance
+
+Resolved versions are recorded in [implementation-versions.json](implementation-versions.json) and checked by `pnpm versions:check`.
+
+| Source | Pinned version |
+|---|---|
+| `@stellar/mpp` | 0.7.1 ([stellar-mpp-sdk](https://github.com/stellar/stellar-mpp-sdk) `9f2f825`) |
+| `mppx` | 0.6.31 |
+| `@stellar/stellar-sdk` | 15.1.0 |
+| [one-way-channel](https://github.com/stellar-experimental/one-way-channel) | `25dea1b`, wasm sha256 `d662c121…5d90`, reproducible build |
+
 ## Start reading here
 
 | File | Purpose | Who reads it |
