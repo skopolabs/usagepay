@@ -9,6 +9,9 @@
       ],
       "@usagepay/fixtures": [
         "./fixtures/src/index.ts"
+      ],
+      "@usagepay/metering": [
+        "./packages/metering/src/index.ts"
       ]
     },
     "allowImportingTsExtensions": true

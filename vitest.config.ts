@@ -6,6 +6,7 @@ export default defineConfig({
     projects: [
       { resolve: { alias }, test: { name: 'contracts', root: './packages/contracts', include: ['test/**/*.test.ts'] } },
       { resolve: { alias }, test: { name: 'fixtures', root: './fixtures', include: ['test/**/*.test.ts'] } },
+      { resolve: { alias }, test: { name: 'metering', root: './packages/metering', include: ['test/**/*.test.ts'] } },
     ],
   },
 });
