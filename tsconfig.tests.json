@@ -15,6 +15,9 @@
       ],
       "@usagepay/settlement": [
         "./packages/settlement/src/index.ts"
+      ],
+      "@usagepay/verification": [
+        "./packages/verification/src/index.ts"
       ]
     },
     "allowImportingTsExtensions": true

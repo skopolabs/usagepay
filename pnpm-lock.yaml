@@ -115,6 +115,22 @@ importers:
         specifier: workspace:*
         version: link:../metering
 
+  packages/verification:
+    dependencies:
+      '@stellar/stellar-sdk':
+        specifier: 15.1.0
+        version: 15.1.0
+      '@usagepay/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+      zod:
+        specifier: 4.6.7
+        version: 4.6.7
+    devDependencies:
+      '@usagepay/fixtures':
+        specifier: workspace:*
+        version: link:../../fixtures
+
 packages:
 
   '@adraffy/ens-normalize@1.11.1':
