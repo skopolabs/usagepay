@@ -28,7 +28,7 @@
     "V05_MPP": {
       "status": "PASS",
       "reasonCode": "CHECK_PASSED",
-      "details": "3 native commitments 1000000 -> 2000000 -> 3000000 equal the pinned encoding for CAKI…YIMJ and verify under GCFV…GD35"
+      "details": "3 native commitments 1000000 -> 2000000 -> 3000000 equal the pinned encoding for CBFR…XHKM and verify under GCFV…GD35"
     },
     "V06_PAYER_ACK": {
       "status": "PASS",
@@ -38,18 +38,18 @@
     "V07_E0_E1_LINK": {
       "status": "PASS",
       "reasonCode": "CHECK_PASSED",
-      "details": "E1.e0Digest = SHA256(JCS(E0)) = 206f386806bf6dc2f6390dc77a564cf1a0187e99f2b88efe2b5d7e1a9a723259; network, channel and asset match the pins"
+      "details": "E1.e0Digest = SHA256(JCS(E0)) = 5d5186a4a6438e1b69038e13a4e80eda05c02cc962517ad8ded1bece286faf4d; network, channel and asset match the pins"
     },
     "V08_CHAIN": {
       "status": "PASS",
       "reasonCode": "CHECK_PASSED",
-      "details": "close tx 8599d0906fc6eb182c3b61f602e77343ef347f01b7d822a4113db6feca6856cc SUCCESS in ledger 5381090 with the highest SDK-signed commitment 3000000; withdraw event pays 3000000 to GAN7…MANG; channel key/parties/token pinned, withdrawn() = 3000000, balance() = 0"
+      "details": "close tx 0626430c4b707bf3273ee9b454a73e014de5a3df0d5f24449ece9abb075ca1da SUCCESS in ledger 5386036 with the highest SDK-signed commitment 3000000; withdraw event pays 3000000 to GAN7…MANG; channel key/parties/token pinned, withdrawn() = 3000000, balance() = 0"
     }
   },
   "subject": {
     "sessionId": "ev-session-001",
-    "e0Digest": "206f386806bf6dc2f6390dc77a564cf1a0187e99f2b88efe2b5d7e1a9a723259",
-    "closeTxHash": "8599d0906fc6eb182c3b61f602e77343ef347f01b7d822a4113db6feca6856cc",
+    "e0Digest": "5d5186a4a6438e1b69038e13a4e80eda05c02cc962517ad8ded1bece286faf4d",
+    "closeTxHash": "0626430c4b707bf3273ee9b454a73e014de5a3df0d5f24449ece9abb075ca1da",
     "increments": [
       {
         "readingId": "r-001",

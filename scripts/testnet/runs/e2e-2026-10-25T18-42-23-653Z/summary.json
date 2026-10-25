@@ -1,19 +1,19 @@
 {
   "schema": "upay.testnet-e2e-run.v1",
-  "runId": "e2e-2026-10-25T11-50-09-395Z",
+  "runId": "e2e-2026-10-25T18-42-23-653Z",
   "result": "PASS",
-  "detail": "channel upay-e2e-20261025t1150 closed once; G3 S1 PASS with V01-V08",
+  "detail": "channel upay-e2e-20261025t1842 closed once; G3 S1 PASS with V01-V08",
   "network": "stellar:testnet",
   "evidenceClass": "REAL_TESTNET",
-  "alias": "upay-e2e-20261025t1150",
+  "alias": "upay-e2e-20261025t1842",
   "g2": {
-    "runDir": "scripts/testnet/runs/g2-2026-10-25T11-50-24-635Z",
-    "channelId": "CAKIMXHFHQ727ISN4DROHH4EOMQI2IVISCHNMAMO3ZB5WBXHXNL4YIMJ",
-    "closeTxHash": "8599d0906fc6eb182c3b61f602e77343ef347f01b7d822a4113db6feca6856cc",
-    "e0Digest": "206f386806bf6dc2f6390dc77a564cf1a0187e99f2b88efe2b5d7e1a9a723259"
+    "runDir": "scripts/testnet/runs/g2-2026-10-25T18-42-37-596Z",
+    "channelId": "CBFRK646MGAOQK5M7ZALES7ATVNNTTF4ULBJ3WQ6Z5FEH4IDBGW7XHKM",
+    "closeTxHash": "0626430c4b707bf3273ee9b454a73e014de5a3df0d5f24449ece9abb075ca1da",
+    "e0Digest": "5d5186a4a6438e1b69038e13a4e80eda05c02cc962517ad8ded1bece286faf4d"
   },
   "g3": {
-    "runDir": "scripts/testnet/runs/g3-2026-10-25T11-50-38-887Z",
+    "runDir": "scripts/testnet/runs/g3-2026-10-25T18-42-49-636Z",
     "scenarios": [
       {
         "id": "S1",

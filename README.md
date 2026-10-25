@@ -125,11 +125,11 @@ corepack pnpm verify $RUN/e0.json $RUN/e1.json --trust $RUN/trust.json --offline
 
 ### Testnet evidence (demo day)
 
-The official Testnet evidence for HackMeridian was generated on **2026-10-25** with `UPAY_TESTNET_E2E=1 corepack pnpm test:e2e:testnet` (run [`e2e-2026-10-25T11-50-09-395Z`](scripts/testnet/runs/e2e-2026-10-25T11-50-09-395Z/summary.json)):
-- channel `upay-e2e-20261025t1150`: [`CAKIMXHFHQ727ISN4DROHH4EOMQI2IVISCHNMAMO3ZB5WBXHXNL4YIMJ`](https://stellar.expert/explorer/testnet/contract/CAKIMXHFHQ727ISN4DROHH4EOMQI2IVISCHNMAMO3ZB5WBXHXNL4YIMJ);
-- close transaction, ledger 5381090: [`8599d0906fc6eb182c3b61f602e77343ef347f01b7d822a4113db6feca6856cc`](https://stellar.expert/explorer/testnet/tx/8599d0906fc6eb182c3b61f602e77343ef347f01b7d822a4113db6feca6856cc);
-- settlement run (E0, E1, `trust.json`): [`g2-2026-10-25T11-50-24-635Z`](scripts/testnet/runs/g2-2026-10-25T11-50-24-635Z/);
-- independent verification, V01–V08 PASS: [`g3-2026-10-25T11-50-38-887Z/s1-report.txt`](scripts/testnet/runs/g3-2026-10-25T11-50-38-887Z/s1-report.txt).
+The official Testnet evidence for HackMeridian was generated on **2026-10-25** with `UPAY_TESTNET_E2E=1 corepack pnpm test:e2e:testnet` (run [`e2e-2026-10-25T18-42-23-653Z`](scripts/testnet/runs/e2e-2026-10-25T18-42-23-653Z/summary.json)):
+- channel `upay-e2e-20261025t1842`: [`CBFRK646MGAOQK5M7ZALES7ATVNNTTF4ULBJ3WQ6Z5FEH4IDBGW7XHKM`](https://stellar.expert/explorer/testnet/contract/CBFRK646MGAOQK5M7ZALES7ATVNNTTF4ULBJ3WQ6Z5FEH4IDBGW7XHKM);
+- close transaction, ledger 5386036: [`0626430c4b707bf3273ee9b454a73e014de5a3df0d5f24449ece9abb075ca1da`](https://stellar.expert/explorer/testnet/tx/0626430c4b707bf3273ee9b454a73e014de5a3df0d5f24449ece9abb075ca1da);
+- settlement run (E0, E1, `trust.json`): [`g2-2026-10-25T18-42-37-596Z`](scripts/testnet/runs/g2-2026-10-25T18-42-37-596Z/);
+- independent verification, V01–V08 PASS: [`g3-2026-10-25T18-42-49-636Z/s1-report.txt`](scripts/testnet/runs/g3-2026-10-25T18-42-49-636Z/s1-report.txt).
 
 The G1 channel feasibility run of the same day is reported in [docs/g1-testnet-feasibility.md](docs/g1-testnet-feasibility.md). Soroban RPC keeps transactions and events for about 7 days; after that, V08 reports `NOT_AVAILABLE` until a fresh run exists. The full procedure is in SPEC 04 §9.
 
