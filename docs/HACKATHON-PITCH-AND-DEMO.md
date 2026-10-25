@@ -1,6 +1,8 @@
 # HackMeridian — UsagePay Pitch and Demo Sheet
 
-**HackMeridian begins:** Sunday, 25 October 2026 · **Audience:** judges and demo presenter · **Length target:** approximately 2–3 minutes · **Technical authority:** [01.1 §§8–11](../01.1-usagepay-technical-architecture-and-roadmap.md)
+**Audience:** judges (async review of the demo video, pitch deck and repository) and the finalist live pitch · **Length target:** about 3 minutes · **Technical authority:** [01.1 §§8–11](../01.1-usagepay-technical-architecture-and-roadmap.md)
+
+**Links:** [live demo](https://usagepay.vercel.app) · [pitch deck](https://docs.google.com/presentation/d/157kTzIG6SZ9LdqSRKgJaeVdF4ENpdYWz/edit?slide=id.p1#slide=id.p1) · [demo video channel](https://www.youtube.com/channel/UCVkziV3cu8SnGI5tDzu37oQ) · [repository](https://github.com/skopolabs/usagepay)
 
 ## The problem, in one sentence
 
@@ -22,14 +24,17 @@ Simulated EV charging event -> check meter evidence -> replay tariff
 
 ## Presentation beats
 
-1. **20s — The gap:** metering, financial approval and settlement are different authoritative systems; today's protocol components are acknowledged.
-2. **30s — Meter:** simulated OCPP/OCMF-shaped record, visibly labeled simulated, with signature and tariff replay.
-3. **25s — Fleet policy:** show a valid approval and a tampered reading / spending cap refusal.
-4. **40s — Real Stellar settlement:** show multiple increasing commitments and a genuine testnet transaction hash.
-5. **35s — Verify:** separate PASS/FAIL/NOT AVAILABLE statuses; E0 before closing and E1 after; no claim of on-chain meter enforcement.
-6. **Optional 20s — Only if functional:** independent second meter adapter **or** SDK-based watcher.
-7. **15s — Continuation:** open-source evidence core and separately validated managed channel operations; privacy and finance are later independent hypotheses.
+Each beat follows one section of the [live demo](https://usagepay.vercel.app); the presenter keys `→` / `←` move between them.
 
-**Truth labels to keep visible:** Testnet-only experimental unaudited one-way-channel; synthetic meter and key, not legal certification; no confidential settlement; watcher is an SDK primitive; no validated B2B buyer. If the session channel demo fails, describe the Charge fallback as narrower and omit channel claims.
+1. **15s — Category and gap** (Overview, 1 · The gap): the meter, the payer and the ledger each keep their own record; nobody can prove which payment matched which measurement.
+2. **20s — Why MPP alone is not enough** (1 · The gap): MPP proves how much was authorized and that it settled, not *for what*. UsagePay adds the link on top of MPP, without a new contract.
+3. **25s — Meter** (3 · Usage): simulated OCPP-shaped readings, visibly labelled simulated, each signed; the tariff replays to the base unit.
+4. **30s — Approval and vouchers** (4 · Vouchers): the fleet approves three increments within its budget; each voucher comes with a payer-signed receipt bound to its evidence; E0 is sealed before settlement.
+5. **25s — One payment on Stellar** (5 · Payment): one real Testnet close settles the three vouchers; open the transaction on stellar.expert.
+6. **30s — Independent auditor** (6 · Auditor): V01–V08 PASS with no keys; separate PASS / FAIL / NOT_AVAILABLE statuses; no claim of on-chain meter enforcement.
+7. **20s — What if** (7 · What if): a tampered reading and an over-budget payment are refused before anyone pays.
+8. **15s — Continuation:** open-source evidence core and separately validated managed channel operations; a second meter adapter is on the roadmap; privacy and finance are later, independent hypotheses.
+
+**Truth labels to keep visible:** Testnet only, experimental unaudited one-way-channel; one adapter today (energy in Wh); synthetic meter and key, not legal certification; no confidential settlement; the channel watcher is an SDK primitive; no validated B2B buyer.
 
 **For engineers:** read [01.1](../01.1-usagepay-technical-architecture-and-roadmap.md). **For product/commercial questions:** consult [01.2](usagepay/01.2-usagepay-product-foundation.md) and [01.4](usagepay/01.4-usagepay-economics.md). This pitch sheet never overrides their scope or guarantees.

@@ -239,7 +239,7 @@ UsagePay is positioned as the proof layer for machine payments on any metered se
 | H1 size | `clamp(2rem, 3.6vw, 3.25rem)` in the left column of the hero, beside the proof panel: at most four lines at 1280, 1366 and 1920 px. Phone width wraps further |
 | Section 3 | "3 · Metered usage · demo: EV charging"; nav label `Usage` |
 | Actor names (`apps/demo` `ACTORS`, also in the terminal walkthrough) | **Meter · EV charger**; **Payer · EV fleet wallet**; **Provider · charging station**. The role comes first, the demo instance second |
-| Limits (`apps/demo` `LIMITS`) | First line: "One adapter today: energy in Wh, shown as EV charging. UsagePay is built for any metered service, but this code accepts energy readings only; a second adapter is on the roadmap." This keeps the horizontal claim honest (01.3 §5: "EV-only hard-coded accounting masquerades as horizontal") |
+| Limits (`apps/demo` `LIMITS`) | First line: "One adapter today: energy in Wh, shown as EV charging. UsagePay is built for any metered service, but this code accepts energy readings only; a second adapter is on the roadmap." This keeps the horizontal claim honest (01.2 §0.1 honesty guardrails: "this demo runs the energy adapter", never "the code supports any unit") |
 | Terminal walkthrough header (`apps/demo` `walkthrough.ts`) | The kicker, the positioning sentence, then "Demo use case: EV charging. …" |
 | `index.html` | Title "UsagePay · verifiable machine payments"; the description starts with the positioning sentence |
 | Phone layout | Sections must not scroll under the three-row top bar: `scroll-margin-top: 180px` below 600 px |

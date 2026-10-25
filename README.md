@@ -8,9 +8,36 @@ Every payment carries its proof: the signed measurement, the price applied, the 
 
 **Demo use case: EV charging**, because everyone understands a charger and a kilowatt-hour. UsagePay is not an EV charging product. The same flow fits any service a machine can measure: energy, compute time, connectivity, equipment hours, water. This MVP implements one adapter, energy in Wh; a second adapter is on the roadmap. Messaging and claim guardrails: [01.2 §0.1](docs/usagepay/01.2-usagepay-product-foundation.md#01-positioning-and-messaging-single-source-for-the-ui-readme-and-pitch).
 
+## For judges
+
+| | |
+|---|---|
+| **Live demo** | [usagepay.vercel.app](https://usagepay.vercel.app): the judge-facing page over the real Testnet run. Static, no keys, no wallet, no network request |
+| **Demo video** | [YouTube channel](https://www.youtube.com/channel/UCVkziV3cu8SnGI5tDzu37oQ) |
+| **Pitch deck** | [Google Slides](https://docs.google.com/presentation/d/157kTzIG6SZ9LdqSRKgJaeVdF4ENpdYWz/edit?slide=id.p1#slide=id.p1) |
+| **Track** | Genesis · Stellar Composed |
+| **Testnet proof** | Close transaction [`0626430c…ca1da`](https://stellar.expert/explorer/testnet/tx/0626430c4b707bf3273ee9b454a73e014de5a3df0d5f24449ece9abb075ca1da) settling three vouchers in one channel close, verified V01–V08 PASS ([details](#testnet-evidence-demo-day)) |
+
+Test it in three steps:
+1. Open the [live demo](https://usagepay.vercel.app): replay the session, then open the independent auditor and the attack scenarios.
+2. Run it yourself: `corepack pnpm install --frozen-lockfile && corepack pnpm demo` replays the captured run and re-checks it read-only against Stellar Testnet ([Run it](#run-it)).
+3. Verify with no keys and no funds: [Verify without keys](#verify-without-keys-reviewers).
+
+Where to find the evidence for each judging criterion:
+
+| Criterion | Where to look |
+|---|---|
+| Track alignment | [HackMeridian positioning](#hackmeridian-positioning--genesis--stellar-composed): Stellar MPP SDK, the one-way channel and Stellar RPC composed into an evidence layer |
+| User value and problem | [The problem](#the-problem) and [Product Foundation](docs/usagepay/01.2-usagepay-product-foundation.md) |
+| Technical execution | [Specs](#specs), [build results](#build-results) and a real [Testnet settlement](#testnet-evidence-demo-day) |
+| Innovation | [Why Stellar MPP alone is not enough](#the-problem) |
+| Hackathon progress | [Build results](#build-results), gate by gate |
+| Market and ecosystem potential | [Viability Gates](docs/usagepay/01.3-usagepay-viability-gates.md) and [Economics](docs/usagepay/01.4-usagepay-economics.md) |
+| Product design and UX | The [live demo](https://usagepay.vercel.app) and [SPEC 05](specs/05-demo-ui-and-ux.md) |
+
 ## HackMeridian positioning — Genesis / Stellar Composed
 
-**Target track:** [Genesis → Stellar Composed](https://www.hackmeridian.com/). The event describes this track as combining **two or more Stellar ecosystem tools or projects into something new**. This is our intended positioning, subject to mentor/judge confirmation.
+**Target track:** [Genesis → Stellar Composed](https://www.hackmeridian.com/). The event describes this track as combining **two or more Stellar ecosystem tools or projects into something new**.
 
 | Building block | Role in UsagePay |
 |---|---|
@@ -18,7 +45,7 @@ Every payment carries its proof: the signed measurement, the price applied, the 
 | [Stellar RPC / JavaScript SDK](https://developers.stellar.org/docs/data/apis/rpc) | Independently query and verify the Testnet channel and settlement |
 | **UsagePay's metering/evidence integration** | Bind signed usage evidence, an accepted tariff and payer authorization to the payment, then replay verification independently |
 
-**What is new:** the evidence-to-authorization and independent-verification layer for metered machine services — **not** MPP itself, the payment channel, or the existing MPP-to-channel integration. The independent use of Stellar RPC and the application-layer composition must be demonstrated in the MVP, rather than asserted only in the pitch.
+**What is new:** the evidence-to-authorization and independent-verification layer for metered machine services — **not** MPP itself, the payment channel, or the existing MPP-to-channel integration. The MVP demonstrates the independent use of Stellar RPC and the application-layer composition with a real Testnet run, not only in the pitch.
 
 **Why Stellar:** reuse its existing off-chain payment channel infrastructure and settle aggregated consumption on Testnet instead of putting every meter reading on-chain. This does **not** make physical metering trustworthy by itself; the demo uses simulated signed readings, and the channel contract does not enforce metering evidence.
 
@@ -44,7 +71,7 @@ Simulated meter, demo: EV charger (signed reading)
     -> Independent verifier checks evidence, signatures and payout
 ```
 
-The hackathon result is one reproducible flow: **three approved consumption increments, one genuine Testnet settlement, and an independently verifiable E0/E1 evidence bundle.** The demo must also reject a tampered reading and an over-budget payment.
+The hackathon result is one reproducible flow: **three approved consumption increments, one genuine Testnet settlement, and an independently verifiable E0/E1 evidence bundle.** The demo also rejects a tampered reading, an over-budget payment and five other attack and failure scenarios.
 
 ### Key trade-offs — what we do *not* claim
 
@@ -149,7 +176,7 @@ Resolved versions are recorded in [implementation-versions.json](implementation-
 | File | Purpose | Who reads it |
 |---|---|---|
 | **[01.1 — Technical Architecture & Roadmap](01.1-usagepay-technical-architecture-and-roadmap.md)** | **Authoritative MVP scope**, invariants, architecture and P0/P1 priorities | Everyone — first |
-| **[Hackathon Pitch & Demo](docs/HACKATHON-PITCH-AND-DEMO.md)** | Two-minute explanation, demo sequence and honest claims | Everyone; presenters |
+| **[Hackathon Pitch & Demo](docs/HACKATHON-PITCH-AND-DEMO.md)** | Three-minute pitch, demo sequence and honest claims | Everyone; presenters |
 | **[SETUP.md](SETUP.md)** | Configure Claude Code, Stellar Skills, Raven MCP, CLI and local prerequisites | Every developer |
 | **[CLAUDE.md](CLAUDE.md)** | Mandatory execution rules and completion-report format for Claude | Every Claude session |
 | [Product Foundation](docs/usagepay/01.2-usagepay-product-foundation.md) | Personas, positioning and product hypothesis | Product/pitch questions |
@@ -158,29 +185,29 @@ Resolved versions are recorded in [implementation-versions.json](implementation-
 
 **Document priority:** 01.1 defines *what* to build; SPEC 00 and the assigned module SPEC define *how* to implement it. Product research is background, not an instruction to add features.
 
-## Team responsibilities (1–3 developers)
+## Specs
 
-| Owner | SPEC | Implementation responsibility |
+Each module has its own SPEC; [01.1](01.1-usagepay-technical-architecture-and-roadmap.md) is the product authority above them.
+
+| SPEC | Defines | Code |
 |---|---|---|
-| **All / coordinator** | [00 — Shared Contracts](specs/00-shared-contracts-and-engineering-rules.md) | Shared types, runtime schemas, fixtures, signing formats, contract tests and dependency versions |
-| **Dev 1 — Backend** | [01 — Metering & Evidence](specs/01-metering-and-evidence.md) | EV simulator, signed raw readings, normalization, deterministic tariff and evidence digests |
-| **Dev 2 — Stellar** | [02 — Payer & Settlement](specs/02-payer-and-stellar-settlement.md) | Fleet approval, native MPP commitments, evidence acknowledgement, Testnet channel and close |
-| **Dev 3 — Verification + Frontend** | [03 — Independent Verifier](specs/03-independent-verifier.md) | Independent signature/tariff/chain checks, readable results and minimal demo UI |
-| **All / coordinator** | [04 — Integration & Acceptance](specs/04-integration-and-acceptance.md) | Wire modules together, execute success/error tests and prepare a repeatable demo |
-| **All / coordinator** | [05 — Demo UI & UX](specs/05-demo-ui-and-ux.md) | Judge-facing UI over the demo bundle: off-chain vs on-chain flow, Testnet confirmation, Verify page, failure scenarios |
+| [00 — Shared Contracts](specs/00-shared-contracts-and-engineering-rules.md) | Shared types, runtime schemas, canonical JSON, digests, signing formats, fixtures and dependency pins | `packages/contracts`, `fixtures` |
+| [01 — Metering & Evidence](specs/01-metering-and-evidence.md) | Simulated charger, signed raw readings, normalization, deterministic tariff and evidence digests | `packages/metering` |
+| [02 — Payer & Settlement](specs/02-payer-and-stellar-settlement.md) | Fleet approval and budget, native MPP commitments, payer evidence receipt, Testnet channel close, E0/E1 | `packages/settlement` |
+| [03 — Independent Verifier](specs/03-independent-verifier.md) | Checks V01–V08 over signatures, tariff, binding and the ledger, with PASS / FAIL / NOT_AVAILABLE | `packages/verification` |
+| [04 — Integration & Acceptance](specs/04-integration-and-acceptance.md) | End-to-end flow, scenarios S1/F1–F7, the `demo` walkthrough and the demo bundle | `apps/demo`, `scripts/testnet` |
+| [05 — Demo UI & UX](specs/05-demo-ui-and-ux.md) | Judge-facing page over the demo bundle: off-chain vs on-chain flow, Testnet settlement, auditor, failure scenarios | `apps/web` |
 
-With one developer, execute the same workstreams sequentially. With two or three, split modules **only after shared contracts and the Stellar technical gate pass**. Each owner modifies their assigned module; shared contract changes require coordinator approval.
+## Build results
 
-## Execution order
-
-| Gate | Deliverable | Stop condition |
+| Gate | Deliverable | Result and evidence |
 |---|---|---|
-| **G0 — Offline foundation** | TypeScript workspace, frozen SPEC 00 schemas, fixtures and passing tests | No blockchain transactions; stop after reporting results |
-| **G1 — Stellar feasibility** | Real Testnet MPP credentials, captured native signature, payer acknowledgement verification boundary and actual channel close | If native proof cannot be captured/verified, report **BLOCKED**; do not simulate success |
-| **G2 — Parallel modules** | SPEC 01, 02 and 03 implementations passing their respective tests | Do not modify another module's interfaces unilaterally |
-| **G3–G5 — Integration and demo** | Real end-to-end flow, independent PASS/FAIL/NOT_AVAILABLE results, repeatable presentation | Demo only after mandatory P0 checks pass |
+| **G0 — Offline foundation** | TypeScript workspace, frozen SPEC 00 schemas, fixtures and contract tests | PASS: `corepack pnpm test:contracts` |
+| **G1 — Stellar feasibility** | Real MPP channel lifecycle on Testnet, captured native commitment signature, actual close | PASS, 35 of 35 checks: [G1 report](docs/g1-testnet-feasibility.md) |
+| **G2 — Modules** | SPEC 01–03: metering, payer and settlement, independent verifier | PASS: settlement run [`g2-2026-10-25T18-42-37-596Z`](scripts/testnet/runs/g2-2026-10-25T18-42-37-596Z/) |
+| **G3–G5 — Integration and demo** | Real end-to-end flow, independent verification, repeatable demo and UI | PASS: [E2E run](scripts/testnet/runs/e2e-2026-10-25T18-42-23-653Z/summary.json), V01–V08 [report](scripts/testnet/runs/g3-2026-10-25T18-42-49-636Z/s1-report.txt), `corepack pnpm demo` prints `DEMO PASS` |
 
-**Testing pyramid:** deterministic unit tests → module/contract integration tests → real Stellar Testnet E2E → demo smoke test. Include positive paths, tampering, budget refusal, replay and missing-chain-data behavior. Mocks never count as real Testnet evidence.
+`corepack pnpm test` runs 461 offline tests in 25 files. **Testing pyramid:** deterministic unit tests → module and contract integration tests → real Stellar Testnet E2E → demo smoke test, including tampering, budget refusal, replay and missing-chain-data paths. Mocks never count as real Testnet evidence.
 
 ## Repository layout
 
@@ -200,17 +227,22 @@ usagepay/
 └── docs/                       # pitch, G1 feasibility notes, product research
 ```
 
-## First Claude Code session
+## Security
 
-Follow [SETUP.md](SETUP.md), open a terminal at the repository root, and run `claude`. Then give Claude this assignment:
+The repository holds no private key, `.env` file, credential or fabricated transaction evidence. Every Testnet identity is disposable, and the page, the payee and the verifier never receive the payer's private key. Testnet only: no mainnet account or real money is used.
 
-```text
-Read CLAUDE.md, UsagePay 01.1 and SPEC 00. Execute G0 only:
-initialize the workspace, implement frozen shared schemas, canonicalization,
-fixtures and offline contract tests. Run tests, typecheck and build.
-Report actual results and STOP before G1. Do not submit transactions.
-```
+## How it was built
 
-**Security:** use disposable Testnet-only identities for G1. Never commit private keys, `.env`, credentials, or fabricated transaction evidence. All project deliverables and code are written in English.
+Built with [Claude Code](https://claude.com/claude-code) under the execution rules in [CLAUDE.md](CLAUDE.md): one gate at a time, each closed only after its tests and Testnet checks actually ran, never on code inspection alone. Setup is in [SETUP.md](SETUP.md).
 
 **Definition of success:** an engineer or judge can replay the documented flow, inspect a real Stellar Testnet settlement and independently understand why a particular charge passed — or failed — verification.
+
+## Team
+
+**Skopo Team**
+- Wesley Santos: [LinkedIn](https://www.linkedin.com/in/wesleymassine/)
+- Mario León: [LinkedIn](https://www.linkedin.com/in/mario-garc%C3%ADa-le%C3%B3n-0a76ab420)
+
+## License
+
+[MIT](LICENSE) © Skopo Labs
