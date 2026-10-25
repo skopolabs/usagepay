@@ -122,10 +122,4 @@ export function utc(iso: string, withSeconds = false): string {
   return `${iso.slice(0, 10)} ${iso.slice(11, withSeconds ? 19 : 16)} UTC`;
 }
 
-/** `18.4000000` -> `18.40`: trims a recorded decimal for display, keeping two places. */
-export function trimDecimal(value: string): string {
-  const [whole, fraction = ''] = value.split('.');
-  return `${whole}.${fraction.replace(/0+$/, '').padEnd(2, '0')}`;
-}
-
 export type { DemoBundle, RealRunView, StoryEvent };

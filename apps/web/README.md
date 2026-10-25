@@ -23,15 +23,17 @@ The output is **one self-contained file**, `apps/web/dist/index.html`:
 
 | # | Section (`src/presenter.ts`) | Source in the bundle |
 |---|---|---|
-| 0 | Overview: positioning (01.2 §0.1), demo use case; the MISSING state when there is no real run | `realRun.status` |
+| 0 | Overview: what the service is (01.2 §0.1) and what every payment carries; the MISSING state when there is no real run | `realRun.status` |
 | 1 | The gap, and why Stellar MPP alone is not enough | static copy |
-| 2 | Who is involved | `actors` |
+| 2 | Who is involved, then the demo use case (EV charging) | `actors` |
 | 3 | Metered usage (demo: EV charging): simulated charger display and signed readings | `realRun.meter`, `tariff`, `parties.meterKey` |
 | 4 | Approval and vouchers: swimlane replay, where a repeated round plays as one step in short; counters; E0 stamp | `realRun.story` |
-| 5 | One payment on Stellar: close transaction, money flow, balances | `realRun.ledger`, `settlement`, `links` |
-| 6 | Check it yourself: `stellar` CLI commands, observed output, explorer links | `realRun.cli`, `links` |
-| 7 | Independent auditor (Verify page) V01–V08 | `realRun.verification` |
-| 8 | What if: S1, F1–F7 with expected vs actual, checkpoints and story | `scenarios`, `evidenceClasses` |
+| 5 | One payment on Stellar: close transaction and money flow | `realRun.ledger`, `settlement`, `links` |
+| 6 | Independent auditor (Verify page) V01–V08, the first two until "Show the other 6 checks" | `realRun.verification` |
+| 7 | What if: S1, F1–F7 cards in short, folded until "Show details"; the open scenario with expected vs actual, checkpoints folded behind their count, and story | `scenarios`, `evidenceClasses` |
+| 8 | Check it yourself: `stellar` CLI commands, observed output, explorer links | `realRun.cli`, `links` |
+
+On a laptop or larger screen each section fills one screen under the top bar, and the menu marks the section on screen. "All · Off-chain · On-chain" in the top bar fades the other layer's events and checks. The footer links the project's GitHub home, https://github.com/skopolabs. Long lists (the swimlane events and the terminal) scroll inside their section. The look follows the vend.money reference (SPEC 05 §10.2).
 
 Presenter keys:
 
@@ -39,14 +41,14 @@ Presenter keys:
 |---|---|
 | `→` / `←` | Next or previous section. Moves the focus and shows `Step n / N · label · elapsed` |
 | `Space` | Play or pause the swimlane replay. On a focused button or link, `Space` keeps its native meaning |
-| `T` | Technical detail on or off |
+| `T` | Technical detail on or off (a "Technical detail ✕" chip in the top bar turns it off) |
 | `S` | Scenarios |
 
 The order and the optional `targetSeconds` live in `PRESENTER_STEPS`, so the pitch can change without touching the components. A link such as `index.html#verify` opens on that section.
 
 ## Honesty rules enforced by the UI
 
-- A captured run is labelled `REPLAY` with its recording time in two places: the top bar and the timeline.
+- A captured run is labelled `REPLAY` with its run id and recording time at the head of the replayed timeline.
 - Status icons and words never depend on colour alone. `NOT_AVAILABLE`, `PENDING`, `FAIL`, `REJECTED` and unknown statuses are never green.
 - `MISSING`, `UNAVAILABLE` and `NOT_AVAILABLE` bundles render explicit states. A malformed bundle renders an explanation, never a crash.
 - The build refuses a bundle containing anything shaped like a Stellar secret seed.

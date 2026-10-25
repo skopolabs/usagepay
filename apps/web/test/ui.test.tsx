@@ -1,4 +1,4 @@
-import { cleanup, render, screen, within } from '@testing-library/react';
+import { cleanup, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, inject, it, vi } from 'vitest';
 import { App } from '../src/App.tsx';
@@ -36,6 +36,10 @@ const text = (el: Node | null | undefined) => (el?.textContent ?? '').replace(/\
 const hasClass = (el: Element | null | undefined, name: string) => el?.classList.contains(name) ?? false;
 
 const show = (bundle: unknown) => render(<App raw={bundle} />);
+/** The S1-F7 cards start folded; "Show details" reveals them. */
+const openScenarios = async (user: ReturnType<typeof userEvent.setup>) =>
+  user.click(section('scenarios').querySelector<HTMLButtonElement>('button[aria-controls="scenario-tabs"]')!);
+
 const section = (id: string) => {
   const el = document.getElementById(id);
   if (el === null) throw new Error(`no section #${id}`);
@@ -81,8 +85,21 @@ describe('UI-AC01: every story event shows actor, layer, status, title and detai
     show(live);
     const digest = realRun(live).e0Digest;
     expect(section('flow').textContent).not.toContain(digest);
-    await user.click(screen.getByRole('button', { name: /Technical: off/ }));
+    await user.keyboard('t');
     expect(section('flow').textContent).toContain(digest);
+  });
+
+  it('"Highlight a layer" fades the other layer and keeps every event and check', async () => {
+    const user = userEvent.setup();
+    show(live);
+    const group = screen.getByRole('group', { name: 'Highlight a layer' });
+    expect(within(group).getByRole('button', { name: 'All' }).getAttribute('aria-pressed')).toBe('true');
+    const events = within(section('flow')).getAllByRole('listitem').length;
+    await user.click(within(group).getByRole('button', { name: 'On-chain' }));
+    expect(within(group).getByRole('button', { name: 'On-chain' }).getAttribute('aria-pressed')).toBe('true');
+    expect(document.querySelector('main')?.dataset['show']).toBe('ON_CHAIN');
+    expect(within(section('flow')).getAllByRole('listitem')).toHaveLength(events);
+    expect(document.querySelector('[data-check="V08_CHAIN"]')?.getAttribute('data-layer')).toBe('ON_CHAIN');
   });
 });
 
@@ -155,20 +172,23 @@ describe('UI-AC02: every on-chain fact has an explorer link or a CLI equivalent 
   });
 });
 
-describe('UI-AC03: REPLAY and the recording time are visible whenever a captured run is shown', () => {
+describe('UI-AC03: REPLAY and the recording time are visible with the replayed run', () => {
   it.each([['live', live], ['offline', offline], ['unavailable', unavailable], ['fail', fail]] as const)('%s bundle', (_name, bundle) => {
     show(bundle);
     const run = realRun(bundle);
     const recorded = utc(run.recordedAt);
-    expect(text(document.querySelector('.topbar'))).toContain(`REPLAY · ${recorded}`);
     expect(text(section('flow'))).toContain(`REPLAY of run ${run.runId}, recorded ${recorded}`);
   });
 });
 
 describe('UI-AC04: V01-V08 with question and status; NOT_AVAILABLE and FAIL never look like success', () => {
-  it('lists all eight checks with their plain question', () => {
+  it('lists all eight checks with their plain question, the first two until "Show the other 6 checks"', async () => {
+    const user = userEvent.setup();
     show(live);
-    const checks = within(screen.getByRole('list', { name: 'Verification checks' })).getAllByRole('listitem');
+    const list = screen.getByRole('list', { name: 'Verification checks' });
+    expect(within(list).getAllByRole('listitem').map((c) => c.dataset['check'])).toEqual(['V01_SCHEMA', 'V02_METER']);
+    await user.click(within(section('verify')).getByRole('button', { name: 'Show the other 6 checks' }));
+    const checks = within(list).getAllByRole('listitem');
     expect(checks.map((c) => c.dataset['check'])).toEqual(['V01_SCHEMA', 'V02_METER', 'V03_TARIFF', 'V04_EVIDENCE', 'V05_MPP', 'V06_PAYER_ACK', 'V07_E0_E1_LINK', 'V08_CHAIN']);
     for (const check of realRun(live).verification.checks) {
       const item = checks.find((c) => c.dataset['check'] === check.id)!;
@@ -185,11 +205,12 @@ describe('UI-AC04: V01-V08 with question and status; NOT_AVAILABLE and FAIL neve
   ] as const)('%s bundle shows V08 %s with its own colour and words', (_name, bundle, status, tone) => {
     show(bundle);
     const v08 = document.querySelector('[data-check="V08_CHAIN"]')!;
+    expect(v08.hasAttribute('hidden')).toBe(false);
     const badge = v08.querySelector(`[data-status="${status}"]`);
     expect(hasClass(badge, tone)).toBe(true);
     expect(text(badge)).not.toContain('PASS');
     expect(text(screen.getByRole('status', { name: 'Auditor verdict' }))).toContain(`AUDITOR VERDICT: ${status}`);
-    expect(text(document.querySelector('.topbar'))).toContain(`Demo ${bundle.result.status}`);
+    expect(section('overview').querySelector(`.demo-result [data-status="${bundle.result.status}"]`)).not.toBeNull();
   });
 
   it.each([['live', live], ['offline', offline], ['unavailable', unavailable], ['fail', fail], ['missing', missing]] as const)(
@@ -208,6 +229,7 @@ describe('UI-AC05: S1 and F1-F7 are reachable with expected vs actual, evidence 
   it('opens every scenario', async () => {
     const user = userEvent.setup();
     show(live);
+    await openScenarios(user);
     const tabs = within(screen.getByRole('tablist', { name: 'Scenarios' })).getAllByRole('tab');
     expect(tabs).toHaveLength(8);
     for (const scenario of live.scenarios) {
@@ -226,9 +248,28 @@ describe('UI-AC05: S1 and F1-F7 are reachable with expected vs actual, evidence 
     }
   });
 
+  it('the S1-F7 cards fold until "Show details", the open scenario stays shown; checkpoints fold behind their count', async () => {
+    const user = userEvent.setup();
+    show(live);
+    const s1 = live.scenarios[0]!;
+    expect(screen.queryByRole('tablist', { name: 'Scenarios' })).toBeNull();
+    expect(text(screen.getByRole('tabpanel'))).toContain(live.scenarios.find((s) => s.id === 'F1')!.question);
+    const toggle = section('scenarios').querySelector<HTMLButtonElement>('button[aria-controls="scenario-tabs"]')!;
+    expect(text(toggle)).toBe('Show details');
+    await user.click(toggle);
+    expect(toggle.getAttribute('aria-expanded')).toBe('true');
+    const card = screen.getByRole('tab', { name: new RegExp(`^${s1.id}`) });
+
+    await user.click(card);
+    const folded = screen.getByRole('tabpanel').querySelector('details.checkpoints-details')!;
+    expect(folded.hasAttribute('open')).toBe(false);
+    expect(text(folded.querySelector('summary'))).toContain(`Checkpoints: ${s1.checkpoints.length} of ${s1.checkpoints.length} as expected`);
+  });
+
   it('F1 shows the edited reading and highlights the refusal as protection', async () => {
     const user = userEvent.setup();
     show(live);
+    await openScenarios(user);
     await user.click(screen.getByRole('tab', { name: /^F1/ }));
     const panel = screen.getByRole('tabpanel');
     expect(text(panel)).toContain('10500');
@@ -238,8 +279,10 @@ describe('UI-AC05: S1 and F1-F7 are reachable with expected vs actual, evidence 
 });
 
 describe('UI-AC06: MISSING, UNAVAILABLE and NOT_AVAILABLE bundles render explicit states', () => {
-  it('MISSING: says there is no real run, still shows the scenarios', () => {
+  it('MISSING: says there is no real run, still shows the scenarios', async () => {
+    const user = userEvent.setup();
     show(missing);
+    await openScenarios(user);
     expect(text(section('overview'))).toContain('No real Testnet run');
     expect(text(section('overview'))).toContain('no g2-* run directory with e1.json');
     expect(document.getElementById('payment')).toBeNull();
@@ -292,9 +335,9 @@ describe('UI-AC08: presenter mode reaches every section by keyboard alone', () =
     expect(document.activeElement?.id).toBe(`${SECTIONS.at(-2)!.id}-title`);
 
     await user.keyboard('t');
-    expect((screen.getByRole('button', { name: /Technical: on/ })).getAttribute('aria-pressed')).toBe('true');
+    expect(screen.getByRole('button', { name: /Technical detail/ }).getAttribute('aria-pressed')).toBe('true');
     await user.keyboard('T');
-    expect(screen.getByRole('button', { name: /Technical: off/ })).toBeTruthy();
+    expect(screen.queryByRole('button', { name: /Technical detail/ })).toBeNull();
 
     await user.keyboard('{ArrowLeft}{ArrowLeft}');
     await user.keyboard('s');
@@ -304,6 +347,16 @@ describe('UI-AC08: presenter mode reaches every section by keyboard alone', () =
     expect((within(section('flow')).getByRole('button', { name: /Pause/ })).getAttribute('aria-pressed')).toBe('true');
     await user.keyboard(' ');
     expect((within(section('flow')).getByRole('button', { name: /Play/ })).getAttribute('aria-pressed')).toBe('false');
+  });
+
+  it('the menu marks the section on screen while scrolling', async () => {
+    show(live);
+    const tops: Record<string, number> = { overview: -2000, gap: -1500, actors: -1000, session: -500, flow: 0, payment: 600, verify: 1200, scenarios: 1800, cli: 2400 };
+    for (const [id, top] of Object.entries(tops)) vi.spyOn(section(id), 'getBoundingClientRect').mockReturnValue({ top } as DOMRect);
+    window.dispatchEvent(new Event('scroll'));
+    const nav = screen.getByRole('navigation', { name: 'Sections' });
+    await waitFor(() => expect(within(nav).getByRole('link', { name: 'Vouchers' }).getAttribute('aria-current')).toBe('location'));
+    expect(nav.querySelectorAll('[aria-current]')).toHaveLength(1);
   });
 
   it('skips the sections a bundle without a real run does not have', async () => {
@@ -328,7 +381,8 @@ describe('UI-AC09: no network request other than links the user opens', () => {
     for (const a of document.querySelectorAll('a')) {
       const href = a.getAttribute('href') ?? '';
       if (href.startsWith('#')) continue;
-      expect(href).toMatch(/^https:\/\/stellar\.expert\/explorer\/testnet\//);
+      // Explorer pages for on-chain facts, and the project's GitHub home in the footer.
+      expect(href).toMatch(/^https:\/\/(stellar\.expert\/explorer\/testnet\/|github\.com\/skopolabs$)/);
       expect((a).getAttribute('target')).toBe('_blank');
       expect((a).getAttribute('rel')).toBe('noopener noreferrer');
     }
@@ -341,12 +395,15 @@ describe('Positioning (SPEC 05 §10.4, 01.2 §0.1): the category comes first, EV
     const overview = section('overview');
     expect(text(screen.getByRole('heading', { level: 1 }))).toBe(POSITIONING);
     expect(POSITIONING).toBe('UsagePay enables verifiable machine-to-machine payments for metered services on Stellar.');
-    // The kicker sits above the H1, and the EV use case is labelled as the demo, after both.
+    // The kicker sits above the H1; the first screen says what the service is, and the EV use case is labelled as the
+    // demo with the actors it names.
     const kicker = overview.querySelector('.kicker');
     expect(text(kicker)).toBe(KICKER);
     expect(KICKER).toBe('Infrastructure for the machine economy.');
     expect(kicker!.compareDocumentPosition(screen.getByRole('heading', { level: 1 })) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-    expect(text(screen.getByRole('complementary', { name: 'Demo use case' }))).toContain('Demo use case · EV charging');
+    const useCase = within(section('actors')).getByRole('complementary', { name: 'Demo use case' });
+    expect(text(useCase)).toContain('Demo use case · EV charging');
+    expect(text(overview)).not.toContain('Demo use case');
     expect(text(overview.querySelector('h1'))).not.toMatch(/kWh|kilowatt|charg/i);
     // Why MPP alone is not enough is always on the page.
     expect(text(section('gap'))).toContain('Why Stellar MPP alone is not enough');

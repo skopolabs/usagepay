@@ -10,51 +10,80 @@ export const POSITIONING = 'UsagePay enables verifiable machine-to-machine payme
 /** Illustrative categories, not built adapters (01.2 §0.1); the demo runs the energy adapter only. */
 const SERVICES = ['Energy', 'Compute time', 'Connectivity', 'Equipment hours', 'Water'] as const;
 
-/** Section 0: value proposition and the demo use case; a bundle without a real run says so here. */
+/** What every UsagePay payment carries, read left to right in the hero panel (the five links UsagePay adds, section 1). */
+const PROOF: readonly (readonly [string, string])[] = [
+  ['Measurement', 'Signed by the meter'],
+  ['Price', 'Replayable to the base unit'],
+  ['Approval', 'Signed by the payer'],
+  ['Settlement', 'One Stellar transaction'],
+  ['Verification', 'Anyone, with no keys'],
+];
+
+/** Section 0: what the service is, nothing else; the demo use case is introduced with the actors. A bundle without a real run says so here. */
 export function Overview({ bundle }: { bundle: DemoBundle }) {
   const run = bundle.realRun;
   return (
     <section id="overview" className="section hero" aria-labelledby="overview-title">
-      <p className="kicker">{KICKER}</p>
-      <h1 id="overview-title" tabIndex={-1}>
-        {POSITIONING}
-      </h1>
-      <p className="hero-lead">
-        Every payment carries its proof: the signed measurement, the price applied, the payer&apos;s approval and the Stellar settlement,
-        checkable by anyone.
-      </p>
-      <aside className="use-case" aria-label="Demo use case">
-        <p className="use-case-tag">Demo use case · EV charging</p>
-        <p>
-          We show it with an electric vehicle charging, because everyone understands a charger and a kilowatt-hour: the charger signs every reading,
-          the fleet pays the station step by step with off-chain Stellar vouchers, and one Stellar transaction settles the total. The same flow fits
-          any service a machine can measure.
+      <div className="hero-text">
+        <p className="kicker">{KICKER}</p>
+        <h1 id="overview-title" tabIndex={-1}>
+          {POSITIONING.slice(0, -1)}
+          <span className="dot-end">.</span>
+        </h1>
+        <p className="hero-lead">
+          Every payment carries its proof: the signed measurement, the price applied, the payer&apos;s approval and the Stellar settlement,
+          checkable by anyone.
         </p>
-        <ul className="use-case-list" aria-label="Metered services the same flow fits">
-          {SERVICES.map((service) => (
-            <li key={service} className={service === 'Energy' ? 'use-case-shown' : undefined}>
-              {service}
-              {service === 'Energy' ? <span className="muted"> · shown here</span> : null}
-            </li>
+        <p className="hero-actions">
+          {run.status === 'MISSING' ? (
+            <a className="button button-primary" href="#scenarios">
+              See the scenarios <span aria-hidden="true">→</span>
+            </a>
+          ) : (
+            <>
+              <a className="button button-primary" href="#flow">
+                Watch the replay <span aria-hidden="true">→</span>
+              </a>
+              <a className="button" href="#verify">
+                See the auditor <span aria-hidden="true">↘</span>
+              </a>
+            </>
+          )}
+        </p>
+        {run.status === 'MISSING' ? (
+          <div className="banner banner-bad" role="status">
+            <StatusBadge status="NOT_AVAILABLE" label="No real Testnet run" />
+            <p>
+              This bundle holds no captured Stellar Testnet run ({run.reason}). The scenarios below still run real code against a simulated ledger; no
+              Testnet payment is shown.
+            </p>
+          </div>
+        ) : null}
+        <p className="demo-result">
+          <span>Demo self-check</span>
+          <StatusBadge status={bundle.result.status} />
+          <span className="muted">{bundle.result.detail}</span>
+        </p>
+      </div>
+
+      <figure className="proof-panel" aria-label="What every payment carries">
+        <p className="proof-head">
+          <span className="proof-dot" aria-hidden="true" />
+          UsagePay / payment proof
+        </p>
+        <p className="proof-title">One payment, its evidence attached</p>
+        <dl className="proof-rows">
+          {PROOF.map(([what, how]) => (
+            <div key={what}>
+              <dt>{what}</dt>
+              <dd>{how}</dd>
+            </div>
           ))}
-        </ul>
-      </aside>
-
-      {run.status === 'MISSING' ? (
-        <div className="banner banner-bad" role="status">
-          <StatusBadge status="NOT_AVAILABLE" label="No real Testnet run" />
-          <p>
-            This bundle holds no captured Stellar Testnet run ({run.reason}). The scenarios below still run real code against a simulated ledger; no
-            Testnet payment is shown.
-          </p>
-        </div>
-      ) : null}
-
-      <p className="demo-result">
-        <span>Demo self-check</span>
-        <StatusBadge status={bundle.result.status} />
-        <span className="muted">{bundle.result.detail}</span>
-      </p>
+        </dl>
+        <figcaption className="proof-foot">
+          Off-chain vouchers <span aria-hidden="true">→</span> one Stellar settlement
+        </figcaption>
+      </figure>
     </section>
   );
 }
@@ -136,8 +165,7 @@ export function Gap() {
           </li>
         </ul>
         <p className="muted small">
-          In this demo the meter is simulated: OCPP-shaped readings signed with a test key, not certified and not OCPP or OCMF conformant. Meters
-          that sign only the start and end of a session need provisional amounts reconciled at the end; that is on the roadmap.
+          In this demo the meter is simulated: OCPP-shaped readings signed with a test key, not certified and not OCPP or OCMF conformant.
         </p>
       </div>
     </section>
@@ -152,11 +180,13 @@ const SIDE: Record<string, { readonly layer: 'OFF_CHAIN' | 'ON_CHAIN' | 'BOTH'; 
   auditor: { layer: 'BOTH', note: 'Reads both, holds no keys' },
 };
 
-/** Section 2: the five actors, from `bundle.actors`. */
+/** Section 2: the five actors, from `bundle.actors`, then the demo use case that names them (EV charger, fleet, station). */
 export function Actors({ bundle }: { bundle: DemoBundle }) {
   return (
     <section id="actors" className="section" aria-labelledby="actors-title">
-      <SectionHeader id="actors" eyebrow="2 · Who is involved" title="Five parties, each with one job" />
+      <SectionHeader id="actors" eyebrow="2 · Who is involved" title="Five parties, each with one job">
+        Each party is named by its role first and by its part in the demo second.
+      </SectionHeader>
       <ul className="actors">
         {Object.entries(bundle.actors).map(([id, actor]) => {
           const side = SIDE[id];
@@ -181,6 +211,24 @@ export function Actors({ bundle }: { bundle: DemoBundle }) {
           );
         })}
       </ul>
+      <aside className="use-case" aria-label="Demo use case">
+        <div>
+          <p className="use-case-tag">Demo use case · EV charging</p>
+          <p>
+            We show it with an electric vehicle charging, because everyone understands a charger and a kilowatt-hour: the charger signs every reading,
+            the fleet pays the station step by step with off-chain Stellar vouchers, and one Stellar transaction settles the total. The same flow fits
+            any service a machine can measure.
+          </p>
+        </div>
+        <ul className="use-case-list" aria-label="Metered services the same flow fits">
+          {SERVICES.map((service) => (
+            <li key={service} className={service === 'Energy' ? 'use-case-shown' : undefined}>
+              {service}
+              {service === 'Energy' ? <span className="muted"> · shown here</span> : null}
+            </li>
+          ))}
+        </ul>
+      </aside>
     </section>
   );
 }
