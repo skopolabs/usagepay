@@ -1,0 +1,25 @@
+{
+  "name": "@usagepay/verification",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SPEC 03 independent verifier: recomputes meter, tariff, evidence, native MPP commitment and payer ack proofs from E0/E1 and checks the Stellar Testnet close through read-only RPC.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "usagepay-verify": "./dist/bin.js"
+  },
+  "files": ["dist"],
+  "dependencies": {
+    "@stellar/stellar-sdk": "15.1.0",
+    "@usagepay/contracts": "workspace:*",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@usagepay/fixtures": "workspace:*"
+  }
+}
