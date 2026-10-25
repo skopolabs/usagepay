@@ -1,0 +1,71 @@
+{
+  "overall": {
+    "status": "PASS",
+    "reasonCode": "ALL_CHECKS_PASSED",
+    "details": "V01-V08 passed for the one-close Testnet scope"
+  },
+  "checks": {
+    "V01_SCHEMA": {
+      "status": "PASS",
+      "reasonCode": "CHECK_PASSED",
+      "details": "E0 (3 increments, sequences 1..3, unique readings and ack nonces) and E1 match the SPEC 00 v1 schemas"
+    },
+    "V02_METER": {
+      "status": "PASS",
+      "reasonCode": "CHECK_PASSED",
+      "details": "3 readings signed by pinned key(s) upay-g2-meter over the exact source bytes; signed counter 10000 -> 10750 Wh, contiguous; certification: simulated (signature validity is not hardware certification)"
+    },
+    "V03_TARIFF": {
+      "status": "PASS",
+      "reasonCode": "CHECK_PASSED",
+      "details": "pinned tariff demo-tariff-usdc-0.40-kwh-v1 (2a42…275b), 4000000 base units/kWh, floor_cumulative; replayed 1000000 -> 2000000 -> 3000000 within cap 5000000"
+    },
+    "V04_EVIDENCE": {
+      "status": "PASS",
+      "reasonCode": "CHECK_PASSED",
+      "details": "session ev-session-001: 3 reading and evidence digests recompute; cumulatives strictly increase"
+    },
+    "V05_MPP": {
+      "status": "PASS",
+      "reasonCode": "CHECK_PASSED",
+      "details": "3 native commitments 1000000 -> 2000000 -> 3000000 equal the pinned encoding for CAKI…YIMJ and verify under GCFV…GD35"
+    },
+    "V06_PAYER_ACK": {
+      "status": "PASS",
+      "reasonCode": "CHECK_PASSED",
+      "details": "3 payer acks verify under GCFV…GD35 and bind evidence, commitment, amount, session, channel and network"
+    },
+    "V07_E0_E1_LINK": {
+      "status": "PASS",
+      "reasonCode": "CHECK_PASSED",
+      "details": "E1.e0Digest = SHA256(JCS(E0)) = 206f386806bf6dc2f6390dc77a564cf1a0187e99f2b88efe2b5d7e1a9a723259; network, channel and asset match the pins"
+    },
+    "V08_CHAIN": {
+      "status": "PASS",
+      "reasonCode": "CHECK_PASSED",
+      "details": "close tx 8599d0906fc6eb182c3b61f602e77343ef347f01b7d822a4113db6feca6856cc SUCCESS in ledger 5381090 with the highest SDK-signed commitment 3000000; withdraw event pays 3000000 to GAN7…MANG; channel key/parties/token pinned, withdrawn() = 3000000, balance() = 0"
+    }
+  },
+  "subject": {
+    "sessionId": "ev-session-001",
+    "e0Digest": "206f386806bf6dc2f6390dc77a564cf1a0187e99f2b88efe2b5d7e1a9a723259",
+    "closeTxHash": "8599d0906fc6eb182c3b61f602e77343ef347f01b7d822a4113db6feca6856cc",
+    "increments": [
+      {
+        "readingId": "r-001",
+        "cumulativeWh": "250",
+        "cumulativeChargeBaseUnits": "1000000"
+      },
+      {
+        "readingId": "r-002",
+        "cumulativeWh": "500",
+        "cumulativeChargeBaseUnits": "2000000"
+      },
+      {
+        "readingId": "r-003",
+        "cumulativeWh": "750",
+        "cumulativeChargeBaseUnits": "3000000"
+      }
+    ]
+  }
+}

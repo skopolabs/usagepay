@@ -1,0 +1,29 @@
+UsagePay Verify — Stellar Testnet
+Session: ev-session-001
+E0 digest (recomputed): 206f386806bf6dc2f6390dc77a564cf1a0187e99f2b88efe2b5d7e1a9a723259
+Close tx (from E1): 8599d0906fc6eb182c3b61f602e77343ef347f01b7d822a4113db6feca6856cc
+  r-001: cumulative 250 Wh -> 1000000 base units
+  r-002: cumulative 500 Wh -> 2000000 base units
+  r-003: cumulative 750 Wh -> 3000000 base units
+
+V01_SCHEMA      PASS          CHECK_PASSED
+                E0 (3 increments, sequences 1..3, unique readings and ack nonces) and E1 match the SPEC 00 v1 schemas
+V02_METER       PASS          CHECK_PASSED
+                3 readings signed by pinned key(s) upay-g2-meter over the exact source bytes; signed counter 10000 -> 10750 Wh, contiguous; certification: simulated (signature validity is not hardware certification)
+V03_TARIFF      PASS          CHECK_PASSED
+                pinned tariff demo-tariff-usdc-0.40-kwh-v1 (2a42…275b), 4000000 base units/kWh, floor_cumulative; replayed 1000000 -> 2000000 -> 3000000 within cap 5000000
+V04_EVIDENCE    PASS          CHECK_PASSED
+                session ev-session-001: 3 reading and evidence digests recompute; cumulatives strictly increase
+V05_MPP         PASS          CHECK_PASSED
+                3 native commitments 1000000 -> 2000000 -> 3000000 equal the pinned encoding for CAKI…YIMJ and verify under GCFV…GD35
+V06_PAYER_ACK   PASS          CHECK_PASSED
+                3 payer acks verify under GCFV…GD35 and bind evidence, commitment, amount, session, channel and network
+V07_E0_E1_LINK  PASS          CHECK_PASSED
+                E1.e0Digest = SHA256(JCS(E0)) = 206f386806bf6dc2f6390dc77a564cf1a0187e99f2b88efe2b5d7e1a9a723259; network, channel and asset match the pins
+V08_CHAIN       PASS          CHECK_PASSED
+                close tx 8599d0906fc6eb182c3b61f602e77343ef347f01b7d822a4113db6feca6856cc SUCCESS in ledger 5381090 with the highest SDK-signed commitment 3000000; withdraw event pays 3000000 to GAN7…MANG; channel key/parties/token pinned, withdrawn() = 3000000, balance() = 0
+
+OVERALL: PASS (ALL_CHECKS_PASSED: V01-V08 passed for the one-close Testnet scope)
+PHYSICAL METER CERTIFICATION: NOT PROVIDED (simulated meter key)
+METER VALIDITY ENFORCED ON-CHAIN: NOT PROVIDED (the channel contract checks the financial amount only)
+CONFIDENTIAL PAYMENT AMOUNTS: NOT PROVIDED (public Stellar USDC channel)

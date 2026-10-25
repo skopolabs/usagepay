@@ -1,0 +1,182 @@
+{
+  "schema": "usagepay.e0.v1",
+  "sessionId": "ev-session-001",
+  "tariff": {
+    "schema": "usagepay.tariff.v1",
+    "tariffId": "demo-tariff-usdc-0.40-kwh-v1",
+    "assetSac": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
+    "assetDecimals": 7,
+    "currencyCode": "USDC",
+    "unit": "kWh",
+    "pricePerKwhBaseUnits": "4000000",
+    "rounding": "floor_cumulative",
+    "validFrom": "2026-10-25T00:00:00.000Z",
+    "validUntil": "2026-10-27T00:00:00.000Z",
+    "versionDigest": "2a4271699a605d0160d2027a7d41e819fc3ebb4d6fd0a834b790f4a6d802275b"
+  },
+  "increments": [
+    {
+      "schema": "usagepay.increment.v1",
+      "sequence": 1,
+      "reading": {
+        "schema": "usagepay.reading.v1",
+        "readingId": "r-001",
+        "sessionId": "ev-session-001",
+        "machineId": "sim-charger-01",
+        "domain": "ev.ocpp2x",
+        "observedAt": "2026-10-25T09:01:00.000Z",
+        "intervalStart": "2026-10-25T09:00:00.000Z",
+        "intervalEnd": "2026-10-25T09:01:00.000Z",
+        "deltaWh": "250",
+        "rawPayloadB64": "eyJkb21haW4iOiJldi5vY3BwMngiLCJpbnRlcnZhbEVuZCI6IjIwMjYtMTAtMjVUMDk6MDE6MDAuMDAwWiIsImludGVydmFsU3RhcnQiOiIyMDI2LTEwLTI1VDA5OjAwOjAwLjAwMFoiLCJtYWNoaW5lSWQiOiJzaW0tY2hhcmdlci0wMSIsIm1ldGVyRW5kV2giOiIxMDI1MCIsIm1ldGVyU3RhcnRXaCI6IjEwMDAwIiwib2JzZXJ2ZWRBdCI6IjIwMjYtMTAtMjVUMDk6MDE6MDAuMDAwWiIsInJlYWRpbmdJZCI6InItMDAxIiwic2NoZW1hIjoidXNhZ2VwYXkuc2ltLW1ldGVyLXBheWxvYWQudjEiLCJzZXNzaW9uSWQiOiJldi1zZXNzaW9uLTAwMSIsInVuaXQiOiJXaCJ9",
+        "signatureB64": "agHDdx2uAoHVraFq/N7PvUtQmQ2OlwGvPjUN9QSuYWKJvELmltkRHcIQW/Ucr9p5M9QB+0w7P/BoNG/SRLMZCw==",
+        "signerKeyId": "upay-g2-meter",
+        "assurance": "L2",
+        "coverage": "intermediate_signed",
+        "certification": "simulated"
+      },
+      "charge": {
+        "schema": "usagepay.charge.v1",
+        "readingId": "r-001",
+        "sessionId": "ev-session-001",
+        "readingDigest": "3e0290b5b3e2e8bbb89aa9d123c3922ed93943047731d1d86dc9a00dd34a6e04",
+        "tariffVersionDigest": "2a4271699a605d0160d2027a7d41e819fc3ebb4d6fd0a834b790f4a6d802275b",
+        "cumulativeWh": "250",
+        "cumulativeChargeBaseUnits": "1000000",
+        "deltaChargeBaseUnits": "1000000",
+        "evidenceDigest": "b105b89117387110a17678b2188549dede09afb19f402af301dae5ec771ec34a"
+      },
+      "commitment": {
+        "schema": "usagepay.native-commitment.v1",
+        "channelId": "CAKIMXHFHQ727ISN4DROHH4EOMQI2IVISCHNMAMO3ZB5WBXHXNL4YIMJ",
+        "network": "stellar:testnet",
+        "cumulativeAmountBaseUnits": "1000000",
+        "signedMessageB64": "AAAAEQAAAAEAAAAEAAAADwAAAAZhbW91bnQAAAAAAAoAAAAAAAAAAAAAAAAAD0JAAAAADwAAAAdjaGFubmVsAAAAABIAAAABFIZc5Tw/r6JN4OLjn4RzII0iqJCO1gGO3kPbBue7V8wAAAAPAAAABmRvbWFpbgAAAAAADwAAAAhjaGFuY21tdAAAAA8AAAAHbmV0d29yawAAAAANAAAAIM7gMC1ZhE0yvcqRXIID3USzP7t+3BkFHqN6vt8o7NRy",
+        "signatureB64": "XgXMgB0Ekoq4hjU7HAhVxJD3c3ZKctseFdfs6IeLGcqfWxPog/iV54RUxe/I3koUzWXK/oXEg6exDc2wnUNJAA==",
+        "commitmentKey": "GCFV674WIJDNW6ACNONT3MTPRR7ORJUCICV2VOQOZJIUE4YEQBNLGD35",
+        "commitmentDigest": "f7020aab59e4b05334d78680b8566eaa2f87f76a5d7ed69c7dd2e664981eb883"
+      },
+      "payerAck": {
+        "schema": "usagepay.payer-ack.v1",
+        "sessionId": "ev-session-001",
+        "network": "stellar:testnet",
+        "channelId": "CAKIMXHFHQ727ISN4DROHH4EOMQI2IVISCHNMAMO3ZB5WBXHXNL4YIMJ",
+        "evidenceDigest": "b105b89117387110a17678b2188549dede09afb19f402af301dae5ec771ec34a",
+        "commitmentDigest": "f7020aab59e4b05334d78680b8566eaa2f87f76a5d7ed69c7dd2e664981eb883",
+        "approvedCumulativeBaseUnits": "1000000",
+        "nonce": "953256e3dc446fc717235b4dd1f8de17",
+        "payerKey": "GCFV674WIJDNW6ACNONT3MTPRR7ORJUCICV2VOQOZJIUE4YEQBNLGD35",
+        "signatureB64": "2A6YSEwHC0cIR5nfTApc+pNL4swkkIR8Bl5T2AdBNh+RuZLJwrSFVQeQQ2exYY7N8hqzjERjkoOyYUKNvTZNDA=="
+      }
+    },
+    {
+      "schema": "usagepay.increment.v1",
+      "sequence": 2,
+      "reading": {
+        "schema": "usagepay.reading.v1",
+        "readingId": "r-002",
+        "sessionId": "ev-session-001",
+        "machineId": "sim-charger-01",
+        "domain": "ev.ocpp2x",
+        "observedAt": "2026-10-25T09:02:00.000Z",
+        "intervalStart": "2026-10-25T09:01:00.000Z",
+        "intervalEnd": "2026-10-25T09:02:00.000Z",
+        "deltaWh": "250",
+        "rawPayloadB64": "eyJkb21haW4iOiJldi5vY3BwMngiLCJpbnRlcnZhbEVuZCI6IjIwMjYtMTAtMjVUMDk6MDI6MDAuMDAwWiIsImludGVydmFsU3RhcnQiOiIyMDI2LTEwLTI1VDA5OjAxOjAwLjAwMFoiLCJtYWNoaW5lSWQiOiJzaW0tY2hhcmdlci0wMSIsIm1ldGVyRW5kV2giOiIxMDUwMCIsIm1ldGVyU3RhcnRXaCI6IjEwMjUwIiwib2JzZXJ2ZWRBdCI6IjIwMjYtMTAtMjVUMDk6MDI6MDAuMDAwWiIsInJlYWRpbmdJZCI6InItMDAyIiwic2NoZW1hIjoidXNhZ2VwYXkuc2ltLW1ldGVyLXBheWxvYWQudjEiLCJzZXNzaW9uSWQiOiJldi1zZXNzaW9uLTAwMSIsInVuaXQiOiJXaCJ9",
+        "signatureB64": "uvdq3IezFq1HYR6Vf2SKc+qoA2tqT0rByO4BcHB4K3Ht8uR6oNiiIe4RlCoYkgAqa67SxGlCKOKuIv6fodONCg==",
+        "signerKeyId": "upay-g2-meter",
+        "assurance": "L2",
+        "coverage": "intermediate_signed",
+        "certification": "simulated"
+      },
+      "charge": {
+        "schema": "usagepay.charge.v1",
+        "readingId": "r-002",
+        "sessionId": "ev-session-001",
+        "readingDigest": "4c3ce354ad818f143ca1b332b611f1654a7863e5d2943924aeef689072efe83f",
+        "tariffVersionDigest": "2a4271699a605d0160d2027a7d41e819fc3ebb4d6fd0a834b790f4a6d802275b",
+        "cumulativeWh": "500",
+        "cumulativeChargeBaseUnits": "2000000",
+        "deltaChargeBaseUnits": "1000000",
+        "evidenceDigest": "27d9e7fd6ce8199a19020298e2985b12ccfafc0ad5b8d3925e567fcae415d110"
+      },
+      "commitment": {
+        "schema": "usagepay.native-commitment.v1",
+        "channelId": "CAKIMXHFHQ727ISN4DROHH4EOMQI2IVISCHNMAMO3ZB5WBXHXNL4YIMJ",
+        "network": "stellar:testnet",
+        "cumulativeAmountBaseUnits": "2000000",
+        "signedMessageB64": "AAAAEQAAAAEAAAAEAAAADwAAAAZhbW91bnQAAAAAAAoAAAAAAAAAAAAAAAAAHoSAAAAADwAAAAdjaGFubmVsAAAAABIAAAABFIZc5Tw/r6JN4OLjn4RzII0iqJCO1gGO3kPbBue7V8wAAAAPAAAABmRvbWFpbgAAAAAADwAAAAhjaGFuY21tdAAAAA8AAAAHbmV0d29yawAAAAANAAAAIM7gMC1ZhE0yvcqRXIID3USzP7t+3BkFHqN6vt8o7NRy",
+        "signatureB64": "QU/qUYezxqcx2k6hX42DLLlFco8n53LPQKZvEl9SLTXDLFoAR1+8FQ8VMgZciCZJ0vvMZlSSXICt+fG6hjbLDg==",
+        "commitmentKey": "GCFV674WIJDNW6ACNONT3MTPRR7ORJUCICV2VOQOZJIUE4YEQBNLGD35",
+        "commitmentDigest": "4b1940fe53507656d6495db61f1f8e69f3819282681f35ef50635f4e1fc6b934"
+      },
+      "payerAck": {
+        "schema": "usagepay.payer-ack.v1",
+        "sessionId": "ev-session-001",
+        "network": "stellar:testnet",
+        "channelId": "CAKIMXHFHQ727ISN4DROHH4EOMQI2IVISCHNMAMO3ZB5WBXHXNL4YIMJ",
+        "evidenceDigest": "27d9e7fd6ce8199a19020298e2985b12ccfafc0ad5b8d3925e567fcae415d110",
+        "commitmentDigest": "4b1940fe53507656d6495db61f1f8e69f3819282681f35ef50635f4e1fc6b934",
+        "approvedCumulativeBaseUnits": "2000000",
+        "nonce": "92166eb417a32756c214462a093da2f5",
+        "payerKey": "GCFV674WIJDNW6ACNONT3MTPRR7ORJUCICV2VOQOZJIUE4YEQBNLGD35",
+        "signatureB64": "jPqC0XsfgHeJKjWMry7RuSh2pINlzgjUIpCvRq9Z9x3FzujxvLYPZPeG+sLXhcD63HFLmsD03JNaHP4CdSaIAA=="
+      }
+    },
+    {
+      "schema": "usagepay.increment.v1",
+      "sequence": 3,
+      "reading": {
+        "schema": "usagepay.reading.v1",
+        "readingId": "r-003",
+        "sessionId": "ev-session-001",
+        "machineId": "sim-charger-01",
+        "domain": "ev.ocpp2x",
+        "observedAt": "2026-10-25T09:03:00.000Z",
+        "intervalStart": "2026-10-25T09:02:00.000Z",
+        "intervalEnd": "2026-10-25T09:03:00.000Z",
+        "deltaWh": "250",
+        "rawPayloadB64": "eyJkb21haW4iOiJldi5vY3BwMngiLCJpbnRlcnZhbEVuZCI6IjIwMjYtMTAtMjVUMDk6MDM6MDAuMDAwWiIsImludGVydmFsU3RhcnQiOiIyMDI2LTEwLTI1VDA5OjAyOjAwLjAwMFoiLCJtYWNoaW5lSWQiOiJzaW0tY2hhcmdlci0wMSIsIm1ldGVyRW5kV2giOiIxMDc1MCIsIm1ldGVyU3RhcnRXaCI6IjEwNTAwIiwib2JzZXJ2ZWRBdCI6IjIwMjYtMTAtMjVUMDk6MDM6MDAuMDAwWiIsInJlYWRpbmdJZCI6InItMDAzIiwic2NoZW1hIjoidXNhZ2VwYXkuc2ltLW1ldGVyLXBheWxvYWQudjEiLCJzZXNzaW9uSWQiOiJldi1zZXNzaW9uLTAwMSIsInVuaXQiOiJXaCJ9",
+        "signatureB64": "d6WplQxG5YGlNQyGLmNNfsLi7I9SRzIekEH8HAjPQEVZcxVXKPQsq2uKtvlw4h5VQ89sMXn/bAdiAmVHVpxZCQ==",
+        "signerKeyId": "upay-g2-meter",
+        "assurance": "L2",
+        "coverage": "terminal_signed",
+        "certification": "simulated"
+      },
+      "charge": {
+        "schema": "usagepay.charge.v1",
+        "readingId": "r-003",
+        "sessionId": "ev-session-001",
+        "readingDigest": "d322708a4387f8c699f02e3946478613253d1eaaabcdd5ccc08ff84c715c592b",
+        "tariffVersionDigest": "2a4271699a605d0160d2027a7d41e819fc3ebb4d6fd0a834b790f4a6d802275b",
+        "cumulativeWh": "750",
+        "cumulativeChargeBaseUnits": "3000000",
+        "deltaChargeBaseUnits": "1000000",
+        "evidenceDigest": "7fe32768f8f09059d9f19f4dfe9007ea3c713d5d1a30973f684ae8e84c3872ef"
+      },
+      "commitment": {
+        "schema": "usagepay.native-commitment.v1",
+        "channelId": "CAKIMXHFHQ727ISN4DROHH4EOMQI2IVISCHNMAMO3ZB5WBXHXNL4YIMJ",
+        "network": "stellar:testnet",
+        "cumulativeAmountBaseUnits": "3000000",
+        "signedMessageB64": "AAAAEQAAAAEAAAAEAAAADwAAAAZhbW91bnQAAAAAAAoAAAAAAAAAAAAAAAAALcbAAAAADwAAAAdjaGFubmVsAAAAABIAAAABFIZc5Tw/r6JN4OLjn4RzII0iqJCO1gGO3kPbBue7V8wAAAAPAAAABmRvbWFpbgAAAAAADwAAAAhjaGFuY21tdAAAAA8AAAAHbmV0d29yawAAAAANAAAAIM7gMC1ZhE0yvcqRXIID3USzP7t+3BkFHqN6vt8o7NRy",
+        "signatureB64": "W3DOEYkRSlVHYQcfDi1yjBLn5sp7kGoLCa0lDdm+x8tFndKtF3ULfm8wNtX355Tj3Kw7BwP3bSg4Ri7NLxbdCw==",
+        "commitmentKey": "GCFV674WIJDNW6ACNONT3MTPRR7ORJUCICV2VOQOZJIUE4YEQBNLGD35",
+        "commitmentDigest": "0b656b231d7bf67a02497b5a015d309200002b3c57bf5ead9623a0092495651e"
+      },
+      "payerAck": {
+        "schema": "usagepay.payer-ack.v1",
+        "sessionId": "ev-session-001",
+        "network": "stellar:testnet",
+        "channelId": "CAKIMXHFHQ727ISN4DROHH4EOMQI2IVISCHNMAMO3ZB5WBXHXNL4YIMJ",
+        "evidenceDigest": "7fe32768f8f09059d9f19f4dfe9007ea3c713d5d1a30973f684ae8e84c3872ef",
+        "commitmentDigest": "0b656b231d7bf67a02497b5a015d309200002b3c57bf5ead9623a0092495651e",
+        "approvedCumulativeBaseUnits": "3000000",
+        "nonce": "0bbe3ca72bb12e77154fe00376ad8916",
+        "payerKey": "GCFV674WIJDNW6ACNONT3MTPRR7ORJUCICV2VOQOZJIUE4YEQBNLGD35",
+        "signatureB64": "1xLV4asqALtZkSePOK3WYYby+zx3MvQ2P44AClttAGEfjHLB6pbKzXsgD1srA0B+PfO9WoP/PHE+L9HdXuceDg=="
+      }
+    }
+  ],
+  "finalizedAt": "2026-10-25T11:50:29.616Z"
+}

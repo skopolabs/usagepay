@@ -1,0 +1,84 @@
+{
+  "schema": "upay.g2-settlement-run.v1",
+  "runId": "g2-2026-10-25T11-50-24-635Z",
+  "result": "PASS",
+  "network": "stellar:testnet",
+  "evidenceClass": "TESTNET_LIVE (meter data: SIMULATED, runtime meter key)",
+  "channelId": "CAKIMXHFHQ727ISN4DROHH4EOMQI2IVISCHNMAMO3ZB5WBXHXNL4YIMJ",
+  "parties": {
+    "funder": "GB6XZYHIGRQPG7L7CHZYFM3HFHKSJNBDXQZ5W5ZCDG5QEM32EEBAPOJC",
+    "recipient": "GAN7YUBHSRIZ4DKNZPFHGPWMSZPNAK2RS6A6CXVWZPJJ7GGYZVTNMANG",
+    "commitmentKey": "GCFV674WIJDNW6ACNONT3MTPRR7ORJUCICV2VOQOZJIUE4YEQBNLGD35",
+    "assetSac": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
+    "meterKey": "GAGTBW5LSKBR7ITIRN4OAS7DGYAAE6Y6EFMLWMARNFQXVU6LHO36PAI3"
+  },
+  "e0Digest": "206f386806bf6dc2f6390dc77a564cf1a0187e99f2b88efe2b5d7e1a9a723259",
+  "closeTxHash": "8599d0906fc6eb182c3b61f602e77343ef347f01b7d822a4113db6feca6856cc",
+  "balances": {
+    "before": {
+      "funder": "17.2000000",
+      "recipient": "1.8000000"
+    },
+    "after": {
+      "funder": "17.9000000",
+      "recipient": "2.1000000"
+    }
+  },
+  "checks": [
+    {
+      "id": "S1-CHANNEL-PINNED",
+      "status": "PASS",
+      "detail": "token CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA, to GAN7YUBHSRIZ4DKNZPFHGPWMSZPNAK2RS6A6CXVWZPJJ7GGYZVTNMANG, from GB6XZYHIGRQPG7L7CHZYFM3HFHKSJNBDXQZ5W5ZCDG5QEM32EEBAPOJC, balance 10000000, closeEffectiveAtLedger null"
+    },
+    {
+      "id": "S1-INCREMENT-r-001",
+      "status": "PASS",
+      "detail": "cumulative 1000000"
+    },
+    {
+      "id": "S1-INCREMENT-r-002",
+      "status": "PASS",
+      "detail": "cumulative 2000000"
+    },
+    {
+      "id": "S1-INCREMENT-r-003",
+      "status": "PASS",
+      "detail": "cumulative 3000000"
+    },
+    {
+      "id": "S1-SDK-STORE",
+      "status": "PASS",
+      "detail": "payee SDK store cumulative 3000000"
+    },
+    {
+      "id": "S1-SETTLEMENT",
+      "status": "PASS",
+      "detail": "close 8599d0906fc6eb182c3b61f602e77343ef347f01b7d822a4113db6feca6856cc SUCCESS, state SETTLED"
+    },
+    {
+      "id": "S1-E1-LINK",
+      "status": "PASS",
+      "detail": "E1 references the frozen E0, channel, network and asset"
+    },
+    {
+      "id": "S1-E1-SETTLED",
+      "status": "PASS",
+      "detail": "withdrawn() observed 3000000"
+    },
+    {
+      "id": "S1-BALANCE-RECIPIENT",
+      "status": "PASS",
+      "detail": "recipient USDC 1.8000000 -> 2.1000000"
+    },
+    {
+      "id": "S1-BALANCE-FUNDER-REFUND",
+      "status": "PASS",
+      "detail": "funder USDC 17.2000000 -> 17.9000000"
+    },
+    {
+      "id": "S1-NEGATIVE-MISSING-TX",
+      "status": "PASS",
+      "detail": "random hash -> NOT_FOUND"
+    }
+  ]
+}
