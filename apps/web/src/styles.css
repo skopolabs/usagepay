@@ -171,8 +171,14 @@ button {
   text-decoration: none;
 }
 
-.brand-mark {
-  color: #ca8a04;
+.brand-sup {
+  margin-left: 3px;
+  font-size: 0.6em;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  vertical-align: super;
+  line-height: 0;
 }
 
 .badge-testnet,
@@ -488,10 +494,20 @@ button {
   padding-top: 48px;
 }
 
+.kicker {
+  margin: 0;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+}
+
+/* At most two lines on a 1366 px or wider screen: the page is 1200 px wide and the sentence is ~90 characters. */
 .hero h1 {
-  font-size: clamp(2.1rem, 4vw, 3.4rem);
+  font-size: clamp(1.7rem, 2.75vw, 2.45rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
   margin: 10px 0 16px;
-  max-width: 900px;
 }
 
 .hero-lead {
@@ -499,6 +515,59 @@ button {
   color: var(--ink-2);
   max-width: 900px;
   margin-bottom: 24px;
+}
+
+.use-case {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  margin: 0 0 24px;
+  box-shadow: var(--shadow);
+}
+
+.use-case p {
+  margin: 0 0 10px;
+  color: var(--ink-2);
+}
+
+.use-case-tag {
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.use-case-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.use-case-list li {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: var(--surface-2);
+}
+
+/* The demo's service, shown as the selected chip. */
+.use-case-list .use-case-shown {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgb(29 78 216 / 30%);
+}
+
+.use-case-list .use-case-shown .muted {
+  color: #dbe5ff;
 }
 
 .figures {
@@ -588,12 +657,114 @@ button {
   color: var(--bad);
 }
 
-.gap-answer {
-  margin-top: 24px;
-  font-size: 1.1rem;
-  max-width: 920px;
+
+.mpp-gap {
+  margin-top: 28px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  box-shadow: var(--shadow);
+}
+
+.mpp-gap h3 {
+  margin: 0 0 14px;
+  font-size: 1.3rem;
+}
+
+.mpp-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.mpp-col {
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+}
+
+.mpp-col ul {
+  margin: 0;
+  padding-left: 20px;
+  display: grid;
+  gap: 6px;
+}
+
+.mpp-col-title {
+  margin: 0 0 8px;
+  font-weight: 800;
+}
+
+.mpp-cannot {
+  border-color: var(--bad-line);
+}
+
+.mpp-cannot .mpp-col-title {
+  color: var(--bad);
+}
+
+.mpp-adds-box {
+  margin-top: 14px;
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+}
+
+.mpp-adds-title {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+}
+
+.mpp-adds {
+  margin: 0;
+  display: grid;
+  gap: 6px;
   border-left: 4px solid var(--accent);
-  padding-left: 16px;
+  padding-block: 2px;
+  padding-inline-start: 36px;
+}
+
+.fits {
+  margin-top: 18px;
+  padding: 18px 22px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--accent);
+  box-shadow: var(--shadow);
+}
+
+.fits h3 {
+  margin: 0 0 12px;
+  font-size: 1.2rem;
+}
+
+.fits-list {
+  margin: 0 0 10px;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.fits-list li {
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+}
+
+.fits-list strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.fits p {
+  margin: 0;
 }
 
 /* ---------- Actors ---------- */
@@ -611,16 +782,31 @@ button {
   border: 1px solid var(--line);
   border-top: 4px solid var(--lane-auditor);
   border-radius: var(--radius);
-  padding: 18px;
+  padding: 16px 14px;
+  min-width: 0;
   display: grid;
   align-content: start;
   gap: 8px;
   box-shadow: var(--shadow);
 }
 
+.actor-card h3 {
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
 .actor-card p {
-  font-size: 0.92rem;
+  font-size: 0.86rem;
   color: var(--ink-2);
+}
+
+/* Five cards share 1200 px: compact layer badges, so they stay inside their card. */
+.actor-card .layer {
+  font-size: 0.68rem;
+}
+
+.actor-side .muted {
+  font-size: 0.82rem;
 }
 
 .actor-card-meter { border-top-color: var(--lane-meter); }
@@ -1358,23 +1544,45 @@ tr.selected {
   margin-top: 10px;
 }
 
+.explorer-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 18px 0 8px;
+  font-size: 0.9rem;
+  color: var(--ink-2);
+}
+
 .explorer-links {
   list-style: none;
   padding: 0;
-  margin: 18px 0 0;
+  margin: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 8px;
 }
 
-.explorer-links li {
+.explorer-link {
   display: flex;
-  gap: 8px;
+  justify-content: space-between;
   align-items: center;
+  gap: 6px;
+  height: 100%;
   background: var(--surface);
-  border: 1px solid var(--line);
+  border: 1px solid var(--on-line);
   border-radius: 10px;
-  padding: 10px 12px;
+  padding: 9px 12px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--on);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.explorer-link:hover,
+.explorer-link:focus-visible {
+  background: var(--on-bg);
 }
 
 /* ---------- Verify ---------- */
@@ -1661,6 +1869,15 @@ tr.selected {
     grid-template-columns: 1fr;
   }
 
+  .mpp-columns,
+  .fits-list {
+    grid-template-columns: 1fr;
+  }
+
+  .explorer-links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .gap-link {
     text-align: center;
   }
@@ -1676,6 +1893,11 @@ tr.selected {
 }
 
 @media (max-width: 600px) {
+  /* The top bar wraps to three rows here; keep section titles clear of it when navigating. */
+  .section {
+    scroll-margin-top: 180px;
+  }
+
   body {
     font-size: 16px;
   }

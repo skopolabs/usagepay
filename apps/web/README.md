@@ -23,10 +23,10 @@ The output is **one self-contained file**, `apps/web/dist/index.html`:
 
 | # | Section (`src/presenter.ts`) | Source in the bundle |
 |---|---|---|
-| 0 | Overview: value proposition, `REPLAY` banner, captured verdict, headline figures | `realRun.recordedAt`, `verification`, `meter`, `settlement` |
-| 1 | The gap | static copy |
+| 0 | Overview: positioning (01.2 §0.1), demo use case, `REPLAY` banner, captured verdict, headline figures | `realRun.recordedAt`, `verification`, `meter`, `settlement` |
+| 1 | The gap, and why Stellar MPP alone is not enough | static copy |
 | 2 | Who is involved | `actors` |
-| 3 | Charging session: simulated charger display and signed readings | `realRun.meter`, `tariff`, `parties.meterKey` |
+| 3 | Metered usage (demo: EV charging): simulated charger display and signed readings | `realRun.meter`, `tariff`, `parties.meterKey` |
 | 4 | Approval and vouchers: swimlane replay, counters, E0 stamp | `realRun.story` |
 | 5 | One payment on Stellar: close transaction, money flow, balances | `realRun.ledger`, `settlement`, `links` |
 | 6 | Check it yourself: `stellar` CLI commands, observed output, explorer links | `realRun.cli`, `links` |

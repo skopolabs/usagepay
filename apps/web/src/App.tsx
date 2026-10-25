@@ -112,7 +112,7 @@ function DemoPage({ bundle }: { bundle: DemoBundle }) {
       <header className="topbar">
         <div className="topbar-inner">
           <a className="brand" href="#overview">
-            <span className="brand-mark" aria-hidden="true">⚡</span> UsagePay
+            UsagePay<sup className="brand-sup">on Stellar</sup>
           </a>
           <span className="badge-testnet">TESTNET ONLY</span>
           {run === undefined ? null : (

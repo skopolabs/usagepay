@@ -2,6 +2,7 @@ import { cleanup, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, inject, it, vi } from 'vitest';
 import { App } from '../src/App.tsx';
+import { KICKER, POSITIONING } from '../src/components/Overview.tsx';
 import { utc, type DemoBundle } from '../src/bundle.ts';
 import { SECTIONS } from '../src/presenter.ts';
 
@@ -297,5 +298,33 @@ describe('UI-AC09: no network request other than links the user opens', () => {
       expect((a).getAttribute('target')).toBe('_blank');
       expect((a).getAttribute('rel')).toBe('noopener noreferrer');
     }
+  });
+});
+
+describe('Positioning (SPEC 05 §10.4, 01.2 §0.1): the category comes first, EV charging is the demo use case', () => {
+  it.each([['live', live], ['missing', missing]] as const)('%s bundle', (_name, bundle) => {
+    show(bundle);
+    const overview = section('overview');
+    expect(text(screen.getByRole('heading', { level: 1 }))).toBe(POSITIONING);
+    expect(POSITIONING).toBe('UsagePay enables verifiable machine-to-machine payments for metered services on Stellar.');
+    // The kicker sits above the H1, and the EV use case is labelled as the demo, after both.
+    const kicker = overview.querySelector('.kicker');
+    expect(text(kicker)).toBe(KICKER);
+    expect(KICKER).toBe('Infrastructure for the machine economy.');
+    expect(kicker!.compareDocumentPosition(screen.getByRole('heading', { level: 1 })) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(text(screen.getByRole('complementary', { name: 'Demo use case' }))).toContain('Demo use case · EV charging');
+    expect(text(overview.querySelector('h1'))).not.toMatch(/kWh|kilowatt|charg/i);
+    // Why MPP alone is not enough, and the one-adapter limit, are always on the page.
+    expect(text(section('gap'))).toContain('Why Stellar MPP alone is not enough');
+    expect(text(section('gap'))).toContain('MPP cannot prove: for what?');
+    expect(text(section('limits'))).toContain('One adapter today: energy in Wh');
+    // It fits existing protocols and hardware, and says the demo meter is not conformant.
+    const fits = within(section('gap')).getByRole('heading', { name: 'Fits what is already deployed' }).parentElement;
+    expect(text(fits)).toContain('No new hardware.');
+    expect(text(fits)).toContain('No new payment protocol.');
+    expect(text(fits)).toContain('not certified and not OCPP or OCMF conformant');
+    // The brand reads "UsagePay on Stellar", never "by Stellar".
+    expect(text(document.querySelector('.topbar .brand'))).toBe('UsagePayon Stellar');
+    expect(document.querySelector('.topbar .brand sup')).not.toBeNull();
   });
 });

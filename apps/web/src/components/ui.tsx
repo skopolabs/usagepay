@@ -33,14 +33,15 @@ export function StatusBadge({ status, label, large = false }: { status: string; 
   );
 }
 
-export function LayerBadge({ layer }: { layer: string }) {
+/** `compact` drops the second half of the label for narrow cards; the full meaning stays in the title. */
+export function LayerBadge({ layer, compact = false }: { layer: string; compact?: boolean }) {
   return layer === 'ON_CHAIN' ? (
-    <span className="layer layer-on" data-layer="ON_CHAIN" title="Read from or written to the public Stellar Testnet ledger">
-      <StellarMark /> ON-CHAIN · Stellar
+    <span className="layer layer-on" data-layer="ON_CHAIN" title="ON-CHAIN · Stellar: read from or written to the public Stellar Testnet ledger">
+      <StellarMark /> {compact ? 'ON-CHAIN' : 'ON-CHAIN · Stellar'}
     </span>
   ) : (
-    <span className="layer layer-off" data-layer="OFF_CHAIN" title="A signed message between the parties; it does not touch the ledger">
-      <SignatureMark /> OFF-CHAIN · signed message
+    <span className="layer layer-off" data-layer="OFF_CHAIN" title="OFF-CHAIN · signed message: a signed message between the parties; it does not touch the ledger">
+      <SignatureMark /> {compact ? 'OFF-CHAIN' : 'OFF-CHAIN · signed message'}
     </span>
   );
 }

@@ -11,9 +11,9 @@ export function Session({ run }: { run: RealRunView }) {
   const row = run.meter[selected];
   return (
     <section id="session" className="section" aria-labelledby="session-title">
-      <SectionHeader id="session" eyebrow="3 · Charging session" title="The charger measures and signs every reading" layer="OFF_CHAIN">
-        Each minute the charger reports its energy register and signs the exact bytes with its meter key. Change one digit and the signature no
-        longer matches (scenario F1).
+      <SectionHeader id="session" eyebrow="3 · Metered usage · demo: EV charging" title="The meter measures and signs every reading" layer="OFF_CHAIN">
+        Each minute the meter, here an EV charger, reports its register and signs the exact bytes with its meter key. Change one digit and the
+        signature no longer matches (scenario F1). This demo meters energy; any service a machine can measure follows the same steps.
       </SectionHeader>
       <div className="session">
         <div className="charger" aria-label="Simulated charger display">

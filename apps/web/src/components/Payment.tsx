@@ -119,10 +119,10 @@ export function Payment({ run }: { run: RealRunView }) {
 export function CheckItYourself({ run }: { run: RealRunView }) {
   const links: [string, string][] = [
     ['Close transaction', run.links.closeTx],
-    ['Payment channel contract', run.links.channel],
+    ['Channel contract', run.links.channel],
     ['Station account', run.links.station],
     ['Fleet account', run.links.fleet],
-    ['Testnet USDC contract', run.links.asset],
+    ['USDC contract', run.links.asset],
   ];
   return (
     <section id="cli" className="section" aria-labelledby="cli-title">
@@ -160,11 +160,16 @@ export function CheckItYourself({ run }: { run: RealRunView }) {
       <p className="muted small terminal-note">
         The CLI prints amounts in USDC base units (7 decimals): <code>{run.settlement.settled}</code> = {formatAmount(run.settlement.settled)}.
       </p>
+      <p className="explorer-title">
+        <LayerBadge layer="ON_CHAIN" /> Open on stellar.expert, the public Testnet explorer:
+      </p>
       <ul className="explorer-links" aria-label="Explorer links">
         {links.map(([label, href]) => (
           <li key={label}>
-            <LayerBadge layer="ON_CHAIN" />
-            <ExternalLink href={href}>{label} on stellar.expert</ExternalLink>
+            <a className="explorer-link" href={href} target="_blank" rel="noopener noreferrer" aria-label={`${label} on stellar.expert`}>
+              <span>{label}</span>
+              <span aria-hidden="true">↗</span>
+            </a>
           </li>
         ))}
       </ul>

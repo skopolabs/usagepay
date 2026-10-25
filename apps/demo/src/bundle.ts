@@ -64,9 +64,10 @@ export interface RealRunView {
 }
 
 export const LIMITS: readonly string[] = [
+  'One adapter today: energy in Wh, shown as EV charging. UsagePay is built for any metered service, but this code accepts energy readings only; a second adapter is on the roadmap.',
   'Meter data is simulated: a software charger signs readings with a disposable test key. Not a certified meter, not OCPP or OCMF conformant.',
   'Stellar Testnet only: test USDC with no real value; Testnet software is not audited for production.',
-  'The Stellar channel contract enforces the payment, not the metering. The fleet receipt links each payment to its reading, and the auditor re-checks that link.',
+  'The Stellar channel contract enforces the payment, not the metering. The payer receipt links each payment to its reading, and the auditor re-checks that link.',
   'Channel deposits, payouts and parties are public on the ledger; ordinary USDC channels are not confidential.',
   'Demo storage lives in one process: no production durability, recovery or reconciliation.',
 ];

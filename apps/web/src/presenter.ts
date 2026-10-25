@@ -14,7 +14,7 @@ export const SECTIONS: readonly Section[] = [
   { id: 'overview', label: 'Overview' },
   { id: 'gap', label: 'Gap' },
   { id: 'actors', label: 'Actors' },
-  { id: 'session', label: 'Charging' },
+  { id: 'session', label: 'Usage' },
   { id: 'flow', label: 'Vouchers' },
   { id: 'payment', label: 'Payment' },
   { id: 'cli', label: 'CLI' },
