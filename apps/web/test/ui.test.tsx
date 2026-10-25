@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, inject, it, vi } from 'vitest';
 import { App } from '../src/App.tsx';
 import { KICKER, POSITIONING } from '../src/components/Overview.tsx';
-import { utc, type DemoBundle } from '../src/bundle.ts';
+import { replaySteps, utc, type DemoBundle } from '../src/bundle.ts';
 import { SECTIONS } from '../src/presenter.ts';
 
 const { live, offline, unavailable, fail, missing } = inject('bundles');
@@ -83,6 +83,44 @@ describe('UI-AC01: every story event shows actor, layer, status, title and detai
     expect(section('flow').textContent).not.toContain(digest);
     await user.click(screen.getByRole('button', { name: /Technical: off/ }));
     expect(section('flow').textContent).toContain(digest);
+  });
+});
+
+describe('Replay pacing: a round that repeats the previous one plays as one step, in short', () => {
+  it('covers every recorded event once, in order, and never folds a refusal or an unknown outcome', () => {
+    for (const story of [realRun(live).story, ...live.scenarios.map((s) => s.story)]) {
+      const steps = replaySteps(story);
+      expect(steps.flatMap((step) => story.slice(step.start, step.end))).toEqual(story);
+      for (const step of steps) expect(step.end > step.start).toBe(true);
+      for (const step of steps.filter((s) => s.end - s.start > 1)) {
+        expect(story.slice(step.start, step.end).every((e) => e.status === 'OK' || e.status === 'INFO')).toBe(true);
+      }
+    }
+    // The real run: three readings, then one voucher round per reading; rounds 2 and 3 are one step each.
+    const repeats = replaySteps(realRun(live).story).filter((s) => s.round !== undefined && s.round.first > 1);
+    expect(repeats.map((s) => [s.round?.first, s.round?.of, s.end - s.start])).toEqual([[2, 3, 2], [2, 3, 7], [3, 3, 7]]);
+  });
+
+  it('steps through the first round event by event and reveals a repeated round at once, details on demand', async () => {
+    const user = userEvent.setup();
+    show(live);
+    const flow = section('flow');
+    const list = within(flow).getByRole('list', { name: 'Recorded events of the Testnet run' });
+    const steps = replaySteps(realRun(live).story);
+    const round2 = steps.findIndex((s) => s.round !== undefined && s.round.first === 2 && s.round.length > 1);
+    await user.click(within(flow).getByRole('button', { name: '▶ Replay step by step' }));
+    await user.click(within(flow).getByRole('button', { name: '❚❚ Pause' }));
+    expect(within(list).queryAllByRole('listitem')).toHaveLength(0);
+    for (let i = 0; i < round2; i++) await user.click(within(flow).getByRole('button', { name: 'Step ▶' }));
+    expect(within(list).queryAllByRole('listitem')).toHaveLength(steps[round2]!.start);
+    await user.click(within(flow).getByRole('button', { name: 'Step ▶' }));
+    const items = within(list).getAllByRole('listitem');
+    expect(items).toHaveLength(steps[round2]!.end);
+    const repeated = items.slice(steps[round2]!.start);
+    expect(text(repeated[0])).toContain('Round 2 of 3 · same 7 steps as round 1, shown in short');
+    for (const item of repeated) expect(item.querySelector('.event-detail')?.hasAttribute('hidden')).toBe(true);
+    await user.click(within(repeated[0]!).getByRole('button', { name: 'Show details' }));
+    for (const item of repeated) expect(item.querySelector('.event-detail')?.hasAttribute('hidden')).toBe(false);
   });
 });
 

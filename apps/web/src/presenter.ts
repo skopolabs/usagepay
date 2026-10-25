@@ -31,5 +31,5 @@ export interface PresenterStep {
 
 export const PRESENTER_STEPS: readonly PresenterStep[] = SECTIONS.map((section) => ({ section: section.id }));
 
-/** Pace of the swimlane replay: one recorded event per tick. */
-export const PLAYBACK_INTERVAL_MS = 900;
+/** Pace of the swimlane replay: one step per tick, where a repeated round is a single step (`replaySteps`). */
+export const PLAYBACK_INTERVAL_MS = 1800;

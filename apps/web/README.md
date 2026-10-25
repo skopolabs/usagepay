@@ -27,7 +27,7 @@ The output is **one self-contained file**, `apps/web/dist/index.html`:
 | 1 | The gap, and why Stellar MPP alone is not enough | static copy |
 | 2 | Who is involved | `actors` |
 | 3 | Metered usage (demo: EV charging): simulated charger display and signed readings | `realRun.meter`, `tariff`, `parties.meterKey` |
-| 4 | Approval and vouchers: swimlane replay, counters, E0 stamp | `realRun.story` |
+| 4 | Approval and vouchers: swimlane replay, where a repeated round plays as one step in short; counters; E0 stamp | `realRun.story` |
 | 5 | One payment on Stellar: close transaction, money flow, balances | `realRun.ledger`, `settlement`, `links` |
 | 6 | Check it yourself: `stellar` CLI commands, observed output, explorer links | `realRun.cli`, `links` |
 | 7 | Independent auditor (Verify page) V01–V08 | `realRun.verification` |
@@ -58,7 +58,7 @@ The order and the optional `targetSeconds` live in `PRESENTER_STEPS`, so the pit
 - They use the newest committed `g2-*` run.
 - `live` and `fail` use the read-only ledger double from `apps/demo/test/ledger-double.ts`.
 
-`test/ui.test.tsx` covers UI-AC01 to UI-AC09 in jsdom. `test/build.test.ts` runs a production build and checks:
+`test/ui.test.tsx` covers UI-AC01 to UI-AC09 and the replay steps in jsdom. `test/build.test.ts` runs a production build and checks:
 - a single file;
 - the CSP;
 - no secret;

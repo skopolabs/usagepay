@@ -149,7 +149,12 @@ This section specifies what the P0 page shall provide beyond §3–§7, so that 
 ### 10.2 UX requirements
 
 - **Swimlane layout.** Each event is one full-width card. Five lane rails on its left mark the actor: meter, fleet, station and auditor off-chain, Stellar on-chain. Long plain-language sentences must stay readable at 1366 px, so there is no column per actor.
-- **Replay.** The timeline starts fully shown, so nothing is hidden from a reader. `Play` or `Space` replays the recorded events from the start at `PLAYBACK_INTERVAL_MS`, and the step controls move one event at a time. The counters are:
+- **Replay.** The timeline starts fully shown, so nothing is hidden from a reader. `Play` or `Space` replays the recorded events from the start, one step every `PLAYBACK_INTERVAL_MS` (slow enough to read a card aloud), and the step controls move one step at a time.
+  - A step is one event, except for a round that repeats the previous one back to back, with the same actors, event kinds and `OK`/`INFO` statuses, such as voucher rounds 2 and 3. A repeated round is one step.
+  - A repeated round shows each of its events in short (actor, layer, status and title) under a "Round n of N" label, with the detail one click away. No event is dropped, merged or reordered.
+  - A refusal or an unknown outcome is never folded into a round.
+
+  The counters are:
   - signed readings;
   - off-chain vouchers;
   - fleet receipts;
