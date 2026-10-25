@@ -20,7 +20,8 @@
     "versions:check": "node scripts/check-versions.mjs",
     "g1:lifecycle": "tsc -b && node scripts/testnet/g1/run.ts",
     "typecheck:testnet": "tsc -b && tsc -p scripts/testnet/tsconfig.json",
-    "g2:settlement": "tsc -b && node scripts/testnet/g2/run.ts"
+    "g2:settlement": "tsc -b && node scripts/testnet/g2/run.ts",
+    "verify": "tsc -b && node packages/verification/dist/bin.js"
   },
   "dependencies": {
     "@stellar/mpp": "0.7.1",
