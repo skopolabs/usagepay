@@ -8,7 +8,9 @@
     "assetSac": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
     "assetSacSource": "USDC_SAC_TESTNET exported by the installed @stellar/mpp 0.7.1 (dist/constants.js)",
     "assetDecimals": 7,
-    "assetDecimalsStatus": "SDK DEFAULT_DECIMALS only; NOT yet verified on-chain (G1 must confirm SAC decimals before any payment)"
+    "assetDecimalsStatus": "SDK DEFAULT_DECIMALS only; NOT yet verified on-chain (G1 must confirm SAC decimals before any payment)",
+    "assetClassic": "USDC:GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5",
+    "assetClassicSource": "SAC name() read on-chain via simulation on 2026-10-25 (stellar CLI 28.1.0, Testnet protocol 29)"
   },
   "toolchain": {
     "node": {
