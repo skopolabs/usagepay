@@ -13,3 +13,6 @@ secrets/
 .stellar/
 
 .DS_Store
+
+# Upstream sources vendored and built by scripts/testnet/build-channel.sh
+scripts/testnet/.vendor/
