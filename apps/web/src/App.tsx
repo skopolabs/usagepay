@@ -50,7 +50,7 @@ function DemoPage({ bundle }: { bundle: DemoBundle }) {
   const [scenario, setScenario] = useState(bundle.scenarios.find((s) => s.id === 'F1')?.id ?? bundle.scenarios[0]?.id ?? '');
 
   // Sections absent from this bundle (no captured run) are skipped by the presenter.
-  const present = useMemo(() => new Set<SectionId>(run === undefined ? ['overview', 'gap', 'actors', 'scenarios', 'limits'] : SECTIONS.map((s) => s.id)), [run]);
+  const present = useMemo(() => new Set<SectionId>(run === undefined ? ['overview', 'gap', 'actors', 'scenarios'] : SECTIONS.map((s) => s.id)), [run]);
   const steps = useMemo(() => PRESENTER_STEPS.filter((s) => present.has(s.section)), [present]);
 
   const moveTo = useCallback(
@@ -160,13 +160,12 @@ function DemoPage({ bundle }: { bundle: DemoBundle }) {
           </>
         )}
         <Scenarios bundle={bundle} selected={scenario} onSelect={setScenario} />
-        <Limits limits={bundle.limits} />
       </main>
 
       <footer className="footer">
         <div className="footer-inner">
           <p>
-            <a href="#limits">What we do not claim</a> · Testnet only, test USDC with no value · simulated meter · data <code>{bundle.schema}</code> generated{' '}
+            Testnet only, test USDC with no value · simulated meter · data <code>{bundle.schema}</code> generated{' '}
             {utc(bundle.generatedAt)}
           </p>
           <p className="keys">
@@ -175,24 +174,5 @@ function DemoPage({ bundle }: { bundle: DemoBundle }) {
         </div>
       </footer>
     </TechnicalContext.Provider>
-  );
-}
-
-/** Section 9: the SPEC 04 limits from the bundle, linked from the top bar and the footer of every view. */
-function Limits({ limits }: { limits: readonly string[] }) {
-  return (
-    <section id="limits" className="section" aria-labelledby="limits-title">
-      <header className="section-header">
-        <p className="eyebrow">9 · Honesty</p>
-        <h2 id="limits-title" tabIndex={-1}>
-          What we do not claim
-        </h2>
-      </header>
-      <ul className="limits">
-        {limits.map((limit) => (
-          <li key={limit}>{limit}</li>
-        ))}
-      </ul>
-    </section>
   );
 }

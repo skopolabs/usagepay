@@ -19,7 +19,7 @@
 | **D5** | **On-chain versus off-chain is always visible.** Every step carries its layer: off-chain for signed messages between the parties, on-chain for reads from or writes to Stellar Testnet. |
 | **D6** | **Readable blockchain CLI.** Every on-chain fact comes with three things: <ul><li>the `stellar` CLI command that reproduces it;</li><li>the output the demo observed;</li><li>a stellar.expert link.</li></ul> Each can be copied. A judge can check every claim outside our software. |
 | **D7** | **Two audiences on one screen.** Plain language comes first. Technical detail (hashes, keys, base units, reason codes, raw events) is one click away and never shown instead of the explanation. |
-| **D8** | **Honesty is part of the UX.** <ul><li>A captured run is always labelled `REPLAY` with its recording time.</li><li>Every scenario shows its evidence class (`REAL_TESTNET`, `SDK_INTEGRATION`, `OFFLINE_FIXTURE`).</li><li>`NOT_AVAILABLE` is never shown as success.</li><li>The limits section from the bundle is always reachable.</li><li>Nothing is fabricated or animated as "live" when it is not.</li><li>The UI is Testnet only.</li></ul> |
+| **D8** | **Honesty is part of the UX.** <ul><li>A captured run is always labelled `REPLAY` with its recording time.</li><li>Every scenario shows its evidence class (`REAL_TESTNET`, `SDK_INTEGRATION`, `OFFLINE_FIXTURE`).</li><li>`NOT_AVAILABLE` is never shown as success.</li><li>The footer of every view states the demo scope: Testnet only, test USDC with no value, simulated meter. The full `bundle.limits` list is printed by `pnpm demo`.</li><li>Nothing is fabricated or animated as "live" when it is not.</li><li>The UI is Testnet only.</li></ul> |
 | **D9** | **Demo-day evidence.** All Testnet evidence shown to judges is regenerated during the hackathon (SPEC 04 §9.4). Earlier runs are rehearsals. |
 | **D10** | **Same rigor as the backend.** Everything is TypeScript, pinned exact dependency versions and the committed lockfile. It carries tests, a reproducible build and English repository artifacts. No secret ever reaches the browser. |
 
@@ -37,7 +37,7 @@ The UI is one page of story sections, plus a scenario explorer. The section orde
 
 | # | Section | Content (all from the bundle) | Layer |
 |---|---|---|---|
-| 0 | **Header and status bar** | <ul><li>The positioning from 01.2 §0.1: the kicker *Infrastructure for the machine economy.*, the H1 *UsagePay enables verifiable machine-to-machine payments for metered services on Stellar.*, the promise line and a box labelling EV charging as the **demo use case** (§10.4).</li><li>`REPLAY of real Stellar Testnet run <id>, recorded <time>`.</li><li>`Verified live at <time>: PASS / NOT_AVAILABLE / FAIL`.</li><li>Testnet badge and links to the evidence files.</li></ul> | — |
+| 0 | **Header and status bar** | <ul><li>The positioning from 01.2 §0.1: the kicker *Infrastructure for the machine economy.*, the H1 *UsagePay enables verifiable machine-to-machine payments for metered services on Stellar.*, the promise line and a box labelling EV charging as the **demo use case** (§10.4).</li><li>The sticky top bar carries the Testnet badge, `REPLAY · <recording time>` and the demo verdict.</li><li>No replay banner and no headline figures: the run id, the verdict and the figures appear in the sections that explain them (4, 5 and 7).</li><li>A bundle without a real run says so here.</li></ul> | — |
 | 1 | **The gap** | Three separate systems: meter, payer, ledger. Why nobody can prove which payment matched which measurement, and why Stellar MPP alone is not enough (§10.4) | — |
 | 2 | **Who is involved** | Five actor cards from `bundle.actors`, each with a role sentence and an icon | — |
 | 3 | **Metered usage (demo: EV charging)** | A simulated charger panel: <ul><li>register in Wh;</li><li>kWh delivered;</li><li>price per kWh;</li><li>running total in USDC;</li><li>"signed by meter key …";</li><li>a `SIMULATED meter` badge.</li></ul> One row per signed reading (`realRun.meter`) | OFF-CHAIN |
@@ -46,7 +46,6 @@ The UI is one page of story sections, plus a scenario explorer. The section orde
 | 6 | **Check it yourself** | A terminal panel with each command from `realRun.cli` and its observed output, plus a copy button | ON-CHAIN |
 | 7 | **Independent auditor (Verify page)** | <ul><li>V01–V08 as a checklist: title, plain question, status icon and text, layer badge.</li><li>The technical `details` can be expanded.</li><li>A large overall verdict.</li></ul> This section fulfils 01.1 P0 Must 4 | OFF + ON |
 | 8 | **What if something goes wrong?** | A card per scenario (S1, F1–F7) with its question, answer, expected versus actual, evidence class and checkpoints. Opening a card replays that scenario's story on the same swimlane, with the refusal highlighted. F1 shows the edited value (10500 → 19500 Wh) | OFF + ON |
-| 9 | **What we do not claim** | `bundle.limits`, always visible in the footer and expanded here | — |
 
 ## 4. UX principles
 
@@ -102,7 +101,7 @@ Tests run with Vitest. Component tests use jsdom and render a **real** bundle bu
 | UI-AC04 | V01–V08 render with the plain question and the status. `NOT_AVAILABLE` and `FAIL` are never shown as success |
 | UI-AC05 | S1 and F1–F7 are all reachable, each with expected versus actual, its evidence class and its checkpoints |
 | UI-AC06 | `MISSING`, `UNAVAILABLE` and `NOT_AVAILABLE` bundles render explicit states and never crash |
-| UI-AC07 | The limits are reachable from every section |
+| UI-AC07 | The footer of every view states the demo scope: Testnet only, test USDC with no value, simulated meter |
 | UI-AC08 | Presenter mode reaches every section by keyboard alone |
 | UI-AC09 | There is no secret pattern in the built assets, and no network request other than user-opened links |
 | UI-AC10 | Usability check: after a three-minute run-through, a person without blockchain knowledge can answer the five questions in §2 |

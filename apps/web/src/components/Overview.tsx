@@ -1,5 +1,4 @@
-import { formatAmount, formatEnergy } from '@usagepay/demo/format';
-import { progressOf, utc, type DemoBundle } from '../bundle.ts';
+import type { DemoBundle } from '../bundle.ts';
 import { ActorIcon, LayerBadge, SectionHeader, StatusBadge } from './ui.tsx';
 
 /** The kicker above the first sentence (01.2 §0.1). */
@@ -11,7 +10,7 @@ export const POSITIONING = 'UsagePay enables verifiable machine-to-machine payme
 /** Illustrative categories, not built adapters (01.2 §0.1); the demo runs the energy adapter only. */
 const SERVICES = ['Energy', 'Compute time', 'Connectivity', 'Equipment hours', 'Water'] as const;
 
-/** Section 0: value proposition, the honest replay banner and the headline figures, all read from the bundle. */
+/** Section 0: value proposition and the demo use case; a bundle without a real run says so here. */
 export function Overview({ bundle }: { bundle: DemoBundle }) {
   const run = bundle.realRun;
   return (
@@ -49,22 +48,7 @@ export function Overview({ bundle }: { bundle: DemoBundle }) {
             Testnet payment is shown.
           </p>
         </div>
-      ) : (
-        <div className="banner banner-replay" role="status">
-          <p className="banner-title">
-            <strong>REPLAY</strong> of a real Stellar Testnet run · <code>{run.runId}</code> · recorded {utc(run.recordedAt)}
-          </p>
-          <p>Nothing is paid again now. The page shows what happened, step by step, and how an independent auditor checked it.</p>
-          <p className="banner-verdict">
-            <StatusBadge status={run.verification.overall.status} />
-            <span>
-              Auditor verdict captured {utc(run.verification.at)}, {run.verification.mode === 'LIVE' ? 'reading Stellar Testnet live' : 'offline'}. {run.verification.overall.plain}
-            </span>
-          </p>
-        </div>
-      )}
-
-      {run.status === 'MISSING' ? null : <Figures bundle={bundle} />}
+      ) : null}
 
       <p className="demo-result">
         <span>Demo self-check</span>
@@ -72,44 +56,6 @@ export function Overview({ bundle }: { bundle: DemoBundle }) {
         <span className="muted">{bundle.result.detail}</span>
       </p>
     </section>
-  );
-}
-
-function Figures({ bundle }: { bundle: DemoBundle }) {
-  const run = bundle.realRun;
-  if (run.status === 'MISSING') return null;
-  const last = run.meter.at(-1);
-  const progress = progressOf(run.story);
-  const passed = run.verification.checks.filter((c) => c.status === 'PASS').length;
-  return (
-    <dl className="figures">
-      <div>
-        <dt>Energy delivered</dt>
-        <dd>{last === undefined ? '—' : formatEnergy(last.cumulativeWh)}</dd>
-        <span className="figure-note">{run.meter.length} signed readings</span>
-      </div>
-      <div>
-        <dt>Paid to the station</dt>
-        <dd>{formatAmount(run.settlement.settled)}</dd>
-        <span className="figure-note">at {run.tariff.pricePerKwh} per kWh</span>
-      </div>
-      <div className="figure-flow">
-        <dt>Payments</dt>
-        <dd>
-          {progress.vouchers} vouchers → {progress.transactions} transaction
-        </dd>
-        <span className="figure-note">
-          <LayerBadge layer="OFF_CHAIN" /> → <LayerBadge layer="ON_CHAIN" />
-        </span>
-      </div>
-      <div>
-        <dt>Auditor checks</dt>
-        <dd>
-          {passed} / {run.verification.checks.length} PASS
-        </dd>
-        <span className="figure-note">recomputed, no keys held</span>
-      </div>
-    </dl>
   );
 }
 

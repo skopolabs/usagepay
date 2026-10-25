@@ -161,7 +161,6 @@ describe('UI-AC03: REPLAY and the recording time are visible whenever a captured
     const run = realRun(bundle);
     const recorded = utc(run.recordedAt);
     expect(text(document.querySelector('.topbar'))).toContain(`REPLAY · ${recorded}`);
-    expect(text(section('overview'))).toContain(`REPLAY of a real Stellar Testnet run · ${run.runId} · recorded ${recorded}`);
     expect(text(section('flow'))).toContain(`REPLAY of run ${run.runId}, recorded ${recorded}`);
   });
 });
@@ -239,14 +238,13 @@ describe('UI-AC05: S1 and F1-F7 are reachable with expected vs actual, evidence 
 });
 
 describe('UI-AC06: MISSING, UNAVAILABLE and NOT_AVAILABLE bundles render explicit states', () => {
-  it('MISSING: says there is no real run, still shows scenarios and limits', () => {
+  it('MISSING: says there is no real run, still shows the scenarios', () => {
     show(missing);
     expect(text(section('overview'))).toContain('No real Testnet run');
     expect(text(section('overview'))).toContain('no g2-* run directory with e1.json');
     expect(document.getElementById('payment')).toBeNull();
     expect(text(document.querySelector('.topbar'))).not.toContain('REPLAY');
     expect(screen.getAllByRole('tab')).toHaveLength(8);
-    expect(section('limits')).toBeTruthy();
   });
 
   it('UNAVAILABLE ledger: the payment is shown as recorded only, not confirmed', () => {
@@ -274,12 +272,10 @@ describe('UI-AC06: MISSING, UNAVAILABLE and NOT_AVAILABLE bundles render explici
   });
 });
 
-describe('UI-AC07: the limits are reachable from every section', () => {
-  it('links them from the sticky top bar and the footer and lists every limit', () => {
-    show(live);
-    expect((within(screen.getByRole('navigation', { name: 'Sections' })).getByRole('link', { name: 'Limits' })).getAttribute('href')).toBe('#limits');
-    expect((within(document.querySelector('footer')!).getByRole('link', { name: 'What we do not claim' })).getAttribute('href')).toBe('#limits');
-    for (const limit of live.limits) expect(text(section('limits'))).toContain(limit);
+describe('UI-AC07: the demo scope is stated in the footer of every view', () => {
+  it.each([['live', live], ['missing', missing]] as const)('%s bundle', (_name, bundle) => {
+    show(bundle);
+    expect(text(document.querySelector('footer'))).toContain('Testnet only, test USDC with no value · simulated meter');
   });
 });
 
@@ -318,7 +314,7 @@ describe('UI-AC08: presenter mode reaches every section by keyboard alone', () =
       await user.keyboard('{ArrowRight}');
       ids.push(document.activeElement?.id ?? '');
     }
-    expect([...new Set(ids)]).toEqual(['overview-title', 'gap-title', 'actors-title', 'scenarios-title', 'limits-title']);
+    expect([...new Set(ids)]).toEqual(['overview-title', 'gap-title', 'actors-title', 'scenarios-title']);
   });
 });
 
@@ -352,10 +348,9 @@ describe('Positioning (SPEC 05 §10.4, 01.2 §0.1): the category comes first, EV
     expect(kicker!.compareDocumentPosition(screen.getByRole('heading', { level: 1 })) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     expect(text(screen.getByRole('complementary', { name: 'Demo use case' }))).toContain('Demo use case · EV charging');
     expect(text(overview.querySelector('h1'))).not.toMatch(/kWh|kilowatt|charg/i);
-    // Why MPP alone is not enough, and the one-adapter limit, are always on the page.
+    // Why MPP alone is not enough is always on the page.
     expect(text(section('gap'))).toContain('Why Stellar MPP alone is not enough');
     expect(text(section('gap'))).toContain('MPP cannot prove: for what?');
-    expect(text(section('limits'))).toContain('One adapter today: energy in Wh');
     // It fits existing protocols and hardware, and says the demo meter is not conformant.
     const fits = within(section('gap')).getByRole('heading', { name: 'Fits what is already deployed' }).parentElement;
     expect(text(fits)).toContain('No new hardware.');

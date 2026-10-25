@@ -23,7 +23,7 @@ The output is **one self-contained file**, `apps/web/dist/index.html`:
 
 | # | Section (`src/presenter.ts`) | Source in the bundle |
 |---|---|---|
-| 0 | Overview: positioning (01.2 §0.1), demo use case, `REPLAY` banner, captured verdict, headline figures | `realRun.recordedAt`, `verification`, `meter`, `settlement` |
+| 0 | Overview: positioning (01.2 §0.1), demo use case; the MISSING state when there is no real run | `realRun.status` |
 | 1 | The gap, and why Stellar MPP alone is not enough | static copy |
 | 2 | Who is involved | `actors` |
 | 3 | Metered usage (demo: EV charging): simulated charger display and signed readings | `realRun.meter`, `tariff`, `parties.meterKey` |
@@ -32,7 +32,6 @@ The output is **one self-contained file**, `apps/web/dist/index.html`:
 | 6 | Check it yourself: `stellar` CLI commands, observed output, explorer links | `realRun.cli`, `links` |
 | 7 | Independent auditor (Verify page) V01–V08 | `realRun.verification` |
 | 8 | What if: S1, F1–F7 with expected vs actual, checkpoints and story | `scenarios`, `evidenceClasses` |
-| 9 | What we do not claim | `limits` |
 
 Presenter keys:
 
@@ -47,7 +46,7 @@ The order and the optional `targetSeconds` live in `PRESENTER_STEPS`, so the pit
 
 ## Honesty rules enforced by the UI
 
-- A captured run is labelled `REPLAY` with its recording time in three places: the top bar, the overview banner and the timeline.
+- A captured run is labelled `REPLAY` with its recording time in two places: the top bar and the timeline.
 - Status icons and words never depend on colour alone. `NOT_AVAILABLE`, `PENDING`, `FAIL`, `REJECTED` and unknown statuses are never green.
 - `MISSING`, `UNAVAILABLE` and `NOT_AVAILABLE` bundles render explicit states. A malformed bundle renders an explanation, never a crash.
 - The build refuses a bundle containing anything shaped like a Stellar secret seed.
