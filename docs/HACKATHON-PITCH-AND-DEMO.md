@@ -1,6 +1,6 @@
 # HackMeridian — UsagePay Pitch and Demo Sheet
 
-**HackMeridian begins:** Sunday, 25 October 2026 · **Audience:** judges and demo presenter · **Length target:** approximately 2–3 minutes · **Technical authority:** [01.1 §§8–11](01-usagepay/01.1-usagepay-technical-architecture-and-roadmap.md)
+**HackMeridian begins:** Sunday, 25 October 2026 · **Audience:** judges and demo presenter · **Length target:** approximately 2–3 minutes · **Technical authority:** [01.1 §§8–11](../01.1-usagepay-technical-architecture-and-roadmap.md)
 
 ## The problem, in one sentence
 
@@ -32,4 +32,4 @@ Simulated EV charging event -> check meter evidence -> replay tariff
 
 **Truth labels to keep visible:** Testnet-only experimental unaudited one-way-channel; synthetic meter and key, not legal certification; no confidential settlement; watcher is an SDK primitive; no validated B2B buyer. If the session channel demo fails, describe the Charge fallback as narrower and omit channel claims.
 
-**For engineers:** read [01.1](01-usagepay/01.1-usagepay-technical-architecture-and-roadmap.md). **For product/commercial questions:** consult [01.2](01-usagepay/01.2-usagepay-product-foundation.md) and [01.4](01-usagepay/01.4-usagepay-economics.md). This pitch sheet never overrides their scope or guarantees.
+**For engineers:** read [01.1](../01.1-usagepay-technical-architecture-and-roadmap.md). **For product/commercial questions:** consult [01.2](usagepay/01.2-usagepay-product-foundation.md) and [01.4](usagepay/01.4-usagepay-economics.md). This pitch sheet never overrides their scope or guarantees.
