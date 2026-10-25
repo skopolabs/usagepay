@@ -4,7 +4,9 @@
  * immutable E0 -> one real close of upay-g2-channel -> E1 built from observed RPC results.
  *
  * Roles share one process but never secrets: the payer holds only the commitment secret, the settlement gateway only
- * the recipient secret. Output: scripts/testnet/runs/<runId>/{trace.jsonl,e0.json,e1.json,summary.json}.
+ * the recipient secret. Output: scripts/testnet/runs/<runId>/{trust.json,trace.jsonl,e0.json,e1.json,summary.json}.
+ * `trust.json` is the public verifier trust file, written before the first increment from configuration and the
+ * pinned on-chain channel facts, never from E0/E1.
  */
 import { randomBytes } from 'node:crypto';
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -74,6 +76,20 @@ if (!gate('S1-CHANNEL-PINNED', checkChannelFacts({ ...trust, recipient }, facts)
   `token ${facts.token}, to ${facts.to}, from ${facts.from}, balance ${facts.balance}, closeEffectiveAtLedger ${facts.closeEffectiveAtLedger}`)) finish(1);
 
 trace.emit('payee', 'meter.key', { keyId: meter.keyId, publicKey: meter.accountId, evidenceClass: 'SIMULATED meter, runtime key' });
+writeFileSync(join(runDir, 'trust.json'), JSON.stringify({
+  schema: 'usagepay.verifier-trust.v1',
+  network: NETWORK,
+  sessionId: trust.sessionId,
+  channelId,
+  recipient,
+  funder,
+  assetSac,
+  commitmentKey: commitmentKey.publicKey(),
+  tariffVersionDigest: tariff.versionDigest,
+  budgetCapBaseUnits: BUDGET_CAP,
+  meterKeys: { [meter.keyId]: meter.accountId },
+}, null, 2) + '\n');
+trace.emit('verifier', 'trust.pinned', { file: 'trust.json', channelId, recipient, meterKey: meter.accountId });
 const charger = createSimulatedCharger({ sessionId: inputs.session.sessionId, machineId: inputs.session.machineId, startedAt: inputs.session.startedAt, meterStartWh: inputs.session.meterStartWh, signer: meter });
 const metering = createMeteringSession({ machineId: inputs.session.machineId, expectedAssetSac: assetSac, trustedMeterKeys: new Map([[meter.keyId, meter.publicKey]]), currentTariff: () => tariff });
 await metering.apply(charger.started());

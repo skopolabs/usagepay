@@ -41,4 +41,10 @@ SPEC 02 S1 on Testnet with the `@usagepay/settlement` package:
 - E0 is frozen, then the recipient closes `upay-g2-channel`.
 - E1 holds only what RPC reported (`txStatus`, `withdrawn()`).
 
-Output goes to `runs/g2-<timestamp>/`: `trace.jsonl`, `e0.json`, `e1.json` and `summary.json`. Independent E0/E1 verification is SPEC 03.
+Output goes to `runs/g2-<timestamp>/`: `trust.json`, `trace.jsonl`, `e0.json`, `e1.json` and `summary.json`.
+
+`trust.json` is the public `usagepay.verifier-trust.v1` file:
+- It is written before the first increment.
+- Its values come from configuration and the pinned on-chain channel facts: channel, recipient, funder, commitment key, asset, tariff digest, budget cap and the runtime meter public key.
+- It is never derived from E0 or E1.
+- V08 confirms its chain-facing values against the ledger.
