@@ -18,6 +18,7 @@ The output is **one self-contained file**, `apps/web/dist/index.html`:
 - the script, the styles and the bundle are inlined;
 - it opens from disk or from any static host (D12: Vercel, during the hackathon only);
 - its Content-Security-Policy forbids every connection (`connect-src 'none'`) and every external resource.
+- on Vercel, `vercel.json` sends the same policy as a header, plus `frame-ancestors 'none'`, `X-Frame-Options`, `nosniff`, `no-referrer` and HSTS; `test/build.test.ts` keeps the two policies equal.
 
 ## Sections and presenter keys
 
