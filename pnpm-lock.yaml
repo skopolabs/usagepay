@@ -20,6 +20,12 @@ importers:
       '@usagepay/fixtures':
         specifier: workspace:*
         version: link:fixtures
+      '@usagepay/metering':
+        specifier: workspace:*
+        version: link:packages/metering
+      '@usagepay/settlement':
+        specifier: workspace:*
+        version: link:packages/settlement
       mppx:
         specifier: 0.6.31
         version: 0.6.31(typescript@6.0.3)(viem@2.57.10(typescript@6.0.3)(zod@4.6.7))
@@ -83,6 +89,31 @@ importers:
       '@usagepay/fixtures':
         specifier: workspace:*
         version: link:../../fixtures
+
+  packages/settlement:
+    dependencies:
+      '@stellar/mpp':
+        specifier: 0.7.1
+        version: 0.7.1(@stellar/stellar-sdk@15.1.0)(mppx@0.6.31(typescript@6.0.3)(viem@2.57.10(typescript@6.0.3)(zod@4.6.7)))
+      '@stellar/stellar-sdk':
+        specifier: 15.1.0
+        version: 15.1.0
+      '@usagepay/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+      mppx:
+        specifier: 0.6.31
+        version: 0.6.31(typescript@6.0.3)(viem@2.57.10(typescript@6.0.3)(zod@4.6.7))
+      zod:
+        specifier: 4.6.7
+        version: 4.6.7
+    devDependencies:
+      '@usagepay/fixtures':
+        specifier: workspace:*
+        version: link:../../fixtures
+      '@usagepay/metering':
+        specifier: workspace:*
+        version: link:../metering
 
 packages:
 

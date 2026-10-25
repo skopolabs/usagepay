@@ -1,0 +1,25 @@
+{
+  "name": "@usagepay/settlement",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SPEC 02 payer and Stellar settlement: payer policy gate, native MPP channel commitments, payer evidence ack, payee pre-acceptance gate, immutable E0 and observed E1.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "dependencies": {
+    "@stellar/mpp": "0.7.1",
+    "@stellar/stellar-sdk": "15.1.0",
+    "@usagepay/contracts": "workspace:*",
+    "mppx": "0.6.31",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@usagepay/fixtures": "workspace:*",
+    "@usagepay/metering": "workspace:*"
+  }
+}
