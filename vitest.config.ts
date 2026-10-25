@@ -8,6 +8,7 @@ export default defineConfig({
       { resolve: { alias }, test: { name: 'fixtures', root: './fixtures', include: ['test/**/*.test.ts'] } },
       { resolve: { alias }, test: { name: 'metering', root: './packages/metering', include: ['test/**/*.test.ts'] } },
       { resolve: { alias }, test: { name: 'settlement', root: './packages/settlement', include: ['test/**/*.test.ts'] } },
+      { resolve: { alias }, test: { name: 'verification', root: './packages/verification', include: ['test/**/*.test.ts'] } },
     ],
   },
 });
