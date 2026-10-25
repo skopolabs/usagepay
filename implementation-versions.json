@@ -108,6 +108,7 @@
       "resolveKeypair",
       "stellar"
     ],
-    "commitmentEncoding": "dist/channel/commitment.js: signed bytes are the XDR ScVal::Map returned by contract prepare_commitment with fields {amount, channel, domain:'chancmmt', network:SHA-256(passphrase)}. Behaviour to be demonstrated with real credentials in G1, not assumed"
+    "commitmentEncoding": "dist/channel/commitment.js: signed bytes are the XDR ScVal::Map returned by contract prepare_commitment with fields {amount, channel, domain:'chancmmt', network:SHA-256(passphrase)}. Behaviour to be demonstrated with real credentials in G1, not assumed",
+    "channelServerOptions": "channel, commitmentKey, store, network, recipient, currency, checkOnChainState, feePayer, feeBudget, logger: recipient/currency ARE supported in 0.7.1 and are enforced against getChannelState"
   }
 }
