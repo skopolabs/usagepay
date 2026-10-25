@@ -1,0 +1,22 @@
+{
+  "name": "@usagepay/metering",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SPEC 01 metering and evidence: OCPP-shaped simulated charger, signed source-byte verification and pinned-tariff bigint charges.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "dependencies": {
+    "@noble/curves": "2.4.0",
+    "@usagepay/contracts": "workspace:*",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@usagepay/fixtures": "workspace:*"
+  }
+}

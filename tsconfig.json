@@ -1,4 +1,4 @@
 {
   "files": [],
-  "references": [{ "path": "packages/contracts" }, { "path": "fixtures" }]
+  "references": [{ "path": "packages/contracts" }, { "path": "fixtures" }, { "path": "packages/metering" }]
 }
