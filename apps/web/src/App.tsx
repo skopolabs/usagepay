@@ -46,8 +46,8 @@ const SHOW: readonly (readonly [Show, string])[] = [
   ['ON_CHAIN', 'On-chain'],
 ];
 
-/** The project's public GitHub home, pitch deck and video channel: the only links in the footer besides the in-page ones. */
-const GITHUB = 'https://github.com/skopolabs';
+/** The project's public GitHub repository, pitch deck and video channel: the only links in the footer besides the in-page ones. */
+const GITHUB = 'https://github.com/skopolabs/usagepay';
 const PITCH_DECK = 'https://docs.google.com/presentation/d/157kTzIG6SZ9LdqSRKgJaeVdF4ENpdYWz/edit?slide=id.p1#slide=id.p1';
 const DEMO_VIDEO = 'https://www.youtube.com/channel/UCVkziV3cu8SnGI5tDzu37oQ';
 
