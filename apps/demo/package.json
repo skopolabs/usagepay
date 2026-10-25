@@ -1,0 +1,25 @@
+{
+  "name": "@usagepay/demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SPEC 04 integration and judge walkthrough: cross-package scenarios S1/F1-F7, plain-language narrative of a real Testnet run and the demo bundle the UI renders.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "usagepay-demo": "./dist/bin.js"
+  },
+  "files": ["dist"],
+  "dependencies": {
+    "@stellar/stellar-sdk": "15.1.0",
+    "@usagepay/contracts": "workspace:*",
+    "@usagepay/fixtures": "workspace:*",
+    "@usagepay/metering": "workspace:*",
+    "@usagepay/settlement": "workspace:*",
+    "@usagepay/verification": "workspace:*"
+  }
+}

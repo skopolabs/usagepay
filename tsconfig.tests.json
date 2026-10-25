@@ -18,6 +18,9 @@
       ],
       "@usagepay/verification": [
         "./packages/verification/src/index.ts"
+      ],
+      "@usagepay/demo": [
+        "./apps/demo/src/index.ts"
       ]
     },
     "allowImportingTsExtensions": true
@@ -25,6 +28,8 @@
   "include": [
     "packages/*/src/**/*.ts",
     "packages/*/test/**/*.ts",
+    "apps/*/src/**/*.ts",
+    "apps/*/test/**/*.ts",
     "fixtures/src/**/*.ts",
     "fixtures/test/**/*.ts",
     "vitest.config.ts",
