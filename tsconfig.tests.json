@@ -12,6 +12,9 @@
       ],
       "@usagepay/metering": [
         "./packages/metering/src/index.ts"
+      ],
+      "@usagepay/settlement": [
+        "./packages/settlement/src/index.ts"
       ]
     },
     "allowImportingTsExtensions": true

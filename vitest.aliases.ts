@@ -7,4 +7,5 @@ export const workspaceAliases = [
   { find: /^@usagepay\/contracts$/, replacement: src('./packages/contracts/src/index.ts') },
   { find: /^@usagepay\/fixtures$/, replacement: src('./fixtures/src/index.ts') },
   { find: /^@usagepay\/metering$/, replacement: src('./packages/metering/src/index.ts') },
+  { find: /^@usagepay\/settlement$/, replacement: src('./packages/settlement/src/index.ts') },
 ];
