@@ -1,6 +1,6 @@
 import { CHECK_IDS, createVerifier, type ChainReader, type CheckId, type VerificationReport } from '@usagepay/verification';
 import { explorerLinks, formatAmount } from './format.js';
-import { ACTORS, CHECK_EXPLANATIONS, explainReason, explainTrace, type CheckExplanation, type StoryEvent } from './narrative.js';
+import { ACTORS, CHECK_EXPLANATIONS, EVIDENCE_CLASSES, explainReason, explainTrace, type CheckExplanation, type StoryEvent } from './narrative.js';
 import { cliEquivalents, meterRows, observeLedger, type CliEquivalent, type LedgerObservation, type MeterRow, type RealRun, type RunSummary } from './real-run.js';
 import { runScenarios, type ScenarioResult } from './scenarios.js';
 
@@ -14,6 +14,7 @@ export interface DemoBundle {
   readonly result: DemoVerdict;
   readonly actors: typeof ACTORS;
   readonly checks: Readonly<Record<CheckId, CheckExplanation>>;
+  readonly evidenceClasses: typeof EVIDENCE_CLASSES;
   readonly realRun: RealRunView | { readonly status: 'MISSING'; readonly reason: string };
   readonly scenarios: readonly ScenarioResult[];
   readonly limits: readonly string[];
@@ -92,6 +93,7 @@ export async function buildBundle(options: BundleOptions): Promise<DemoBundle> {
     result: demoVerdict(realRun, scenarios),
     actors: ACTORS,
     checks: CHECK_EXPLANATIONS,
+    evidenceClasses: EVIDENCE_CLASSES,
     realRun,
     scenarios,
     limits: LIMITS,

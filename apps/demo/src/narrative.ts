@@ -50,6 +50,13 @@ export const CHECK_EXPLANATIONS: Record<CheckId, CheckExplanation> = {
   V08_CHAIN: { title: 'On-chain payment', question: 'Does the public Stellar ledger show the channel closed with the right amount paid to the right station?', layer: 'ON_CHAIN' },
 };
 
+/** What each scenario evidence class (SPEC 04 §2) proves, in plain words. */
+export const EVIDENCE_CLASSES: Record<'OFFLINE_FIXTURE' | 'SDK_INTEGRATION' | 'REAL_TESTNET', { readonly label: string; readonly plain: string }> = {
+  OFFLINE_FIXTURE: { label: 'Offline fixture', plain: 'Deterministic test data with test-only keys; proves the formats and the arithmetic, not a payment.' },
+  SDK_INTEGRATION: { label: 'Real code, simulated ledger', plain: 'Real meter, fleet and station code and real Stellar MPP SDK signatures; only the ledger is simulated offline.' },
+  REAL_TESTNET: { label: 'Real Stellar Testnet', plain: 'Signed and settled on the public Stellar Testnet with test USDC; anyone can look it up.' },
+};
+
 /** Stable reason codes from all modules, in plain words. Unknown codes fall back to the code itself. */
 const REASONS: Record<string, string> = {
   CHECK_PASSED: 'Check passed.',
