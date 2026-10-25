@@ -1,0 +1,103 @@
+{
+  "channel": "CBDYDMFWEZXPLEZVIWGOPK6W3FNSBNEZNFHUZ4GQKS3DA4OZHJKOGXN4",
+  "close": {
+    "txHash": "ee5598ca5f5ea5fda213282bd7f2fc23a0ab53bf947ae28b2c0393ff4ff74543",
+    "amount": "3000000"
+  },
+  "increments": [
+    {
+      "sequence": 1,
+      "commitment": {
+        "schema": "usagepay.native-commitment.v1",
+        "channelId": "CBDYDMFWEZXPLEZVIWGOPK6W3FNSBNEZNFHUZ4GQKS3DA4OZHJKOGXN4",
+        "network": "stellar:testnet",
+        "cumulativeAmountBaseUnits": "1000000",
+        "signedMessageB64": "AAAAEQAAAAEAAAAEAAAADwAAAAZhbW91bnQAAAAAAAoAAAAAAAAAAAAAAAAAD0JAAAAADwAAAAdjaGFubmVsAAAAABIAAAABR4GwtiZu9ZM1RYznq9bZWyC0mWlPTPDQVLYwcdk6VOMAAAAPAAAABmRvbWFpbgAAAAAADwAAAAhjaGFuY21tdAAAAA8AAAAHbmV0d29yawAAAAANAAAAIM7gMC1ZhE0yvcqRXIID3USzP7t+3BkFHqN6vt8o7NRy",
+        "signatureB64": "wtvyd+0qMqYrxsdls7gdZ1DaXjDL41kHxwjWohsXqEbyoOdsBdnutUWDo1sFC3LTg81UKpG7wtnZu3RzzI77CA==",
+        "commitmentKey": "GCFV674WIJDNW6ACNONT3MTPRR7ORJUCICV2VOQOZJIUE4YEQBNLGD35",
+        "commitmentDigest": "9e0878af5df2e4684d912886971b004fc52b3f5f7cff05b9faa7e72971db198b"
+      },
+      "ack": {
+        "schema": "usagepay.payer-ack.v1",
+        "sessionId": "ev-session-001",
+        "network": "stellar:testnet",
+        "channelId": "CBDYDMFWEZXPLEZVIWGOPK6W3FNSBNEZNFHUZ4GQKS3DA4OZHJKOGXN4",
+        "evidenceDigest": "deb163e679df62e9faea8b576214d464932c2a5eb1cbedbe7d1167e16f024153",
+        "commitmentDigest": "9e0878af5df2e4684d912886971b004fc52b3f5f7cff05b9faa7e72971db198b",
+        "approvedCumulativeBaseUnits": "1000000",
+        "nonce": "c39ccf408a837e72203cc72f7e22021c",
+        "payerKey": "GCFV674WIJDNW6ACNONT3MTPRR7ORJUCICV2VOQOZJIUE4YEQBNLGD35",
+        "signatureB64": "RHn/GLSgSeh8swUtlI4P04kGXpT3jecT5Qs5Nw/DI1q+0fW3tBujZgjKrnjfsZkhakTCgQ9CIcyScoZvfy59DA=="
+      },
+      "credentialAuthorization": "Payment eyJjaGFsbGVuZ2UiOnsiZGVzY3JpcHRpb24iOiJ1cGF5IGluY3JlbWVudCAxIiwiZXhwaXJlcyI6IjIwMjYtMTAtMjVUMTE6NTQ6NTAuODQ2WiIsImlkIjoiQkI1alFSdDhLSjR0b19VTzE5Y1I2UllLaXpfRzRnQnE1dTVkUFZIREJvbyIsImludGVudCI6ImNoYW5uZWwiLCJtZXRob2QiOiJzdGVsbGFyIiwicmVhbG0iOiJ1cGF5LWcxIiwicmVxdWVzdCI6ImV5SmhiVzkxYm5RaU9pSXhNREF3TURBd0lpd2lZMmhoYm01bGJDSTZJa05DUkZsRVRVWlhSVnBZVUV4RldsWkpWMGRQVUVzMlZ6TkdUbE5DVGtWYVRrWklWVm8wUjFGTFV6TkVRVFJQV2toS1MwOUhXRTQwSWl3aWJXVjBhRzlrUkdWMFlXbHNjeUk2ZXlKamRXMTFiR0YwYVhabFFXMXZkVzUwSWpvaU1DSXNJbTVsZEhkdmNtc2lPaUp6ZEdWc2JHRnlPblJsYzNSdVpYUWlMQ0p5WldabGNtVnVZMlVpT2lJMU1XWXdaRFUxTmkwMk5XRmlMVFJqTlRBdE9UazFNaTB5TTJJMU1XVXpaRFl4TlRnaWZYMCJ9LCJwYXlsb2FkIjp7ImFjdGlvbiI6InZvdWNoZXIiLCJhbW91bnQiOiIxMDAwMDAwIiwic2lnbmF0dXJlIjoiYzJkYmYyNzdlZDJhMzJhNjJiYzZjNzY1YjNiODFkNjc1MGRhNWUzMGNiZTM1OTA3YzcwOGQ2YTIxYjE3YTg0NmYyYTBlNzZjMDVkOWVlYjU0NTgzYTM1YjA1MGI3MmQzODNjZDU0MmE5MWJiYzJkOWQ5YmI3NDczY2M4ZWZiMDgifX0"
+    },
+    {
+      "sequence": 2,
+      "commitment": {
+        "schema": "usagepay.native-commitment.v1",
+        "channelId": "CBDYDMFWEZXPLEZVIWGOPK6W3FNSBNEZNFHUZ4GQKS3DA4OZHJKOGXN4",
+        "network": "stellar:testnet",
+        "cumulativeAmountBaseUnits": "2000000",
+        "signedMessageB64": "AAAAEQAAAAEAAAAEAAAADwAAAAZhbW91bnQAAAAAAAoAAAAAAAAAAAAAAAAAHoSAAAAADwAAAAdjaGFubmVsAAAAABIAAAABR4GwtiZu9ZM1RYznq9bZWyC0mWlPTPDQVLYwcdk6VOMAAAAPAAAABmRvbWFpbgAAAAAADwAAAAhjaGFuY21tdAAAAA8AAAAHbmV0d29yawAAAAANAAAAIM7gMC1ZhE0yvcqRXIID3USzP7t+3BkFHqN6vt8o7NRy",
+        "signatureB64": "vx3QJ4G9OI6gdsQxP5Iyiy1SmQQFN6b3WjNZB/A+E10uW6u+4BF1JqlKs12AkJ7S5YT6vYJBDIcngmq3QaoGDg==",
+        "commitmentKey": "GCFV674WIJDNW6ACNONT3MTPRR7ORJUCICV2VOQOZJIUE4YEQBNLGD35",
+        "commitmentDigest": "22c3f34bd950f62d73f557280c7550e07b865fe37ca74e9438dd6baba8abc590"
+      },
+      "ack": {
+        "schema": "usagepay.payer-ack.v1",
+        "sessionId": "ev-session-001",
+        "network": "stellar:testnet",
+        "channelId": "CBDYDMFWEZXPLEZVIWGOPK6W3FNSBNEZNFHUZ4GQKS3DA4OZHJKOGXN4",
+        "evidenceDigest": "8dfc351dc2c17dd4b436f08c31c66e5e5c3c7902ec116b047479bc48e4e4b4f0",
+        "commitmentDigest": "22c3f34bd950f62d73f557280c7550e07b865fe37ca74e9438dd6baba8abc590",
+        "approvedCumulativeBaseUnits": "2000000",
+        "nonce": "9c35de40bda2ba5f2b5702c5b20ca583",
+        "payerKey": "GCFV674WIJDNW6ACNONT3MTPRR7ORJUCICV2VOQOZJIUE4YEQBNLGD35",
+        "signatureB64": "sm0yct5RjBJyMaJA6Xi+ChuR06eUkk0gY2gwMA7rQs6U9tS1nGO+qWQ6KUOzovzT/AzFSANDx2ESMmlkB6nrCA=="
+      },
+      "credentialAuthorization": "Payment eyJjaGFsbGVuZ2UiOnsiZGVzY3JpcHRpb24iOiJ1cGF5IGluY3JlbWVudCAyIiwiZXhwaXJlcyI6IjIwMjYtMTAtMjVUMTE6NTQ6NTIuMDI1WiIsImlkIjoieWtCU0ZqZkNjMTdVanRjRWxtQTVlWEQ5Q2NnaVRUMEF0YVdPUTJrMlJKTSIsImludGVudCI6ImNoYW5uZWwiLCJtZXRob2QiOiJzdGVsbGFyIiwicmVhbG0iOiJ1cGF5LWcxIiwicmVxdWVzdCI6ImV5SmhiVzkxYm5RaU9pSXhNREF3TURBd0lpd2lZMmhoYm01bGJDSTZJa05DUkZsRVRVWlhSVnBZVUV4RldsWkpWMGRQVUVzMlZ6TkdUbE5DVGtWYVRrWklWVm8wUjFGTFV6TkVRVFJQV2toS1MwOUhXRTQwSWl3aWJXVjBhRzlrUkdWMFlXbHNjeUk2ZXlKamRXMTFiR0YwYVhabFFXMXZkVzUwSWpvaU1UQXdNREF3TUNJc0ltNWxkSGR2Y21zaU9pSnpkR1ZzYkdGeU9uUmxjM1J1WlhRaUxDSnlaV1psY21WdVkyVWlPaUl6WmpVMlpqQm1aaTFoWWpNM0xUUXhNell0WVRVeFlTMDBORFkyTnpKaU1tWXpOV1FpZlgwIn0sInBheWxvYWQiOnsiYWN0aW9uIjoidm91Y2hlciIsImFtb3VudCI6IjIwMDAwMDAiLCJzaWduYXR1cmUiOiJiZjFkZDAyNzgxYmQzODhlYTA3NmM0MzEzZjkyMzI4YjJkNTI5OTA0MDUzN2E2Zjc1YTMzNTkwN2YwM2UxMzVkMmU1YmFiYmVlMDExNzUyNmE5NGFiMzVkODA5MDllZDJlNTg0ZmFiZDgyNDEwYzg3Mjc4MjZhYjc0MWFhMDYwZSJ9fQ"
+    },
+    {
+      "sequence": 3,
+      "commitment": {
+        "schema": "usagepay.native-commitment.v1",
+        "channelId": "CBDYDMFWEZXPLEZVIWGOPK6W3FNSBNEZNFHUZ4GQKS3DA4OZHJKOGXN4",
+        "network": "stellar:testnet",
+        "cumulativeAmountBaseUnits": "3000000",
+        "signedMessageB64": "AAAAEQAAAAEAAAAEAAAADwAAAAZhbW91bnQAAAAAAAoAAAAAAAAAAAAAAAAALcbAAAAADwAAAAdjaGFubmVsAAAAABIAAAABR4GwtiZu9ZM1RYznq9bZWyC0mWlPTPDQVLYwcdk6VOMAAAAPAAAABmRvbWFpbgAAAAAADwAAAAhjaGFuY21tdAAAAA8AAAAHbmV0d29yawAAAAANAAAAIM7gMC1ZhE0yvcqRXIID3USzP7t+3BkFHqN6vt8o7NRy",
+        "signatureB64": "fjZRIRj2+f59dtAkN1StrBftdBi8qb1/RY++N5G43PGbLzk5Rqgx7X4EgCqDwuFUxTiWbYhpvpT3FJjfQ7+WAA==",
+        "commitmentKey": "GCFV674WIJDNW6ACNONT3MTPRR7ORJUCICV2VOQOZJIUE4YEQBNLGD35",
+        "commitmentDigest": "6327e2c444e96e6bbe59238faef1ad36f7eec9280590b6fbb2983d79fae78130"
+      },
+      "ack": {
+        "schema": "usagepay.payer-ack.v1",
+        "sessionId": "ev-session-001",
+        "network": "stellar:testnet",
+        "channelId": "CBDYDMFWEZXPLEZVIWGOPK6W3FNSBNEZNFHUZ4GQKS3DA4OZHJKOGXN4",
+        "evidenceDigest": "4ae38e0a6e0360c92663d1a3b41be9a8e357fb3b78dc728470c84e057142d178",
+        "commitmentDigest": "6327e2c444e96e6bbe59238faef1ad36f7eec9280590b6fbb2983d79fae78130",
+        "approvedCumulativeBaseUnits": "3000000",
+        "nonce": "78727790a519f36a084364e8ebd16546",
+        "payerKey": "GCFV674WIJDNW6ACNONT3MTPRR7ORJUCICV2VOQOZJIUE4YEQBNLGD35",
+        "signatureB64": "SU7XgFIFdnQmdexOisZgpiNmO6RlLCQz09pZe6c7QRUpOLXlpDODUF0xO9RKu8C4aTJWAdM6IvIqkHnnRCEZBw=="
+      },
+      "credentialAuthorization": "Payment eyJjaGFsbGVuZ2UiOnsiZGVzY3JpcHRpb24iOiJ1cGF5IGluY3JlbWVudCAzIiwiZXhwaXJlcyI6IjIwMjYtMTAtMjVUMTE6NTQ6NTQuMDA2WiIsImlkIjoiQjRTTjhuM2hlSEhYaTcwdmMyNnRpdFNsV3RjR1UwZ0dJS0VVNU1JTFZ1USIsImludGVudCI6ImNoYW5uZWwiLCJtZXRob2QiOiJzdGVsbGFyIiwicmVhbG0iOiJ1cGF5LWcxIiwicmVxdWVzdCI6ImV5SmhiVzkxYm5RaU9pSXhNREF3TURBd0lpd2lZMmhoYm01bGJDSTZJa05DUkZsRVRVWlhSVnBZVUV4RldsWkpWMGRQVUVzMlZ6TkdUbE5DVGtWYVRrWklWVm8wUjFGTFV6TkVRVFJQV2toS1MwOUhXRTQwSWl3aWJXVjBhRzlrUkdWMFlXbHNjeUk2ZXlKamRXMTFiR0YwYVhabFFXMXZkVzUwSWpvaU1qQXdNREF3TUNJc0ltNWxkSGR2Y21zaU9pSnpkR1ZzYkdGeU9uUmxjM1J1WlhRaUxDSnlaV1psY21WdVkyVWlPaUkxTVRNMU1UQTRZaTFrTjJSbExUUTJPVGd0T1RsaFpDMHdPVGRtWVdRek56Y3dabU1pZlgwIn0sInBheWxvYWQiOnsiYWN0aW9uIjoidm91Y2hlciIsImFtb3VudCI6IjMwMDAwMDAiLCJzaWduYXR1cmUiOiI3ZTM2NTEyMTE4ZjZmOWZlN2Q3NmQwMjQzNzU0YWRhYzE3ZWQ3NDE4YmNhOWJkN2Y0NThmYmUzNzkxYjhkY2YxOWIyZjM5Mzk0NmE4MzFlZDdlMDQ4MDJhODNjMmUxNTRjNTM4OTY2ZDg4NjliZTk0ZjcxNDk4ZGY0M2JmOTYwMCJ9fQ"
+    }
+  ],
+  "negatives": [
+    {
+      "label": "stale-evidence",
+      "status": 409,
+      "code": "ACK_EVIDENCE_MISMATCH",
+      "storedCumulativeAfter": "2000000",
+      "nativeSignature": "7e36512118f6f9fe7d76d0243754adac17ed7418bca9bd7f458fbe3791b8dcf19b2f393946a831ed7e04802a83c2e154c538966d8869be94f71498df43bf9600"
+    },
+    {
+      "label": "foreign-signer",
+      "status": 409,
+      "code": "ACK_PAYER_KEY_MISMATCH",
+      "storedCumulativeAfter": "2000000",
+      "nativeSignature": "7e36512118f6f9fe7d76d0243754adac17ed7418bca9bd7f458fbe3791b8dcf19b2f393946a831ed7e04802a83c2e154c538966d8869be94f71498df43bf9600"
+    }
+  ]
+}
