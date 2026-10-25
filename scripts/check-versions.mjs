@@ -26,6 +26,17 @@ for (const [name, expected] of Object.entries(pins.dependencies)) {
   if (actual !== expected) failures.push(name);
 }
 
+// SPEC 05 demo UI (apps/web): pinned exact in its package.json and installed as such.
+const web = JSON.parse(readFileSync(new URL('apps/web/package.json', root), 'utf8'));
+const webDeclared = { ...web.dependencies, ...web.devDependencies };
+for (const [name, expected] of Object.entries(pins.uiDependencies)) {
+  // Direct dependencies are linked under apps/web/node_modules (type-only packages have no resolvable entry point).
+  const actual = JSON.parse(readFileSync(new URL(`apps/web/node_modules/${name}/package.json`, root), 'utf8')).version;
+  const ok = actual === expected && webDeclared[name] === expected;
+  console.log(`${ok ? 'PASS' : 'FAIL'} ${name} pinned=${expected} declared=${webDeclared[name]} installed=${actual}`);
+  if (!ok) failures.push(name);
+}
+
 const mpp = await import('@stellar/mpp');
 const server = await import('@stellar/mpp/channel/server');
 const checks = [

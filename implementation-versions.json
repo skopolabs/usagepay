@@ -57,11 +57,24 @@
     "@noble/hashes": "2.4.0",
     "canonicalize": "2.1.0"
   },
+  "uiDependencies": {
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "vite": "8.3.5",
+    "@vitejs/plugin-react": "6.1.2",
+    "jsdom": "29.1.1",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/dom": "10.4.2",
+    "@testing-library/user-event": "14.6.7"
+  },
   "dependencyNotes": {
     "@stellar/mpp": "peerDependencies require @stellar/stellar-sdk ^15.1.0 and mppx ^0.6.29; newer stellar-sdk 17.x / mppx 0.15.x are intentionally NOT used",
     "viem": "required (non-optional) peer of mppx 0.6.31",
     "@stellar/stellar-base": "npm marks 15.0.0 deprecated (rolled into stellar-sdk), but it is the exact single instance stellar-sdk 15.1.0 depends on; contracts use only StrKey",
-    "canonicalize": "dev-only RFC 8785 reference implementation used for differential tests"
+    "canonicalize": "dev-only RFC 8785 reference implementation used for differential tests",
+    "uiDependencies": "SPEC 05 apps/web, resolved 2026-10-24: newest stable releases at least two weeks old, except vite 8.3.5, which is the single vite instance vitest 4.1.12 already resolved in the lockfile (a second vite would load two module graphs). jsdom 30.x requires Node ^22.22.2, so 29.1.1 (Node ^22.13.0) is used. No UI framework, no runtime dependency beyond react/react-dom."
   },
   "upstreamSources": {
     "stellar-mpp-sdk": {

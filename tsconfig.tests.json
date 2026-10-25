@@ -34,5 +34,8 @@
     "fixtures/test/**/*.ts",
     "vitest.config.ts",
     "vitest.aliases.ts"
+  ],
+  "exclude": [
+    "apps/web/**"
   ]
 }
