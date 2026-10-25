@@ -45,6 +45,7 @@ The fake is installed on `rpc.Server.prototype` in `test/fake-chain.ts`, the RPC
 | F3-B | both | replayed r-002 → `DUPLICATE_READING`; reused nonce → `REPLAY_NONCE` (payer and payee) |
 | F4-B | `payer-payee.test.ts` | 10 tampered acks and credentials → 409 before the SDK; store unchanged |
 | F4-C | `payer-payee.test.ts` | unpinned channel, wrong network, wrong amount, wrong signer, SDK balance and recipient refusals |
+| Failure propagation | `payer-payee.test.ts` | tampered reading or tariff → never signed; RPC down before signing; native bytes not capturable → `SDK_CAPTURE_UNAVAILABLE`; lost answer → `PENDING` until reconciled |
 | AC01–AC17 | `policy.test.ts` | every frozen conformance case is refused with its catalogue code, and every control is accepted |
 | Settlement | `settlement.test.ts` | SUCCESS, FAILED, NOT_FOUND, unknown outcome, RPC down → PENDING → re-read; the E0 binding |
 

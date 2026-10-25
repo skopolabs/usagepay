@@ -61,8 +61,8 @@ The package depends only on `@usagepay/contracts` and `@stellar/stellar-sdk`. It
 |---|---|---|
 | S1-C | `offline.test.ts` | Golden session passes V01–V07 with 1,000,000 / 2,000,000 / 3,000,000; overall is NOT_AVAILABLE without chain proof |
 | F1-C | `offline.test.ts` | One flipped source byte, an unpinned or unknown meter key, or an envelope mismatch → V02 FAIL; a stored `verified: true` → V01 FAIL |
-| F3-C | `offline.test.ts` | Duplicate reading, reused nonce or reordered increments → V01 FAIL; a counter, interval or terminal gap → V02 `COUNTER_DISCONTINUITY` |
-| F4-C | `offline.test.ts` | Mutated evidence, tariff, price, rounding, budget, asset, session or channel → V03–V07 FAIL while the native signature stays genuine |
+| F3-C | `offline.test.ts` | Duplicate reading, reused nonce or reordered increments → V01 FAIL and every other check `PRECONDITION_FAILED`; a counter, interval or terminal gap → V02 `COUNTER_DISCONTINUITY` |
+| F4-C | `offline.test.ts` | Mutated evidence, tariff, price, rounding, budget, asset, session or channel → V03–V07 FAIL while the native signature stays genuine; a non-increasing cumulative → V04 `NON_MONOTONIC_CUMULATIVE` |
 | F4-D | `offline.test.ts` | Different amount or channel, replaced signature, wrong signer or wrong key → V05 `NATIVE_COMMITMENT_INVALID` |
 | F5-C | `chain.test.ts` | Unrelated SUCCESS tx, wrong close amount or signature, payout recipient or amount, channel parties, token or key, `withdrawn()`, residual balance, overstated E1 → V08 FAIL |
 | F5-D | `chain.test.ts` | RPC down, timeout, NOT_FOUND, events outside retention, missing `withdraw` event, unreadable key → V08 NOT_AVAILABLE |
