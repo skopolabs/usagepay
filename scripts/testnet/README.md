@@ -1,4 +1,4 @@
-# Testnet scripts (G1, G2)
+# Testnet scripts (G1, G2, G3)
 
 Stellar Testnet only. Identities are disposable and live in the Stellar CLI keystore, outside the repository.
 Testnet names use the `upay` prefix.
@@ -12,6 +12,7 @@ Testnet names use the `upay` prefix.
 | 5–7. Commitments, ack gate, close, independent verification | `corepack pnpm g1:lifecycle` | yes (close) |
 | G2. Deploy `upay-g2-channel` (1 USDC) | `CHANNEL_ALIAS=upay-g2-channel scripts/testnet/deploy-channel.sh` | yes |
 | G2. SPEC 02 settlement E2E (`@usagepay/settlement`) | `corepack pnpm g2:settlement` | yes (close) |
+| G3. SPEC 03 independent verification of the newest G2 run | `corepack pnpm g3:verify` | no (read-only RPC) |
 
 All scripts are idempotent except `g1:lifecycle` and `g2:settlement`. It closes the channel, so a rerun needs a freshly deployed channel
 (remove the `upay-g1-channel` alias, then run `deploy-channel.sh` again).
@@ -48,3 +49,14 @@ Output goes to `runs/g2-<timestamp>/`: `trust.json`, `trace.jsonl`, `e0.json`, `
 - Its values come from configuration and the pinned on-chain channel facts: channel, recipient, funder, commitment key, asset, tariff digest, budget cap and the runtime meter public key.
 - It is never derived from E0 or E1.
 - V08 confirms its chain-facing values against the ledger.
+
+## G3 verification (`g3/run.ts`)
+
+G3 is read-only. It runs the SPEC 03 verifier against the newest `g2-*` run and that run's `trust.json`; arguments `[g2RunDir] [trustFile]` override both. Its four scenarios:
+
+| Scenario | Expected verdict |
+|---|---|
+| S1 | PASS |
+| F1-C: a byte is flipped | FAIL |
+| F5-C: a real but unrelated close (override with `UPAY_UNRELATED_TX`) | FAIL `CHAIN_MISMATCH` |
+| F5-D: a random hash | NOT_AVAILABLE |

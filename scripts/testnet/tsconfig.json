@@ -7,5 +7,5 @@
     "erasableSyntaxOnly": true,
     "rootDir": "."
   },
-  "include": ["g1/**/*.ts", "g2/**/*.ts"]
+  "include": ["g1/**/*.ts", "g2/**/*.ts", "g3/**/*.ts"]
 }

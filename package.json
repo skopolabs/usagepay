@@ -21,7 +21,8 @@
     "g1:lifecycle": "tsc -b && node scripts/testnet/g1/run.ts",
     "typecheck:testnet": "tsc -b && tsc -p scripts/testnet/tsconfig.json",
     "g2:settlement": "tsc -b && node scripts/testnet/g2/run.ts",
-    "verify": "tsc -b && node packages/verification/dist/bin.js"
+    "verify": "tsc -b && node packages/verification/dist/bin.js",
+    "g3:verify": "tsc -b && node scripts/testnet/g3/run.ts"
   },
   "dependencies": {
     "@stellar/mpp": "0.7.1",
@@ -30,6 +31,7 @@
     "@usagepay/fixtures": "workspace:*",
     "@usagepay/metering": "workspace:*",
     "@usagepay/settlement": "workspace:*",
+    "@usagepay/verification": "workspace:*",
     "mppx": "0.6.31",
     "viem": "2.57.10"
   },
