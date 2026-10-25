@@ -14,7 +14,7 @@
     "build": "tsc -b",
     "clean": "tsc -b --clean",
     "test": "vitest run",
-    "test:contracts": "vitest run --project contracts --project fixtures",
+    "test:contracts": "vitest run --project contracts --project fixtures --project integration",
     "fixtures:generate": "tsc -b && node fixtures/dist/cli.js generate",
     "fixtures:check": "tsc -b && node fixtures/dist/cli.js check",
     "versions:check": "node scripts/check-versions.mjs",
