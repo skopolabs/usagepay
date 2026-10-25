@@ -1,14 +1,24 @@
 {
   "schema": "usagepay.implementation-versions.v1",
   "resolvedAt": "2026-10-24",
-  "gate": "G0",
+  "gate": "G1",
   "network": {
     "id": "stellar:testnet",
     "networkPassphrase": "Test SDF Network ; September 2015",
     "assetSac": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
     "assetSacSource": "USDC_SAC_TESTNET exported by the installed @stellar/mpp 0.7.1 (dist/constants.js)",
     "assetDecimals": 7,
-    "assetDecimalsStatus": "SDK DEFAULT_DECIMALS only; NOT yet verified on-chain (G1 must confirm SAC decimals before any payment)"
+    "assetDecimalsStatus": "VERIFIED on-chain 2026-10-25: SAC decimals() = 7, symbol() = USDC",
+    "assetClassic": "USDC:GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLLFLA5",
+    "assetClassicSource": "SAC name() read on-chain via simulation on 2026-10-25 (stellar CLI 28.1.0, Testnet protocol 29)",
+    "testnetObserved": {
+      "date": "2026-10-25",
+      "protocolVersion": 29,
+      "rpc": "stellar-rpc 30.0.0 (13e53516)",
+      "core": "stellar-core 30.0.0",
+      "rpcEventRetention": "~7 days",
+      "nextReset": "2026-12-16"
+    }
   },
   "toolchain": {
     "node": {
@@ -27,6 +37,10 @@
       "requiredMinimum": "28.1.0",
       "localObserved": "28.1.0 (c0f4d0da)",
       "stellarXdr": "28.0.0"
+    },
+    "rust": {
+      "localObserved": "rustc 1.97.1 (8bab26f4f 2026-07-14)",
+      "target": "wasm32v1-none"
     },
     "claudeCode": {
       "localObserved": "2.1.310"
@@ -60,7 +74,14 @@
       "repository": "https://github.com/stellar-experimental/one-way-channel",
       "ref": "main",
       "commit": "25dea1b303495a7a4184af7605bbb7671ff08da6",
-      "note": "no release tags; pinned to main HEAD observed 2026-10-23. Experimental, unaudited, Testnet only"
+      "note": "no release tags; pinned to main HEAD observed 2026-10-23. Experimental, unaudited, Testnet only",
+      "wasm": {
+        "buildScript": "scripts/testnet/build-channel.sh",
+        "command": "stellar contract build --package channel --locked",
+        "bytes": 12385,
+        "sha256": "d662c1217f2452115d1a3392f21f097acc458fa6ff77dafd84c0d637b9745d90",
+        "reproducible": true
+      }
     },
     "stellar-dev-skill": {
       "repository": "https://github.com/stellar/stellar-dev-skill",
@@ -95,6 +116,18 @@
       "resolveKeypair",
       "stellar"
     ],
-    "commitmentEncoding": "dist/channel/commitment.js: signed bytes are the XDR ScVal::Map returned by contract prepare_commitment with fields {amount, channel, domain:'chancmmt', network:SHA-256(passphrase)}. Behaviour to be demonstrated with real credentials in G1, not assumed"
+    "commitmentEncoding": "DEMONSTRATED in G1 (2026-10-25): prepare_commitment simulation bytes equal a locally built XDR ScVal::Map {amount:i128, channel:Address, domain:Symbol chancmmt, network:SHA-256(passphrase)}; captured signatures verify under the on-chain CommitmentKey",
+    "channelServerOptions": "channel, commitmentKey, store, network, recipient, currency, checkOnChainState, feePayer, feeBudget, logger: recipient/currency ARE supported in 0.7.1 and are enforced against getChannelState"
+  },
+  "testnetDeployments": {
+    "upay-g1-channel": {
+      "contractId": "CBDYDMFWEZXPLEZVIWGOPK6W3FNSBNEZNFHUZ4GQKS3DA4OZHJKOGXN4",
+      "wasmHash": "d662c1217f2452115d1a3392f21f097acc458fa6ff77dafd84c0d637b9745d90",
+      "wasmUploadTx": null,
+      "wasmUploadNote": "no upload tx in this deployment: the content-addressed wasm was already installed on Testnet, so the CLI skipped the install",
+      "deployTx": "56f298ba7890d73cc11c5fd35c46f792076dd34bdaf74c6ff59d3ee3733097f7",
+      "closeTx": "ee5598ca5f5ea5fda213282bd7f2fc23a0ab53bf947ae28b2c0393ff4ff74543",
+      "status": "CLOSED by G1 run g1-2026-10-25T11-49-48-724Z (withdrawn 3000000, refund 7000000)"
+    }
   }
 }

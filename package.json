@@ -17,7 +17,9 @@
     "test:contracts": "vitest run --project contracts --project fixtures",
     "fixtures:generate": "tsc -b && node fixtures/dist/cli.js generate",
     "fixtures:check": "tsc -b && node fixtures/dist/cli.js check",
-    "versions:check": "node scripts/check-versions.mjs"
+    "versions:check": "node scripts/check-versions.mjs",
+    "g1:lifecycle": "tsc -b && node scripts/testnet/g1/run.ts",
+    "typecheck:testnet": "tsc -b && tsc -p scripts/testnet/tsconfig.json"
   },
   "dependencies": {
     "@stellar/mpp": "0.7.1",

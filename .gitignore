@@ -12,4 +12,10 @@ coverage/
 secrets/
 .stellar/
 
+# Testnet run outputs: run directories hold only public evidence and are committed; raw CLI logs stay local
+scripts/testnet/runs/*.log
+
 .DS_Store
+
+# Upstream sources vendored and built by scripts/testnet/build-channel.sh
+scripts/testnet/.vendor/
