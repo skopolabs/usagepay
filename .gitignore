@@ -1,0 +1,15 @@
+node_modules/
+dist/
+*.tsbuildinfo
+coverage/
+
+# Secrets and local identities: never commit
+.env
+.env.*
+!.env.example
+*.key
+*.secret
+secrets/
+.stellar/
+
+.DS_Store

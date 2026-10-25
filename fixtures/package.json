@@ -1,0 +1,19 @@
+{
+  "name": "@usagepay/fixtures",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Deterministic OFFLINE_FIXTURE data for SPEC 00 v1 contract tests. Test-only keys; never proof of a payment.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "v1"],
+  "dependencies": {
+    "@noble/curves": "2.4.0",
+    "@usagepay/contracts": "workspace:*",
+    "zod": "4.6.7"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "rootDir": ".",
+    "paths": {
+      "@usagepay/contracts": [
+        "./packages/contracts/src/index.ts"
+      ],
+      "@usagepay/fixtures": [
+        "./fixtures/src/index.ts"
+      ]
+    },
+    "allowImportingTsExtensions": true
+  },
+  "include": [
+    "packages/*/src/**/*.ts",
+    "packages/*/test/**/*.ts",
+    "fixtures/src/**/*.ts",
+    "fixtures/test/**/*.ts",
+    "vitest.config.ts",
+    "vitest.aliases.ts"
+  ]
+}

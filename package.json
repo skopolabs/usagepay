@@ -1,0 +1,35 @@
+{
+  "name": "usagepay",
+  "version": "0.0.0",
+  "private": true,
+  "description": "UsagePay HackMeridian P0 monorepo (Stellar Testnet only).",
+  "type": "module",
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=22.12.0",
+    "pnpm": "10.33.0"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.tests.json",
+    "build": "tsc -b",
+    "clean": "tsc -b --clean",
+    "test": "vitest run",
+    "test:contracts": "vitest run --project contracts --project fixtures",
+    "fixtures:generate": "tsc -b && node fixtures/dist/cli.js generate",
+    "fixtures:check": "tsc -b && node fixtures/dist/cli.js check",
+    "versions:check": "node scripts/check-versions.mjs"
+  },
+  "dependencies": {
+    "@stellar/mpp": "0.7.1",
+    "@stellar/stellar-sdk": "15.1.0",
+    "@usagepay/contracts": "workspace:*",
+    "@usagepay/fixtures": "workspace:*",
+    "mppx": "0.6.31",
+    "viem": "2.57.10"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.5",
+    "typescript": "6.0.3",
+    "vitest": "4.1.12"
+  }
+}
