@@ -129,7 +129,7 @@ One real Stellar testnet channel and one externally metered simulated domain, wi
 
 ## 6. Future coexistence roadmap — integration milestones ONLY
 
-**Each product retains its own roadmap:** UsagePay milestones and Track A/B separation are authoritative in [01.1 §10](01-usagepay/01.1-usagepay-technical-architecture-and-roadmap.md); FlowCredit stages are in [02 §7](02-flowcredit.md); VeilPay stages are in [04 §6](04-veilpay.md). No duplicate per-product timeline is maintained here.
+**Each product retains its own roadmap:** UsagePay milestones and Track A/B separation are authoritative in [01.1 §10](../../01.1-usagepay-technical-architecture-and-roadmap.md); FlowCredit and VeilPay stages are kept in their own product documents, outside this repository. No duplicate per-product timeline is maintained here.
 
 **Integration sequence, only if independent products demonstrate value:**
 
