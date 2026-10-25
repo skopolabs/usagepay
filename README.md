@@ -66,6 +66,8 @@ corepack pnpm test               # every offline test (unit + module + integrati
 corepack pnpm test:contracts     # SPEC 00 contracts, fixtures and the SPEC 04 cross-package scenarios S1/F1-F7
 corepack pnpm build              # all packages and the demo entry point
 corepack pnpm demo               # judge walkthrough: replay of the latest real Testnet run + live read-only verification
+corepack pnpm ui:build           # demo UI: refreshes the bundle, builds apps/web/dist/index.html (one self-contained file)
+corepack pnpm ui:preview         # serves the demo UI locally; presenter keys → ← Space T S
 corepack pnpm test:e2e:testnet   # EXPLICIT OPT-IN, live Testnet: needs UPAY_TESTNET_E2E=1 and funded disposable identities
 ```
 
@@ -179,6 +181,24 @@ With one developer, execute the same workstreams sequentially. With two or three
 | **G3–G5 — Integration and demo** | Real end-to-end flow, independent PASS/FAIL/NOT_AVAILABLE results, repeatable presentation | Demo only after mandatory P0 checks pass |
 
 **Testing pyramid:** deterministic unit tests → module/contract integration tests → real Stellar Testnet E2E → demo smoke test. Include positive paths, tampering, budget refusal, replay and missing-chain-data behavior. Mocks never count as real Testnet evidence.
+
+## Repository layout
+
+```text
+usagepay/
+├── 01.1-usagepay-technical-architecture-and-roadmap.md   # product authority
+├── specs/                      # SPEC 00-04 implementation contracts, SPEC 05 demo UI & UX
+├── packages/
+│   ├── contracts/              # SPEC 00 shared schemas, JCS, digests, signatures
+│   ├── metering/               # SPEC 01 simulated charger, signed readings, tariff
+│   ├── settlement/             # SPEC 02 payer gate, payee ack gate, MPP commitments, close, E0/E1
+│   └── verification/           # SPEC 03 independent verifier V01-V08 and `verify` CLI
+├── fixtures/                   # SPEC 00 deterministic OFFLINE_FIXTURE data and conformance cases
+├── apps/demo/                  # SPEC 04 scenarios S1/F1-F7, plain-language narrative, `demo` CLI and bundle
+├── apps/web/                   # SPEC 05 judge-facing demo UI (static, renders the demo bundle, no keys, no network)
+├── scripts/testnet/            # G1/G2/G3 and E2E Testnet runners; runs/ holds public evidence
+└── docs/                       # pitch, G1 feasibility notes, product research
+```
 
 ## First Claude Code session
 
