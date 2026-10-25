@@ -6,5 +6,7 @@ export * from './payee.js';
 export * from './payer.js';
 export * from './policy.js';
 export * from './ports.js';
+export * from './settlement.js';
 export * from './state.js';
+export * from './stellar-gateway.js';
 export * from './transport.js';
