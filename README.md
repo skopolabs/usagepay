@@ -1,4 +1,4 @@
-# UsagePay — HackMeridian MVP
+# UsagePay — HackMeridian Lisbon 2026 MVP
 
 *Infrastructure for the machine economy.*
 
