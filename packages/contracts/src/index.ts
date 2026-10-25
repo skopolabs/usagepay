@@ -1,4 +1,5 @@
 export * from './amounts.js';
+export * from './authorization.js';
 export * from './canonical.js';
 export * from './digests.js';
 export * from './encoding.js';
