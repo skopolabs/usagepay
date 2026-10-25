@@ -1,4 +1,4 @@
-# Testnet scripts (G1, G2, G3)
+# Testnet scripts (G1, G2, G3, E2E)
 
 Stellar Testnet only. Identities are disposable and live in the Stellar CLI keystore, outside the repository.
 Testnet names use the `upay` prefix.
@@ -13,6 +13,7 @@ Testnet names use the `upay` prefix.
 | G2. Deploy `upay-g2-channel` (1 USDC) | `CHANNEL_ALIAS=upay-g2-channel scripts/testnet/deploy-channel.sh` | yes |
 | G2. SPEC 02 settlement E2E (`@usagepay/settlement`) | `corepack pnpm g2:settlement` | yes (close) |
 | G3. SPEC 03 independent verification of the newest G2 run | `corepack pnpm g3:verify` | no (read-only RPC) |
+| SPEC 04. Fresh channel + G2 + G3 in one command | `UPAY_TESTNET_E2E=1 corepack pnpm test:e2e:testnet` | yes (deploy, deposit, close) |
 
 All scripts are idempotent except `g1:lifecycle` and `g2:settlement`. It closes the channel, so a rerun needs a freshly deployed channel
 (remove the `upay-g1-channel` alias, then run `deploy-channel.sh` again).
@@ -50,6 +51,8 @@ Output goes to `runs/g2-<timestamp>/`: `trust.json`, `trace.jsonl`, `e0.json`, `
 - It is never derived from E0 or E1.
 - V08 confirms its chain-facing values against the ledger.
 
+`UPAY_CHANNEL_ALIAS` selects the channel. The default is `upay-g2-channel`.
+
 ## G3 verification (`g3/run.ts`)
 
 G3 is read-only. It runs the SPEC 03 verifier against the newest `g2-*` run and that run's `trust.json`; arguments `[g2RunDir] [trustFile]` override both. Its four scenarios:
@@ -60,3 +63,18 @@ G3 is read-only. It runs the SPEC 03 verifier against the newest `g2-*` run and 
 | F1-C: a byte is flipped | FAIL |
 | F5-C: a real but unrelated close (override with `UPAY_UNRELATED_TX`) | FAIL `CHAIN_MISMATCH` |
 | F5-D: a random hash | NOT_AVAILABLE |
+
+## Testnet E2E (`e2e/run.ts`, `pnpm test:e2e:testnet`)
+
+The E2E is opt-in through `UPAY_TESTNET_E2E=1`. It refuses with exit 3 in four cases:
+- the opt-in is absent;
+- `implementation-versions.json` is not `stellar:testnet` or does not carry the Testnet passphrase;
+- the RPC is not a Testnet endpoint, or reports another passphrase;
+- the funder holds less than 1 USDC.
+
+Steps:
+1. Deploy a fresh `upay-e2e-<timestamp>` channel.
+2. Run G2 on it.
+3. Run G3 on the new run.
+
+It records `runs/e2e-<timestamp>/summary.json` (`REAL_TESTNET`). Each call deploys a new channel, so reruns need no cleanup.

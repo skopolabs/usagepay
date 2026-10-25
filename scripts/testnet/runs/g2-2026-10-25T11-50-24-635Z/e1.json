@@ -1,0 +1,11 @@
+{
+  "schema": "usagepay.e1.v1",
+  "e0Digest": "206f386806bf6dc2f6390dc77a564cf1a0187e99f2b88efe2b5d7e1a9a723259",
+  "network": "stellar:testnet",
+  "channelId": "CAKIMXHFHQ727ISN4DROHH4EOMQI2IVISCHNMAMO3ZB5WBXHXNL4YIMJ",
+  "assetSac": "CBIELTK6YBZJU5UP2WWQEUCYKLPU6AUNZ2BQ4WWFEIE3USCIHMXQDAMA",
+  "closeTxHash": "8599d0906fc6eb182c3b61f602e77343ef347f01b7d822a4113db6feca6856cc",
+  "txStatus": "SUCCESS",
+  "settledCumulativeBaseUnits": "3000000",
+  "verifierVersion": "usagepay-verifier.v1"
+}

@@ -1,0 +1,196 @@
+{
+  "schema": "upay.g3-verification-run.v1",
+  "runId": "g3-2026-10-25T11-50-38-887Z",
+  "result": "PASS",
+  "network": "stellar:testnet",
+  "evidenceClass": "TESTNET_LIVE read-only RPC (meter data: SIMULATED, runtime meter key)",
+  "inputs": {
+    "g2Run": "scripts/testnet/runs/g2-2026-10-25T11-50-24-635Z",
+    "trustFile": "scripts/testnet/runs/g2-2026-10-25T11-50-24-635Z/trust.json",
+    "e0Digest": "206f386806bf6dc2f6390dc77a564cf1a0187e99f2b88efe2b5d7e1a9a723259",
+    "closeTxHash": "8599d0906fc6eb182c3b61f602e77343ef347f01b7d822a4113db6feca6856cc",
+    "channelId": "CAKIMXHFHQ727ISN4DROHH4EOMQI2IVISCHNMAMO3ZB5WBXHXNL4YIMJ"
+  },
+  "scenarios": [
+    {
+      "id": "S1",
+      "description": "genuine G2 E0/E1 against live Testnet RPC",
+      "result": "PASS",
+      "overall": {
+        "status": "PASS",
+        "reasonCode": "ALL_CHECKS_PASSED",
+        "details": "V01-V08 passed for the one-close Testnet scope"
+      },
+      "checks": {
+        "V01_SCHEMA": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        },
+        "V02_METER": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        },
+        "V03_TARIFF": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        },
+        "V04_EVIDENCE": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        },
+        "V05_MPP": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        },
+        "V06_PAYER_ACK": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        },
+        "V07_E0_E1_LINK": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        },
+        "V08_CHAIN": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        }
+      },
+      "mismatches": []
+    },
+    {
+      "id": "F1-C",
+      "description": "copied E0, one meter source byte of r-002 flipped under the original signature",
+      "result": "PASS",
+      "overall": {
+        "status": "FAIL",
+        "reasonCode": "INVALID_METER_SIGNATURE",
+        "details": "failed: V02_METER, V04_EVIDENCE, V07_E0_E1_LINK"
+      },
+      "checks": {
+        "V01_SCHEMA": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        },
+        "V02_METER": {
+          "status": "FAIL",
+          "reasonCode": "INVALID_METER_SIGNATURE"
+        },
+        "V03_TARIFF": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        },
+        "V04_EVIDENCE": {
+          "status": "FAIL",
+          "reasonCode": "EVIDENCE_DIGEST_MISMATCH"
+        },
+        "V05_MPP": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        },
+        "V06_PAYER_ACK": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        },
+        "V07_E0_E1_LINK": {
+          "status": "FAIL",
+          "reasonCode": "E0_DIGEST_MISMATCH"
+        },
+        "V08_CHAIN": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        }
+      },
+      "mismatches": []
+    },
+    {
+      "id": "F5-C",
+      "description": "E1 points to a real SUCCESS close of another channel (ee5598ca5f5ea5fda213282bd7f2fc23a0ab53bf947ae28b2c0393ff4ff74543)",
+      "result": "PASS",
+      "overall": {
+        "status": "FAIL",
+        "reasonCode": "CHAIN_MISMATCH",
+        "details": "failed: V08_CHAIN"
+      },
+      "checks": {
+        "V01_SCHEMA": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        },
+        "V02_METER": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        },
+        "V03_TARIFF": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        },
+        "V04_EVIDENCE": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        },
+        "V05_MPP": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        },
+        "V06_PAYER_ACK": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        },
+        "V07_E0_E1_LINK": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        },
+        "V08_CHAIN": {
+          "status": "FAIL",
+          "reasonCode": "CHAIN_MISMATCH"
+        }
+      },
+      "mismatches": []
+    },
+    {
+      "id": "F5-D",
+      "description": "E1 points to a transaction hash that does not exist on Testnet",
+      "result": "PASS",
+      "overall": {
+        "status": "NOT_AVAILABLE",
+        "reasonCode": "SETTLEMENT_NOT_PROVABLE",
+        "details": "not provable: V08_CHAIN"
+      },
+      "checks": {
+        "V01_SCHEMA": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        },
+        "V02_METER": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        },
+        "V03_TARIFF": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        },
+        "V04_EVIDENCE": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        },
+        "V05_MPP": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        },
+        "V06_PAYER_ACK": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        },
+        "V07_E0_E1_LINK": {
+          "status": "PASS",
+          "reasonCode": "CHECK_PASSED"
+        },
+        "V08_CHAIN": {
+          "status": "NOT_AVAILABLE",
+          "reasonCode": "SETTLEMENT_NOT_PROVABLE"
+        }
+      },
+      "mismatches": []
+    }
+  ]
+}

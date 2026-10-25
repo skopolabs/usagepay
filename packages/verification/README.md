@@ -51,7 +51,7 @@ Verdict precedence is FAIL > NOT_AVAILABLE > PASS, and PASS requires all of V01�
 
 ## Independence
 
-The package depends only on `@usagepay/contracts` and `@stellar/stellar-sdk`. It never imports the metering or settlement modules. The XDR commitment encoding is rebuilt here.
+The package depends only on `@usagepay/contracts` and `@stellar/stellar-sdk`. It never imports the metering or settlement modules. The XDR commitment encoding is rebuilt here; the contract test proves it byte-equal to the SDK-signed messages captured on Testnet in G2.
 
 ## Tests
 
@@ -67,7 +67,9 @@ The package depends only on `@usagepay/contracts` and `@stellar/stellar-sdk`. It
 | F5-C | `chain.test.ts` | Unrelated SUCCESS tx, wrong close amount or signature, payout recipient or amount, channel parties, token or key, `withdrawn()`, residual balance, overstated E1 → V08 FAIL |
 | F5-D | `chain.test.ts` | RPC down, timeout, NOT_FOUND, events outside retention, missing `withdraw` event, unreadable key → V08 NOT_AVAILABLE |
 | AC01–AC17 | `conformance.test.ts` | Every frozen case fails one of its catalogue checks (AC13 in V03); every control passes V01–V07 |
+| Contract | `g2-artifacts.test.ts` | The newest committed genuine G2 E0/E1 (with its `trust.json`) passes V01–V08 against a chain double; a flipped byte fails |
 | Adapter | `stellar-reader.test.ts` | Close envelope, events and contract state decoded from Soroban RPC XDR shapes |
+| CLI | `cli.test.ts` | Exit codes, `--offline`, `--json`, `--rpc`; trust file required |
 
 The live Testnet E2E is opt-in and read-only:
 
