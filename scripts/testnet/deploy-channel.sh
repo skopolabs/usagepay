@@ -1,18 +1,19 @@
 #!/usr/bin/env bash
 # G1 step 4: upload the pinned one-way-channel wasm and deploy one channel funded by upay-g1-payer.
 # Idempotent: if the contract alias already exists the deploy is skipped and only the read-only checks run.
-# CLI output (including transaction hashes) is appended to scripts/testnet/runs/g1-deploy.log (gitignored).
+# CHANNEL_ALIAS selects the channel (default upay-g1-channel; G2 settlement E2E uses upay-g2-channel).
+# CLI output (including transaction hashes) is appended to scripts/testnet/runs/<log>.log (gitignored).
 # Testnet naming rule: aliases use the "upay" prefix.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 NETWORK="testnet"
-ALIAS="upay-g1-channel"
+ALIAS="${CHANNEL_ALIAS:-upay-g1-channel}"
 DEPOSIT="10000000"              # 1 USDC in base units (7 decimals)
 REFUND_WAITING_PERIOD="100"     # ledgers; only gates the payer's unilateral refund
 WASM="$ROOT/scripts/testnet/.vendor/out/channel.wasm"
 RUNS="$ROOT/scripts/testnet/runs"
-LOG="$RUNS/g1-deploy.log"
+if [ "$ALIAS" = "upay-g1-channel" ]; then LOG="$RUNS/g1-deploy.log"; else LOG="$RUNS/$ALIAS-deploy.log"; fi
 TOKEN="$(node -e "console.log(require('$ROOT/implementation-versions.json').network.assetSac)")"
 mkdir -p "$RUNS"
 

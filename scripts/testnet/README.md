@@ -1,4 +1,4 @@
-# Testnet scripts (G1)
+# Testnet scripts (G1, G2)
 
 Stellar Testnet only. Identities are disposable and live in the Stellar CLI keystore, outside the repository.
 Testnet names use the `upay` prefix.
@@ -10,8 +10,10 @@ Testnet names use the `upay` prefix.
 | — Fund `upay-g1-payer` with Testnet USDC | Circle faucet (manual) | yes |
 | 4. Upload wasm, deploy and fund `upay-g1-channel` (1 USDC) | `scripts/testnet/deploy-channel.sh` | yes |
 | 5–7. Commitments, ack gate, close, independent verification | `corepack pnpm g1:lifecycle` | yes (close) |
+| G2. Deploy `upay-g2-channel` (1 USDC) | `CHANNEL_ALIAS=upay-g2-channel scripts/testnet/deploy-channel.sh` | yes |
+| G2. SPEC 02 settlement E2E (`@usagepay/settlement`) | `corepack pnpm g2:settlement` | yes (close) |
 
-All scripts are idempotent except `g1:lifecycle`. It closes the channel, so a rerun needs a freshly deployed channel
+All scripts are idempotent except `g1:lifecycle` and `g2:settlement`. It closes the channel, so a rerun needs a freshly deployed channel
 (remove the `upay-g1-channel` alias, then run `deploy-channel.sh` again).
 
 ## G1 lifecycle (`g1/`)
@@ -29,3 +31,14 @@ All scripts are idempotent except `g1:lifecycle`. It closes the channel, so a re
   - the `withdraw`/`close`/`refund` events;
   - the getters.
 - Each run writes `runs/<runId>/trace.jsonl`, which the demo UI replays, plus `capture.json` and `summary.json`. These files contain only public data and are committed as evidence. Raw CLI logs (`runs/*.log`) stay local.
+
+## G2 settlement E2E (`g2/run.ts`)
+
+SPEC 02 S1 on Testnet with the `@usagepay/settlement` package:
+
+- SPEC 01 metering signs the simulated readings with a runtime meter key.
+- The payer pins the channel facts and authorizes three increments through the payee ack gate.
+- E0 is frozen, then the recipient closes `upay-g2-channel`.
+- E1 holds only what RPC reported (`txStatus`, `withdrawn()`).
+
+Output goes to `runs/g2-<timestamp>/`: `trace.jsonl`, `e0.json`, `e1.json` and `summary.json`. Independent E0/E1 verification is SPEC 03.

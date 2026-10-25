@@ -20,6 +20,12 @@ importers:
       '@usagepay/fixtures':
         specifier: workspace:*
         version: link:fixtures
+      '@usagepay/metering':
+        specifier: workspace:*
+        version: link:packages/metering
+      '@usagepay/settlement':
+        specifier: workspace:*
+        version: link:packages/settlement
       mppx:
         specifier: 0.6.31
         version: 0.6.31(typescript@6.0.3)(viem@2.57.10(typescript@6.0.3)(zod@4.6.7))

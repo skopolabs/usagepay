@@ -19,13 +19,16 @@
     "fixtures:check": "tsc -b && node fixtures/dist/cli.js check",
     "versions:check": "node scripts/check-versions.mjs",
     "g1:lifecycle": "tsc -b && node scripts/testnet/g1/run.ts",
-    "typecheck:testnet": "tsc -b && tsc -p scripts/testnet/tsconfig.json"
+    "typecheck:testnet": "tsc -b && tsc -p scripts/testnet/tsconfig.json",
+    "g2:settlement": "tsc -b && node scripts/testnet/g2/run.ts"
   },
   "dependencies": {
     "@stellar/mpp": "0.7.1",
     "@stellar/stellar-sdk": "15.1.0",
     "@usagepay/contracts": "workspace:*",
     "@usagepay/fixtures": "workspace:*",
+    "@usagepay/metering": "workspace:*",
+    "@usagepay/settlement": "workspace:*",
     "mppx": "0.6.31",
     "viem": "2.57.10"
   },
