@@ -47,6 +47,15 @@ describe('UI-AC09: the production build holds no secret and loads nothing from t
     expect(html).toContain(bundle.realRun.settlement.closeTxHash);
   });
 
+  it('the Vercel headers repeat the page CSP and forbid framing (SPEC 05 D12)', () => {
+    const config = JSON.parse(readFileSync(join(ROOT, 'vercel.json'), 'utf8')) as { headers: { source: string; headers: { key: string; value: string }[] }[] };
+    const headers = new Map(config.headers.flatMap((rule) => (rule.source === '/(.*)' ? rule.headers.map((h) => [h.key, h.value] as const) : [])));
+    expect(headers.get('Content-Security-Policy')).toBe(`${CONTENT_SECURITY_POLICY}; frame-ancestors 'none'`);
+    expect(headers.get('X-Frame-Options')).toBe('DENY');
+    expect(headers.get('X-Content-Type-Options')).toBe('nosniff');
+    expect(headers.get('Referrer-Policy')).toBe('no-referrer');
+  });
+
   it('refuses a bundle carrying anything shaped like a Stellar secret seed', async () => {
     const tainted = join(mkdtempSync(join(tmpdir(), 'upay-web-bad-')), 'demo-bundle.json');
     const fakeSeed = `S${'A'.repeat(55)}`;
