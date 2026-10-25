@@ -103,7 +103,7 @@ Tests run with Vitest. Component tests use jsdom and render a **real** bundle bu
 | UI-AC06 | `MISSING`, `UNAVAILABLE` and `NOT_AVAILABLE` bundles render explicit states and never crash |
 | UI-AC07 | The footer of every view states the demo scope: Testnet only, test USDC with no value, simulated meter |
 | UI-AC08 | Presenter mode reaches every section by keyboard alone |
-| UI-AC09 | There is no secret pattern in the built assets, and no network request other than user-opened links: stellar.expert explorer pages, and in the footer the project's GitHub home, pitch deck and demo video channel |
+| UI-AC09 | There is no secret pattern in the built assets, and no network request other than user-opened links: stellar.expert explorer pages, and in the footer the project's GitHub repository, pitch deck and demo video channel |
 | UI-AC10 | Usability check: after a three-minute run-through, a person without blockchain knowledge can answer the five questions in §2 |
 
 ## 8. Out of scope
@@ -181,7 +181,7 @@ This section specifies what the P0 page shall provide beyond §3–§7, so that 
   - Light panels everywhere else: the charger display is a white card, not a dark screen.
   - Section explanations (the right column of each header) are small text, 0.88 rem, in the muted grey.
 - **Footer, after vend.money.** Three bands:
-  - a closing line, "Do not trust us: check it yourself.", with "See the auditor" (the scenarios without a real run) and "Source on GitHub" (`https://github.com/skopolabs`, new tab); below them, in the same text style, "Pitch Deck" (the Google Slides deck) and "Demo Video" (the YouTube channel), each in a new tab;
+  - a closing line, "Do not trust us: check it yourself.", with "See the auditor" (the scenarios without a real run) and "Source on GitHub" (`https://github.com/skopolabs/usagepay`, new tab); below them, in the same text style, "Pitch Deck" (the Google Slides deck) and "Demo Video" (the YouTube channel), each in a new tab;
   - the brand "UsagePay on Stellar" with the kicker;
   - the fine print: the demo scope (UI-AC07) and the presenter keys.
   - Text and labels:

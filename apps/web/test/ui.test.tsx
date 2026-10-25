@@ -327,7 +327,7 @@ describe('Footer (SPEC 05 §10.2): the source, pitch deck and demo video open in
     show(bundle);
     const footer = within(document.querySelector('footer') as HTMLElement);
     for (const [name, host] of [
-      [/Source on GitHub/, 'https://github.com/skopolabs'],
+      [/Source on GitHub/, 'https://github.com/skopolabs/usagepay'],
       [/Pitch Deck/, 'https://docs.google.com/presentation/d/'],
       [/Demo Video/, 'https://www.youtube.com/channel/'],
     ] as const) {
@@ -397,9 +397,9 @@ describe('UI-AC09: no network request other than links the user opens', () => {
     for (const a of document.querySelectorAll('a')) {
       const href = a.getAttribute('href') ?? '';
       if (href.startsWith('#')) continue;
-      // Explorer pages for on-chain facts; in the footer, the project's GitHub home, pitch deck and video channel.
+      // Explorer pages for on-chain facts; in the footer, the project's GitHub repository, pitch deck and video channel.
       expect(href).toMatch(
-        /^https:\/\/(stellar\.expert\/explorer\/testnet\/|github\.com\/skopolabs$|docs\.google\.com\/presentation\/d\/157kTzIG6SZ9LdqSRKgJaeVdF4ENpdYWz\/|www\.youtube\.com\/channel\/UCVkziV3cu8SnGI5tDzu37oQ$)/,
+        /^https:\/\/(stellar\.expert\/explorer\/testnet\/|github\.com\/skopolabs\/usagepay$|docs\.google\.com\/presentation\/d\/157kTzIG6SZ9LdqSRKgJaeVdF4ENpdYWz\/|www\.youtube\.com\/channel\/UCVkziV3cu8SnGI5tDzu37oQ$)/,
       );
       expect((a).getAttribute('target')).toBe('_blank');
       expect((a).getAttribute('rel')).toBe('noopener noreferrer');

@@ -34,7 +34,7 @@ The output is **one self-contained file**, `apps/web/dist/index.html`:
 | 7 | What if: S1, F1–F7 cards in short, folded until "Show details"; the open scenario with expected vs actual, checkpoints folded behind their count, and story | `scenarios`, `evidenceClasses` |
 | 8 | Check it yourself: `stellar` CLI commands, observed output, explorer links | `realRun.cli`, `links` |
 
-On a laptop or larger screen each section fills one screen under the top bar, and the menu marks the section on screen. "All · Off-chain · On-chain" in the top bar fades the other layer's events and checks. The footer links the project's GitHub home (https://github.com/skopolabs), the pitch deck and the demo video channel. Long lists (the swimlane events and the terminal) scroll inside their section. The look follows the vend.money reference (SPEC 05 §10.2).
+On a laptop or larger screen each section fills one screen under the top bar, and the menu marks the section on screen. "All · Off-chain · On-chain" in the top bar fades the other layer's events and checks. The footer links the project's GitHub repository (https://github.com/skopolabs/usagepay), the pitch deck and the demo video channel. Long lists (the swimlane events and the terminal) scroll inside their section. The look follows the vend.money reference (SPEC 05 §10.2).
 
 Presenter keys:
 
