@@ -241,7 +241,7 @@ Built with [Claude Code](https://claude.com/claude-code) under the execution rul
 
 **Skopo Team**
 - Wesley Santos: [LinkedIn](https://www.linkedin.com/in/wesleymassine/)
-- Mario León: [LinkedIn](https://www.linkedin.com/in/mario-garc%C3%ADa-le%C3%B3n-0a76ab420)
+- Mario García León: [LinkedIn](https://www.linkedin.com/in/mario-garc%C3%ADa-le%C3%B3n-0a76ab420)
 
 ## License
 
